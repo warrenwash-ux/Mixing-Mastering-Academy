@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixing & Mastering Academy | LMW Studio</title>
+<style>
+:root{
+  --gold:#C9A84C;--gold-light:#E8C97A;--gold-dim:#7A6230;
+  --bg:#0A0A0A;--bg2:#111111;--bg3:#181818;--bg4:#222222;--bg5:#2A2A2A;
+  --border:#2A2A2A;--border2:#333333;--border3:#444444;
+  --text:#F0F0F0;--text2:#A0A0A0;--text3:#666666;
+  --green:#1D9E75;--green-bg:#0D2920;--green-light:#9FE1CB;
+  --red:#CC3520;--red-bg:#2A0A0A;
+  --yellow:#C9A84C;--yellow-bg:#231500;
+  --blue:#378ADD;--blue-bg:#0A1828;
+  --purple:#7F77DD;--purple-bg:#1A1830;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;}
+
+/* NAV */
+.site-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100;}
+.site-logo{font-size:13px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.site-nav{display:flex;gap:4px;}
+.nav-btn{font-size:12px;color:var(--text2);background:none;border:1px solid transparent;border-radius:6px;padding:6px 14px;cursor:pointer;transition:all .15s;font-family:inherit;}
+.nav-btn:hover{color:var(--gold);border-color:var(--border2);}
+.nav-btn.active{color:var(--gold);border-color:var(--gold-dim);background:rgba(201,168,76,0.06);}
+
+/* PAGES */
+.page{display:none;max-width:960px;margin:0 auto;padding:2rem;}
+.page.active{display:block;}
+
+/* ===== LESSONS PAGE ===== */
+.lessons-grid{display:grid;grid-template-columns:280px 1fr;gap:1.5rem;align-items:start;}
+.lesson-sidebar{position:sticky;top:80px;}
+.sidebar-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text3);margin-bottom:1rem;}
+.level-block{margin-bottom:8px;border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.level-header{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;background:var(--bg2);transition:background .15s;}
+.level-header:hover{background:var(--bg3);}
+.level-num{width:24px;height:24px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.level-name{font-size:13px;font-weight:600;color:var(--text);flex:1;}
+.level-count{font-size:11px;color:var(--text3);}
+.level-arrow{font-size:10px;color:var(--text3);transition:transform .2s;}
+.level-arrow.open{transform:rotate(90deg);}
+.lesson-list{display:none;border-top:1px solid var(--border);}
+.lesson-list.open{display:block;}
+.lesson-item{padding:8px 14px 8px 48px;font-size:13px;color:var(--text2);cursor:pointer;border-bottom:1px solid var(--border);transition:all .15s;}
+.lesson-item:last-child{border-bottom:none;}
+.lesson-item:hover{color:var(--gold);background:rgba(201,168,76,0.04);}
+.lesson-item.active{color:var(--gold);background:rgba(201,168,76,0.08);}
+
+/* LESSON CONTENT */
+.lesson-content{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2rem;}
+.lesson-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:rgba(201,168,76,0.1);color:var(--gold);border:1px solid var(--gold-dim);border-radius:20px;padding:4px 12px;margin-bottom:1rem;}
+.lesson-title{font-size:24px;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.lesson-subtitle{font-size:14px;color:var(--text2);margin-bottom:1.5rem;line-height:1.6;}
+.lesson-body{font-size:14px;color:var(--text2);line-height:1.8;}
+.lesson-body h3{font-size:16px;font-weight:600;color:var(--text);margin:1.5rem 0 0.5rem;}
+.lesson-body p{margin-bottom:1rem;}
+.lesson-body ul{margin:0 0 1rem 1.2rem;}
+.lesson-body li{margin-bottom:0.4rem;}
+.tip-box{background:var(--green-bg);border:1px solid rgba(29,158,117,0.3);border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:13px;color:var(--green-light);}
+.warn-box{background:var(--yellow-bg);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:1rem 1.25rem;margin:1rem 0;font-size:13px;color:var(--gold-light);}
+.lesson-nav{display:flex;justify-content:space-between;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border);}
+.lesson-nav-btn{background:var(--bg3);border:1px solid var(--border2);border-radius:8px;padding:10px 20px;font-size:13px;color:var(--text2);cursor:pointer;font-family:inherit;transition:all .15s;}
+.lesson-nav-btn:hover{border-color:var(--gold-dim);color:var(--gold);}
+.lesson-nav-btn:disabled{opacity:0.3;cursor:not-allowed;}
+
+/* ===== SIMULATOR PAGE ===== */
+.sim-tabs{display:flex;gap:8px;margin-bottom:1.5rem;}
+.sim-tab{padding:8px 20px;border:1px solid var(--border2);border-radius:8px;background:var(--bg2);color:var(--text2);cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;font-family:inherit;}
+.sim-tab:hover{border-color:var(--gold-dim);color:var(--gold-light);}
+.sim-tab.active{background:rgba(201,168,76,0.1);border-color:var(--gold);color:var(--gold);}
+.sim-panel{display:none;}
+.sim-panel.active{display:block;}
+.sim-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1rem;}
+.sim-card-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.sim-card-sub{font-size:13px;color:var(--text2);margin-bottom:1.25rem;}
+
+/* EQ */
+.eq-bands{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;margin-bottom:1rem;}
+.eq-band{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.eq-slider-wrap{height:160px;display:flex;align-items:center;justify-content:center;}
+.eq-slider{writing-mode:vertical-lr;direction:rtl;-webkit-appearance:slider-vertical;width:28px;height:140px;cursor:pointer;accent-color:var(--gold);}
+.eq-label{font-size:10px;color:var(--text3);text-align:center;font-weight:600;}
+.eq-val{font-size:11px;font-weight:700;text-align:center;min-width:36px;}
+.eq-canvas-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:8px;margin-bottom:1rem;overflow:hidden;}
+canvas{display:block;width:100%;height:120px;}
+.feedback-box{background:var(--bg3);border-radius:8px;padding:1rem;font-size:13px;line-height:1.6;min-height:60px;}
+
+/* COMP */
+.comp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1rem;}
+.knob-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.knob-label{font-size:11px;color:var(--text3);font-weight:600;text-align:center;}
+.knob-val{font-size:13px;font-weight:700;color:var(--gold);text-align:center;}
+input[type=range]{width:100%;accent-color:var(--gold);}
+.gr-meter{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1rem;}
+.gr-bar-wrap{height:16px;background:var(--bg4);border-radius:4px;overflow:hidden;margin:8px 0;}
+.gr-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--gold),var(--red));border-radius:4px;transition:width .1s;}
+.gr-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);}
+
+/* MIXER */
+.mixer-strips{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.strip{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.strip-name{font-size:10px;font-weight:700;color:var(--text2);text-align:center;letter-spacing:.5px;text-transform:uppercase;}
+.strip-fader-wrap{height:120px;display:flex;align-items:center;justify-content:center;}
+.strip-fader{writing-mode:vertical-lr;direction:rtl;-webkit-appearance:slider-vertical;width:24px;height:100px;accent-color:var(--gold);cursor:pointer;}
+.strip-db{font-size:11px;font-weight:700;color:var(--gold);}
+.strip-pan{width:100%;accent-color:var(--gold);}
+.strip-pan-label{font-size:10px;color:var(--text3);}
+.strip-btns{display:flex;gap:4px;}
+.strip-btn{font-size:9px;font-weight:700;padding:3px 6px;border-radius:4px;border:1px solid var(--border2);background:var(--bg4);color:var(--text3);cursor:pointer;font-family:inherit;transition:all .15s;}
+.strip-btn.muted{background:var(--red-bg);border-color:var(--red);color:var(--red);}
+.strip-btn.soloed{background:var(--yellow-bg);border-color:var(--gold);color:var(--gold);}
+
+/* ===== TEMPLATES PAGE ===== */
+.genre-tabs{display:flex;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.tab-btn{padding:10px 22px;border:1px solid var(--border2);border-radius:8px;background:var(--bg2);color:var(--text2);cursor:pointer;font-size:14px;font-weight:600;transition:all .2s;font-family:inherit;}
+.tab-btn:hover{border-color:var(--gold-dim);color:var(--gold-light);}
+.tab-btn.active{background:rgba(201,168,76,0.1);border-color:var(--gold);color:var(--gold);}
+.template-header{margin-bottom:1.5rem;padding-bottom:1.25rem;border-bottom:1px solid var(--border);}
+.template-title{font-size:22px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.template-sub{font-size:14px;color:var(--text2);line-height:1.6;}
+.progress-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.progress-label{font-size:12px;color:var(--text2);}
+.reset-btn{font-size:12px;color:var(--text3);border:none;background:none;cursor:pointer;text-decoration:underline;font-family:inherit;}
+.progress-bar-wrap{height:3px;background:var(--bg4);border-radius:2px;margin-bottom:1.75rem;overflow:hidden;}
+.progress-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));transition:width .4s;}
+.phase-block{margin-bottom:10px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg2);}
+.phase-header{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;user-select:none;transition:background .15s;}
+.phase-header:hover{background:var(--bg3);}
+.phase-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+.phase-title{font-size:15px;font-weight:600;color:var(--text);flex:1;}
+.phase-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+.phase-arrow{font-size:10px;color:var(--text3);transition:transform .2s;}
+.phase-arrow.open{transform:rotate(90deg);}
+.phase-body{display:none;border-top:1px solid var(--border);}
+.phase-body.open{display:block;}
+.step-row{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-bottom:1px solid var(--border);}
+.step-row:last-child{border-bottom:none;}
+.step-check{width:20px;height:20px;border:1.5px solid var(--border2);border-radius:5px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.step-check:hover{border-color:var(--gold-dim);}
+.step-check.done{background:rgba(201,168,76,0.15);border-color:var(--gold);}
+.step-check.done::after{content:'';width:11px;height:7px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);display:block;margin-top:-2px;}
+.step-content{flex:1;min-width:0;}
+.step-label{font-size:14px;font-weight:600;color:var(--text);margin-bottom:5px;transition:all .15s;}
+.step-label.done{text-decoration:line-through;color:var(--text3);}
+.step-detail{font-size:13px;color:var(--text2);line-height:1.65;margin-bottom:10px;}
+.setting-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:10px;}
+.setting-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.setting-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:5px;}
+.setting-val{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;}
+.setting-note{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.4;}
+
+/* ===== DFY PAGE ===== */
+.dfy-hero{text-align:center;padding:3rem 1rem 2rem;border-bottom:1px solid var(--border);margin-bottom:2rem;}
+.dfy-crown{font-size:48px;margin-bottom:1rem;}
+.dfy-title{font-size:36px;font-weight:800;letter-spacing:-1px;color:var(--text);margin-bottom:0.5rem;}
+.dfy-title span{color:var(--gold);}
+.dfy-tagline{font-size:16px;color:var(--text2);max-width:560px;margin:0 auto 1.5rem;line-height:1.7;}
+.dfy-price{font-size:32px;font-weight:800;color:var(--gold);}
+.dfy-price-note{font-size:13px;color:var(--text3);margin-top:4px;}
+.dfy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;margin-bottom:2rem;}
+.dfy-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.25rem;}
+.dfy-icon{font-size:24px;margin-bottom:0.75rem;}
+.dfy-card-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.dfy-card-desc{font-size:13px;color:var(--text2);line-height:1.6;}
+.dfy-cta{text-align:center;padding:2rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px;}
+.dfy-cta-title{font-size:20px;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.dfy-cta-sub{font-size:14px;color:var(--text2);margin-bottom:1.25rem;}
+.dfy-link{display:inline-block;padding:12px 28px;background:var(--gold);color:#000;font-weight:700;border-radius:8px;text-decoration:none;font-size:14px;transition:background .15s;}
+.dfy-link:hover{background:var(--gold-light);}
+
+/* PAGE HERO */
+.page-hero{padding:2rem 0 1.5rem;}
+.hero-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;background:rgba(201,168,76,0.08);border:1px solid var(--gold-dim);border-radius:20px;padding:5px 14px;margin-bottom:1rem;}
+.page-hero h1{font-size:clamp(22px,4vw,36px);font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.page-hero h1 span{color:var(--gold);}
+.page-hero p{font-size:14px;color:var(--text2);line-height:1.7;max-width:580px;}
+
+/* FOOTER */
+.site-footer{text-align:center;padding:2rem;font-size:12px;color:var(--text3);border-top:1px solid var(--border);margin-top:2rem;}
+.site-footer span{color:var(--gold-dim);}
+
+@media(max-width:700px){
+  .lessons-grid{grid-template-columns:1fr;}
+  .lesson-sidebar{position:static;}
+  .comp-grid{grid-template-columns:1fr 1fr;}
+  .mixer-strips{grid-template-columns:repeat(3,1fr);}
+  .site-nav .nav-btn:not(.active){display:none;}
+  .page{padding:1rem;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo">LMW Studio</div>
+  <nav class="site-nav">
+    <button class="nav-btn active" onclick="showPage('lessons',this)">Lessons</button>
+    <button class="nav-btn" onclick="showPage('simulator',this)">Simulator</button>
+    <button class="nav-btn" onclick="showPage('templates',this)">Templates</button>
+    <button class="nav-btn" onclick="showPage('dfy',this)">Done For You</button>
+  </nav>
+</header>
+
+<!-- ============ LESSONS ============ -->
+<div class="page active" id="page-lessons">
+  <div class="page-hero">
+    <div class="hero-badge">&#127911; Learn the Craft</div>
+    <h1>Mixing & Mastering <span>Lessons</span></h1>
+    <p>Eight levels from absolute beginner to advanced — every concept explained in plain English, no jargon without a definition.</p>
+  </div>
+  <div class="lessons-grid">
+    <div class="lesson-sidebar">
+      <div class="sidebar-title">Course Levels</div>
+      <div id="sidebar-levels"></div>
+    </div>
+    <div class="lesson-content" id="lesson-display">
+      <div class="lesson-badge">Welcome</div>
+      <div class="lesson-title">Pick a lesson to start</div>
+      <div class="lesson-subtitle">Choose any level from the sidebar and dive in. Start at Level 1 if you're new, or jump to where you need it.</div>
+      <div class="lesson-body"><p>The course covers everything from what a DAW is, all the way to mastering for streaming and sync. Every lesson is written so a 12-year-old could follow it — no assumed knowledge, no skipped steps.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SIMULATOR ============ -->
+<div class="page" id="page-simulator">
+  <div class="page-hero">
+    <div class="hero-badge">&#127898; Practice Tools</div>
+    <h1>Mix <span>Simulator</span></h1>
+    <p>Interactive EQ, compressor, and mixer — move the controls and get real-time feedback on what you're doing and why.</p>
+  </div>
+  <div class="sim-tabs">
+    <button class="sim-tab active" onclick="showSim('eq',this)">EQ</button>
+    <button class="sim-tab" onclick="showSim('comp',this)">Compressor</button>
+    <button class="sim-tab" onclick="showSim('mixer',this)">Mixer</button>
+  </div>
+
+  <!-- EQ -->
+  <div class="sim-panel active" id="sim-eq">
+    <div class="sim-card">
+      <div class="sim-card-title">Equalizer (EQ)</div>
+      <div class="sim-card-sub">Drag the sliders up to boost a frequency or down to cut it. Watch the curve and read the feedback below.</div>
+      <div class="eq-bands" id="eq-bands"></div>
+      <div class="eq-canvas-wrap"><canvas id="eq-canvas" height="120"></canvas></div>
+      <div class="feedback-box" id="eq-feedback">Move a slider to see real-time feedback about what that frequency range does in a mix.</div>
+    </div>
+  </div>
+
+  <!-- COMP -->
+  <div class="sim-panel" id="sim-comp">
+    <div class="sim-card">
+      <div class="sim-card-title">Compressor</div>
+      <div class="sim-card-sub">Adjust the four main controls. The gain reduction meter shows how hard the compressor is working.</div>
+      <div class="comp-grid" id="comp-knobs"></div>
+      <div class="gr-meter">
+        <div style="font-size:12px;color:var(--text3);margin-bottom:4px;">Gain Reduction</div>
+        <div class="gr-bar-wrap"><div class="gr-bar" id="gr-bar" style="width:0%"></div></div>
+        <div class="gr-label"><span>0 dB</span><span id="gr-val">0.0 dB GR</span><span>20 dB</span></div>
+      </div>
+      <div class="feedback-box" id="comp-feedback">Adjust the controls above to see what each setting does to your sound.</div>
+    </div>
+  </div>
+
+  <!-- MIXER -->
+  <div class="sim-panel" id="sim-mixer">
+    <div class="sim-card">
+      <div class="sim-card-title">Mixer Channel Strips</div>
+      <div class="sim-card-sub">Move faders for volume, pan knobs for stereo position. Mute or solo individual channels.</div>
+      <div class="mixer-strips" id="mixer-strips"></div>
+      <div class="feedback-box" style="margin-top:1rem;" id="mixer-feedback">Interact with the channels to see feedback about mixing decisions.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TEMPLATES ============ -->
+<div class="page" id="page-templates">
+  <div class="page-hero">
+    <div class="hero-badge">&#9834; Genre Blueprints</div>
+    <h1>Mixing <span>Templates</span></h1>
+    <p>Genre-specific checklists with exact settings — EQ, compression, panning, stereo width, and delivery specs. Work through every step in order so nothing gets missed.</p>
+  </div>
+  <div class="genre-tabs">
+    <button class="tab-btn active" onclick="switchGenre('rnb',this)">R&amp;B / Soul</button>
+    <button class="tab-btn" onclick="switchGenre('hiphop',this)">Hip Hop</button>
+    <button class="tab-btn" onclick="switchGenre('cinematic',this)">Cinematic / Sync</button>
+  </div>
+  <div id="template-area"></div>
+</div>
+
+<!-- ============ DFY ============ -->
+<div class="page" id="page-dfy">
+  <div class="dfy-hero">
+    <div class="dfy-crown">&#128081;</div>
+    <div class="dfy-title">DONE <span>FOR YOU</span></div>
+    <div class="dfy-tagline">You bring the vision. Warren Lamb brings the hit. Custom music created from scratch — lyrics, production, mixing, mastering. Everything.</div>
+    <div class="dfy-price">Starting at $10,000</div>
+    <div class="dfy-price-note">Per original composition &middot; Full ownership transferred to client</div>
+  </div>
+  <div class="dfy-grid">
+    <div class="dfy-card"><div class="dfy-icon">&#9997;&#65039;</div><div class="dfy-card-title">Original Lyrics</div><div class="dfy-card-desc">Custom-written lyrics tailored to your story, your brand, your message. No templates. No recycled content.</div></div>
+    <div class="dfy-card"><div class="dfy-icon">&#127929;</div><div class="dfy-card-title">Full Production</div><div class="dfy-card-desc">Beat, arrangement, instrumentation — all produced from scratch by Warren Lamb in the LMW studio.</div></div>
+    <div class="dfy-card"><div class="dfy-icon">&#127897;&#65039;</div><div class="dfy-card-title">Vocal Direction</div><div class="dfy-card-desc">Guidance on vocal performance, artist coaching, and direction to make sure the delivery matches the vision.</div></div>
+    <div class="dfy-card"><div class="dfy-icon">&#127898;</div><div class="dfy-card-title">Mix & Master</div><div class="dfy-card-desc">Professional mixing and mastering. Radio-ready, sync-ready, streaming-ready delivery in all formats.</div></div>
+    <div class="dfy-card"><div class="dfy-icon">&#128196;</div><div class="dfy-card-title">Full Ownership</div><div class="dfy-card-desc">100% of master and publishing rights transferred to you. No royalties. No backend. It's yours.</div></div>
+    <div class="dfy-card"><div class="dfy-icon">&#127911;</div><div class="dfy-card-title">Sync Ready</div><div class="dfy-card-desc">Delivered in every format needed for film, TV, and brand placements. Stems, alternates, instrumental — all included.</div></div>
+  </div>
+  <div class="dfy-cta">
+    <div class="dfy-cta-title">Ready to start?</div>
+    <div class="dfy-cta-sub">Reach out directly to discuss your project and get a quote.</div>
+    <a class="dfy-link" href="https://lambmusicworks.com" target="_blank">Contact Warren at LMW</a>
+  </div>
+</div>
+
+<footer class="site-footer"><span>Lamb Music Works</span> &mdash; No Cuss, No Fuss &mdash; lambmusicworks.com</footer>
+
+<script>
+// =================== PAGE NAV ===================
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  if (id === 'simulator') initSim();
+  if (id === 'templates') renderTemplate(currentGenre);
+}
+
+// =================== LESSONS ===================
+const LEVELS = [
+  {
+    num: 1, name: "The Basics", lessons: [
+      { title: "What is a DAW?", sub: "Your digital recording studio explained", body: `<p>A DAW — Digital Audio Workstation — is the software you use to record, arrange, edit, and mix music. Think of it like a digital version of a full recording studio crammed into your computer. Instead of physical tape machines, mixing consoles, and racks of gear, everything lives on your screen.</p><h3>Common DAWs</h3><ul><li><strong>Pro Tools</strong> — industry standard in professional studios</li><li><strong>Logic Pro</strong> — Mac only, extremely popular for music production</li><li><strong>FL Studio</strong> — the home of hip hop and electronic music</li><li><strong>Ableton Live</strong> — popular for electronic music and live performance</li><li><strong>GarageBand</strong> — free on Mac/iOS, great starting point</li></ul><div class="tip-box">&#9989; You don't need the most expensive DAW to make professional music. Many hits have been made in free or budget software. The skill matters more than the tool.</div><p>Inside your DAW you'll see tracks arranged on a timeline — audio tracks for recorded sound, MIDI tracks for virtual instruments, and bus/return tracks for effects routing.</p>` },
+      { title: "Tracks, Channels & Buses", sub: "How audio flows through your session", body: `<p>Understanding signal flow is the foundation of mixing. Every sound in your session travels from a source to your speakers, and knowing that path gives you total control.</p><h3>Track types</h3><ul><li><strong>Audio track</strong> — holds a recorded audio file (vocals, live guitar, etc.)</li><li><strong>MIDI/instrument track</strong> — triggers a virtual instrument (drums, synths, piano)</li><li><strong>Bus / group track</strong> — receives signals from multiple tracks so you can process them together</li><li><strong>Return / send track</strong> — receives a copy of the signal for shared effects like reverb</li></ul><h3>Signal flow</h3><p>Audio track → (optional) Group bus → Master bus → Your speakers. Every stage is an opportunity to shape the sound. If something sounds wrong at the end, trace it back through the chain.</p><div class="warn-box">&#9888;&#65039; Always gain stage properly. If your tracks are too loud before hitting plugins, you'll clip and distort. Aim for individual tracks peaking around -18 dBFS before any plugins touch them.</div>` },
+      { title: "Gain Staging — Why It Matters", sub: "Headroom is your best friend", body: `<p>Gain staging means setting the volume levels throughout your signal chain so that nothing clips and every plugin operates in its ideal range. It's the most overlooked fundamental in amateur mixes.</p><h3>The goal at each stage</h3><ul><li><strong>Individual audio tracks:</strong> peak around -18 dBFS before plugins</li><li><strong>After EQ and compression:</strong> output should still be around -12 to -10 dBFS</li><li><strong>Group buses:</strong> -10 to -8 dBFS</li><li><strong>Master bus pre-limiter:</strong> -6 dBFS or lower</li></ul><p>Why does this matter? Plugins — especially emulations of analog gear — were designed to work best at certain input levels. Drive them too hard and they distort in ways you didn't choose. Feed them too little signal and you lose detail and introduce noise.</p><div class="tip-box">&#9989; Use a gain or trim plugin at the top of every channel's chain to set the input level before anything else touches it. This is pro workflow.</div>` },
+    ]
+  },
+  {
+    num: 2, name: "EQ Fundamentals", lessons: [
+      { title: "What Does EQ Do?", sub: "Sculpting frequencies explained simply", body: `<p>EQ — equalization — is the process of boosting or cutting specific frequency ranges in a sound. Every sound is made up of frequencies measured in Hertz (Hz) and kilohertz (kHz). EQ lets you reshape those frequencies.</p><h3>The frequency spectrum</h3><ul><li><strong>Sub bass (20–60 Hz)</strong> — felt more than heard. The deep rumble. Kick drum sub, bass guitar fundamental.</li><li><strong>Bass (60–250 Hz)</strong> — warmth and body. Where kick punch and bass weight live.</li><li><strong>Low-mids (250–800 Hz)</strong> — muddiness and boxiness often sit here. Cut carefully.</li><li><strong>Mids (800 Hz–3 kHz)</strong> — the core of most instruments. Vocals, guitars, snares all compete here.</li><li><strong>Upper mids (3–8 kHz)</strong> — presence, intelligibility, harshness. Vocals cut through here.</li><li><strong>Air / highs (8–20 kHz)</strong> — shimmer, sparkle, breathiness. Too much = harsh. Just right = open.</li></ul><div class="tip-box">&#9989; A good rule: cut to fix problems, boost to add character. Most of the best EQ work is subtractive — removing what shouldn't be there rather than piling on more.</div>` },
+      { title: "High Pass & Low Pass Filters", sub: "The first move on almost every track", body: `<p>A high pass filter (HPF) removes everything below a set frequency — it only lets the high frequencies pass through. A low pass filter (LPF) does the opposite — it only lets low frequencies through.</p><h3>Why use a high pass filter?</h3><p>Almost every track in your mix has unnecessary low-end energy. A vocalist doesn't need anything below 80 Hz. A hi-hat doesn't need anything below 2 kHz. That extra energy adds up and muddies your mix without you hearing it clearly.</p><ul><li><strong>Vocals:</strong> HPF at 80–100 Hz</li><li><strong>Guitars:</strong> HPF at 100–120 Hz</li><li><strong>Synth pads:</strong> HPF at 120–200 Hz depending on the sound</li><li><strong>Hi-hats and cymbals:</strong> HPF at 800 Hz–2 kHz</li></ul><div class="warn-box">&#9888;&#65039; Don't HPF your kick drum or bass — those instruments are supposed to live in the low end. And don't cut too aggressively on anything that needs warmth, like a Rhodes piano or acoustic guitar.</div>` },
+      { title: "Parametric EQ Controls", sub: "Frequency, gain, and Q explained", body: `<p>A parametric EQ gives you precise control over exactly which frequencies you're boosting or cutting, how much, and how wide the adjustment affects neighboring frequencies.</p><h3>The three main controls</h3><ul><li><strong>Frequency</strong> — which Hz value is the center of your boost or cut</li><li><strong>Gain</strong> — how many dB you're boosting (positive) or cutting (negative)</li><li><strong>Q (bandwidth)</strong> — how wide or narrow the bell shape is. High Q = narrow, surgical cut. Low Q = wide, gentle shelf-like adjustment.</li></ul><h3>Practical EQ moves</h3><p>To find a problem frequency: boost with a narrow Q and sweep the frequency knob until something sounds harsh or honky. Then flip the gain to cut that same spot. This technique is called "boost to find, cut to fix."</p><div class="tip-box">&#9989; Less is more with EQ. Boosts or cuts of more than 6 dB are usually a sign that something went wrong earlier — at the recording stage, mic placement, or gain staging. Fix the source first when you can.</div>` },
+    ]
+  },
+  {
+    num: 3, name: "Compression", lessons: [
+      { title: "What Compression Does", sub: "Controlling dynamics without killing them", body: `<p>A compressor automatically turns down the loudest parts of a signal when they exceed a set level — the threshold. The result is a more controlled, consistent dynamic range. After compressing, you can turn the whole signal back up, making quiet parts louder and loud parts more even.</p><h3>Why this matters</h3><p>Without compression, a vocal performance that goes from a whisper to a belt will be wildly inconsistent in the mix. The whisper gets buried and the belt blows everything else out. Compression brings both into a manageable range.</p><div class="tip-box">&#9989; Compression is not just for fixing problems — it shapes the feel and groove of music. A compressed drum bus makes things sound tighter and more powerful. A lightly compressed acoustic guitar sounds more controlled and present.</div><h3>Common uses</h3><ul><li>Vocals — evening out performance dynamics</li><li>Drums — controlling transients and adding punch</li><li>Bass — keeping consistent level so the groove locks in</li><li>Mix bus — glueing everything together subtly</li></ul>` },
+      { title: "The Five Controls", sub: "Threshold, ratio, attack, release, makeup gain", body: `<p>Every compressor has five core controls. Understanding what each one does gives you total command over your dynamics.</p><h3>Threshold</h3><p>The level at which the compressor starts working. Any signal above the threshold gets compressed. Set it lower = more compression. Set it higher = less compression.</p><h3>Ratio</h3><p>How much the compressor reduces the signal once it's over the threshold. A 4:1 ratio means for every 4 dB that goes over the threshold, only 1 dB comes out. A 10:1 ratio is very heavy. A 1.5:1 ratio is very gentle.</p><h3>Attack</h3><p>How fast the compressor responds after the signal crosses the threshold. Fast attack = the compressor clamps down immediately. Slow attack = lets the initial transient (the hit) through before compressing.</p><h3>Release</h3><p>How fast the compressor stops compressing after the signal drops below the threshold. Too fast = pumping. Too slow = the compressor never fully recovers.</p><h3>Makeup Gain</h3><p>Because compression turns things down, makeup gain brings the overall level back up to match the original. A good rule: bypass the compressor and adjust makeup gain until the bypassed and compressed signals sound equal in volume. Then you can judge the compression fairly.</p>` },
+      { title: "Attack & Release — The Feel Controls", sub: "Where tone and groove actually come from", body: `<p>Most beginners focus on threshold and ratio. Professionals obsess over attack and release — because that's where the feel lives.</p><h3>Slow attack = more punch</h3><p>When the compressor has a slow attack (20–50ms), the initial transient of the sound gets through before the compressor reacts. This makes drums sound punchier and more aggressive. The hit comes through uncompressed, then the body of the sound gets controlled.</p><h3>Fast attack = more control</h3><p>A fast attack (1–5ms) catches even the initial transient. Good for taming harsh peaks on vocals or controlling a bass that's jumping around too much.</p><h3>Release and groove</h3><p>The release controls when the compressor lets go. If you sync the release to the tempo of the track — so the compressor recovers right before the next beat — the compression actually breathes with the music and creates a pumping groove. This is an advanced technique used on dance music and hip hop.</p><div class="warn-box">&#9888;&#65039; Too-fast release causes audible pumping and breathing. Too-slow release means the compressor never recovers and makes your sound flat and lifeless. Use your ears — the compressor should be almost invisible unless you want it as an effect.</div>` },
+    ]
+  },
+  {
+    num: 4, name: "Panning & Stereo", lessons: [
+      { title: "Stereo Field Basics", sub: "Left, right, center — how to use all of it", body: `<p>The stereo field is the full left-to-right space between your speakers or headphones. A mono signal plays equally from both sides — it's centered. A stereo signal uses the width between left and right to create a sense of space.</p><h3>The center lane is sacred</h3><p>Everything critical to the song should live in or near the center: kick drum, bass, lead vocal, snare. These elements anchor the mix and must survive a mono fold-down (when someone plays your track from a single Bluetooth speaker).</p><h3>Using the sides</h3><p>Pad chords, harmonies, delays, reverbs, background elements, and wide percussion can all live out in the stereo field. This is what makes a mix feel wide and immersive rather than flat and cramped.</p><div class="tip-box">&#9989; Always check your mix in mono before you call it done. Open a utility plugin and fold to mono. If something important disappears or sounds thin, you may have phase cancellation — elements that cancel each other out when summed to mono.</div>` },
+      { title: "Panning Technique", sub: "Where to put things and why", body: `<p>There's no one universal rule for panning, but there are conventions that have developed from decades of records — and they work for a reason.</p><h3>Standard panning approach</h3><ul><li><strong>Kick drum:</strong> center</li><li><strong>Snare:</strong> center or near-center</li><li><strong>Bass / 808:</strong> center</li><li><strong>Lead vocal:</strong> center</li><li><strong>Hi-hats:</strong> slight left or right (never hard pan)</li><li><strong>Guitar doubles:</strong> L30-50 / R30-50 (mirrored)</li><li><strong>Pad chords:</strong> L40-60 / R40-60 wide stereo</li><li><strong>Ad libs / backing vocals:</strong> L60-80 / R60-80 or hard pan</li></ul><h3>Mirroring rule</h3><p>When you pan something to the left, find something of similar frequency weight to balance it on the right. An unbalanced stereo field feels unstable — like the mix is leaning to one side.</p><div class="warn-box">&#9888;&#65039; Never hard-pan low-frequency content. Bass, kick, and 808 must stay in the center. Low frequencies are non-directional — our ears can't locate them spatially — and panning them off-center causes phase problems and wastes sub energy.</div>` },
+    ]
+  },
+  {
+    num: 5, name: "Reverb & Delay", lessons: [
+      { title: "What Reverb Does", sub: "Space, depth, and dimension", body: `<p>Reverb is the sound of a space. When you clap in a bathroom, the sound bounces off the walls and you hear those reflections — that's reverb. In mixing, we use reverb plugins to place sounds into virtual acoustic spaces: rooms, halls, plates, chambers.</p><h3>Types of reverb</h3><ul><li><strong>Room</strong> — short and intimate. Makes things sound like they're in a real room. Great for drums, snares.</li><li><strong>Hall</strong> — long and lush. Orchestral music, cinematic pads, big vocal moments.</li><li><strong>Plate</strong> — a classic studio effect. Bright, diffuse, musical. Beloved on vocals and snares.</li><li><strong>Chamber</strong> — warm and dense. Vintage sound. Good for guitars and keys.</li><li><strong>Spring</strong> — twangy, retro. Classic on guitar amps and some drums.</li></ul><h3>Key reverb parameters</h3><ul><li><strong>Pre-delay</strong> — how long before the reverb tail starts. Adding 15–30ms of pre-delay separates the dry sound from the reverb, keeping the source clear and present.</li><li><strong>Decay / RT60</strong> — how long the reverb tail lasts. Shorter = tighter. Longer = bigger.</li><li><strong>Wet/Dry mix</strong> — on a send/return setup, keep the reverb plugin at 100% wet and control the amount with the send level.</li></ul>` },
+      { title: "Delay Techniques", sub: "Echo as rhythm and texture", body: `<p>Delay repeats your audio signal after a set time — creating an echo effect. But in mixing it's far more than just echo — delay is a rhythmic and textural tool.</p><h3>Tempo-synced delay</h3><p>Syncing your delay to the tempo of the track (in 1/8 notes, 1/4 notes, dotted 1/8s etc.) makes the repeats fall on musical beats rather than randomly. This is a core hip hop vocal technique — the delayed repeat falls perfectly between the syllables.</p><h3>Common delay types</h3><ul><li><strong>Slapback</strong> — very short (50–120ms), 1 repeat. Classic rockabilly and country vocal effect. Adds presence without obvious echo.</li><li><strong>Ping-pong</strong> — the repeat bounces left to right, creating stereo width. Great on rap vocals and synth leads.</li><li><strong>Tape delay</strong> — warm, slightly degraded repeats with natural pitch drift. Vintage and musical feeling.</li></ul><div class="tip-box">&#9989; Pro tip: put a high pass filter on your delay return channel. Cut everything below 300–500 Hz. This keeps the delay repeats clear and airy without adding mud to your low end.</div>` },
+    ]
+  },
+  {
+    num: 6, name: "Mixing Workflow", lessons: [
+      { title: "The Mixing Order", sub: "Why sequence matters in a mix", body: `<p>Professional engineers follow a mixing order — a sequence of steps — because the decisions you make early affect everything that comes after. Jumping around randomly wastes time and leads to endless second-guessing.</p><h3>A proven mixing order</h3><ol style="margin-left:1.2rem;"><li style="margin-bottom:0.5rem;"><strong>Gain staging</strong> — set all track levels properly before any plugins</li><li style="margin-bottom:0.5rem;"><strong>Group and bus</strong> — route drums, bass, vocals, keys to their group buses</li><li style="margin-bottom:0.5rem;"><strong>Static balance</strong> — get a rough volume balance with no plugins at all. Just faders.</li><li style="margin-bottom:0.5rem;"><strong>EQ</strong> — start with subtractive EQ to clean up each track</li><li style="margin-bottom:0.5rem;"><strong>Compression</strong> — control dynamics on individual tracks, then on buses</li><li style="margin-bottom:0.5rem;"><strong>Panning & stereo</strong> — place everything in the stereo field</li><li style="margin-bottom:0.5rem;"><strong>Reverb & delay</strong> — add space and dimension</li><li style="margin-bottom:0.5rem;"><strong>Automation</strong> — volume rides, pan moves, effect changes</li><li style="margin-bottom:0.5rem;"><strong>Mix bus processing</strong> — gentle compression and EQ on the stereo output</li><li style="margin-bottom:0.5rem;"><strong>Reference & revise</strong> — check against reference tracks</li></ol>` },
+      { title: "Reference Tracks", sub: "How pros use other songs to calibrate their ears", body: `<p>A reference track is a professionally mixed and mastered song in a similar genre that you use to compare your mix against. It's one of the most powerful — and most ignored — tools in mixing.</p><h3>How to reference properly</h3><ul><li>Import the reference song into your session as an audio track</li><li>Level-match it to your mix (both at similar perceived loudness)</li><li>Switch between your mix and the reference quickly — your ears adapt, so fast comparisons are more honest</li><li>Listen for specific things: how wide is the stereo field? How punchy is the low end? Where do the vocals sit relative to the instruments?</li></ul><div class="tip-box">&#9989; Don't try to make your mix sound identical to the reference — that's not the goal. The goal is calibration. Your mix should sound like it belongs in the same sonic universe as the reference, not like a copy of it.</div><div class="warn-box">&#9888;&#65039; Your mix will rarely sound as good as a mastered reference track, and that's fine. The reference is mastered — yours isn't yet. You're comparing the feel, balance, and tone — not the raw loudness.</div>` },
+    ]
+  },
+  {
+    num: 7, name: "Mastering Basics", lessons: [
+      { title: "What Mastering Is", sub: "The final step before the world hears it", body: `<p>Mastering is the final stage of audio production — the bridge between your finished mix and the delivered product. A mastering engineer takes your stereo mix file and optimizes it for playback across all systems and platforms.</p><h3>What mastering does</h3><ul><li>Applies final EQ to correct any tonal imbalances in the mix</li><li>Adds gentle compression to glue the mix and add density</li><li>Controls the final loudness to meet streaming platform standards</li><li>Ensures mono compatibility (the mix survives single-speaker playback)</li><li>Checks stereo width and corrects any phase issues</li><li>Sets the True Peak ceiling so the file won't clip on lossy playback</li></ul><div class="tip-box">&#9989; The golden rule of mastering: if you have to do a lot to the mix at the mastering stage, the mix wasn't finished. Mastering should be fine-tuning, not problem-solving. Get the mix right first.</div>` },
+      { title: "Loudness & Streaming Standards", sub: "LUFS, True Peak, and why louder isn't better", body: `<p>Streaming platforms automatically normalize the loudness of every track to a target level. This changed everything about mastering. Before streaming, louder masters "won" — they hit harder on radio and in record stores. Now, if your master is louder than the platform's target, it gets turned down automatically.</p><h3>The standards</h3><ul><li><strong>Spotify / Apple Music:</strong> -14 LUFS integrated target</li><li><strong>YouTube:</strong> -14 LUFS</li><li><strong>Tidal:</strong> -14 LUFS</li><li><strong>TV broadcast:</strong> -23 LUFS (much quieter — dynamic range is critical)</li></ul><h3>True Peak</h3><p>True Peak measures the actual peak level of your audio including intersample peaks — peaks that occur between samples and can clip on playback even if your meter reads below 0 dBFS. Always set your limiter ceiling to -1.0 dBTP (decibels True Peak).</p><div class="warn-box">&#9888;&#65039; Chasing loudness is a trap. Squashing your master to be as loud as possible doesn't help on streaming — it just gets turned down. Worse, heavy limiting kills the punch and dynamics that make your music hit hard. Protect the dynamics.</div>` },
+    ]
+  },
+  {
+    num: 8, name: "Sync Licensing", lessons: [
+      { title: "Mixing for Sync", sub: "What music supervisors actually need", body: `<p>Sync licensing — placing your music in TV shows, films, ads, and trailers — has specific technical and creative requirements. Music that isn't mixed and delivered correctly won't be used, no matter how good it sounds.</p><h3>Technical requirements for sync</h3><ul><li><strong>Sample rate:</strong> 48 kHz (the broadcast standard — not 44.1 kHz)</li><li><strong>Bit depth:</strong> 24-bit minimum</li><li><strong>True Peak ceiling:</strong> -1.0 dBTP</li><li><strong>Loudness target:</strong> -23 LUFS for broadcast, -14 LUFS for digital</li><li><strong>Format:</strong> WAV or AIFF — never MP3 for sync delivery</li></ul><h3>Deliverables music supervisors expect</h3><ul><li>Full mix (stereo WAV)</li><li>Instrumental version (no vocals)</li><li>Stems (drums, bass, melody, atmosphere — separate files)</li><li>30-second and 60-second edits</li><li>Sometimes: a cappella (vocals only)</li></ul><div class="tip-box">&#9989; Having stems ready before you pitch is a major competitive advantage. Most indie artists don't have them. Music supervisors often need to adjust elements in post-production — if you have stems and your competitor doesn't, you get the placement.</div>` },
+      { title: "Preparing Your Catalog", sub: "What to have ready before you pitch", body: `<p>Sync licensing is competitive. Having technically correct, well-organized files ready before you start pitching is what separates working composers from those who almost get there.</p><h3>The sync-ready checklist</h3><ul><li>Every track delivered at 24-bit / 48 kHz WAV</li><li>Every track has a corresponding instrumental</li><li>Every track has stems (at minimum: music + vocal stems)</li><li>File names are clean: Artist_Title_FullMix.wav, Artist_Title_Instrumental.wav</li><li>Metadata is embedded: title, composer, BPM, key, genre, mood tags</li><li>BMI or ASCAP registration is complete for every track you pitch</li><li>You have a one-paragraph description of the track and its mood/use case</li></ul><div class="warn-box">&#9888;&#65039; Do not pitch a track to a music library or supervisor before it is BMI/ASCAP registered. If it gets placed and you haven't registered, you may miss out on performance royalties — money that is owed to you automatically once the cue airs.</div><div class="tip-box">&#9989; For Warren's catalog: unregistered tracks can still be placed in PRO-free sync deals (Roblox, direct developer licensing, production music libraries that handle clearance themselves). Know which tracks are registered and which aren't before you pitch.</div>` },
+    ]
+  }
+];
+
+let currentLessonLevel = 0;
+let currentLessonIndex = 0;
+
+function buildSidebar() {
+  const container = document.getElementById('sidebar-levels');
+  container.innerHTML = LEVELS.map((lv, li) => `
+    <div class="level-block">
+      <div class="level-header" onclick="toggleLevel(${li})">
+        <div class="level-num">${lv.num}</div>
+        <div class="level-name">${lv.name}</div>
+        <div class="level-count">${lv.lessons.length}</div>
+        <div class="level-arrow" id="larrow-${li}">&#9654;</div>
+      </div>
+      <div class="lesson-list" id="llist-${li}">
+        ${lv.lessons.map((ls, si) => `
+          <div class="lesson-item" id="litem-${li}-${si}" onclick="loadLesson(${li},${si})">${ls.title}</div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+  toggleLevel(0);
+  loadLesson(0, 0);
+}
+
+function toggleLevel(li) {
+  const list = document.getElementById('llist-' + li);
+  const arrow = document.getElementById('larrow-' + li);
+  const open = list.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open', open);
+}
+
+function loadLesson(li, si) {
+  currentLessonLevel = li;
+  currentLessonIndex = si;
+  document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+  const item = document.getElementById(`litem-${li}-${si}`);
+  if (item) item.classList.add('active');
+  const lv = LEVELS[li];
+  const ls = lv.lessons[si];
+  const display = document.getElementById('lesson-display');
+  const isFirst = li === 0 && si === 0;
+  const isLast = li === LEVELS.length - 1 && si === LEVELS[li].lessons.length - 1;
+  display.innerHTML = `
+    <div class="lesson-badge">Level ${lv.num} &mdash; ${lv.name}</div>
+    <div class="lesson-title">${ls.title}</div>
+    <div class="lesson-subtitle">${ls.sub}</div>
+    <div class="lesson-body">${ls.body}</div>
+    <div class="lesson-nav">
+      <button class="lesson-nav-btn" onclick="prevLesson()" ${isFirst ? 'disabled' : ''}>&larr; Previous</button>
+      <button class="lesson-nav-btn" onclick="nextLesson()" ${isLast ? 'disabled' : ''}>Next &rarr;</button>
+    </div>
+  `;
+  display.scrollTop = 0;
+}
+
+function nextLesson() {
+  const lv = LEVELS[currentLessonLevel];
+  if (currentLessonIndex < lv.lessons.length - 1) {
+    loadLesson(currentLessonLevel, currentLessonIndex + 1);
+  } else if (currentLessonLevel < LEVELS.length - 1) {
+    const nextLi = currentLessonLevel + 1;
+    const listEl = document.getElementById('llist-' + nextLi);
+    if (listEl && !listEl.classList.contains('open')) toggleLevel(nextLi);
+    loadLesson(nextLi, 0);
+  }
+}
+
+function prevLesson() {
+  if (currentLessonIndex > 0) {
+    loadLesson(currentLessonLevel, currentLessonIndex - 1);
+  } else if (currentLessonLevel > 0) {
+    const prevLi = currentLessonLevel - 1;
+    loadLesson(prevLi, LEVELS[prevLi].lessons.length - 1);
+  }
+}
+
+buildSidebar();
+
+// =================== SIMULATOR ===================
+const EQ_BANDS = [
+  { freq: '60Hz', range: [-12, 12], desc: ['Sub bass — felt more than heard. Rumble and weight of kick and bass.', 'cutting sub cleans up muddiness', 'boosting sub adds weight — watch for flabby low end on small speakers'] },
+  { freq: '120Hz', range: [-12, 12], desc: ['Bass body — punch and warmth of kick, bass guitar, and 808.', 'cutting here thins the low end', 'boosting adds thickness — too much = muddy mix'] },
+  { freq: '250Hz', range: [-12, 12], desc: ['Low-mids — warmth or muddiness. Cutting here often cleans up a mix.', 'cutting cleans out boxiness and mud', 'boosting adds warmth but risks making things sound congested'] },
+  { freq: '500Hz', range: [-12, 12], desc: ['Low-mids — where honkiness lives. Vocals and instruments can sound boxy here.', 'cutting reduces the boxy/honky quality', 'boosting can make things sound nasal or congested'] },
+  { freq: '1kHz', range: [-12, 12], desc: ['Mids — body and core of most instruments. Guitars, vocals, keys all compete here.', 'cutting creates distance and thinness', 'boosting adds presence but too much sounds harsh and fatiguing'] },
+  { freq: '3kHz', range: [-12, 12], desc: ['Upper mids — where intelligibility lives. Vocal consonants and instrument attack.', 'cutting pulls vocals back in the mix', 'boosting adds presence and cut-through — too much = harsh and fatiguing'] },
+  { freq: '8kHz', range: [-12, 12], desc: ['High presence — detail, brightness, attack of hi-hats and cymbals.', 'cutting smooths harshness', 'boosting adds brightness and detail — sensitive range, use carefully'] },
+  { freq: '16kHz', range: [-12, 12], desc: ['Air — shimmer, openness, breathiness. The "polish" frequency range.', 'cutting removes harshness and digital edge', 'boosting adds air and openness — a little goes a long way'] }
+];
+
+const COMP_PARAMS = [
+  { id: 'threshold', label: 'Threshold', min: -40, max: 0, val: -12, unit: 'dB', step: 1 },
+  { id: 'ratio', label: 'Ratio', min: 1, max: 20, val: 4, unit: ':1', step: 0.5 },
+  { id: 'attack', label: 'Attack', min: 1, max: 100, val: 20, unit: 'ms', step: 1 },
+  { id: 'release', label: 'Release', min: 10, max: 500, val: 100, unit: 'ms', step: 5 }
+];
+
+const MIXER_CHANNELS = [
+  { name: 'Kick', color: '#C9A84C' },
+  { name: 'Snare', color: '#7F77DD' },
+  { name: 'Bass', color: '#1D9E75' },
+  { name: 'Keys', color: '#378ADD' },
+  { name: 'Vocal', color: '#D4537E' },
+  { name: 'FX', color: '#888' }
+];
+
+let simInited = false;
+
+function initSim() {
+  if (simInited) return;
+  simInited = true;
+  buildEQ();
+  buildComp();
+  buildMixer();
+}
+
+function showSim(id, btn) {
+  document.querySelectorAll('.sim-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sim-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sim-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// EQ
+let eqVals = [0, 0, 0, 0, 0, 0, 0, 0];
+
+function buildEQ() {
+  const container = document.getElementById('eq-bands');
+  container.innerHTML = EQ_BANDS.map((b, i) => `
+    <div class="eq-band">
+      <div class="eq-label">${b.freq}</div>
+      <div class="eq-slider-wrap">
+        <input type="range" class="eq-slider" min="${b.range[0]}" max="${b.range[1]}" value="0" step="0.5"
+          oninput="updateEQ(${i}, this.value)">
+      </div>
+      <div class="eq-val" id="eqv-${i}" style="color:var(--text2)">0 dB</div>
+    </div>
+  `).join('');
+  drawEQCurve();
+}
+
+function updateEQ(i, v) {
+  eqVals[i] = parseFloat(v);
+  const valEl = document.getElementById('eqv-' + i);
+  const sign = v > 0 ? '+' : '';
+  valEl.textContent = sign + parseFloat(v).toFixed(1) + ' dB';
+  valEl.style.color = v > 6 ? 'var(--red)' : v > 3 ? 'var(--yellow)' : v < -6 ? 'var(--blue)' : 'var(--green-light)';
+  const b = EQ_BANDS[i];
+  const abs = Math.abs(v);
+  let msg = `<strong style="color:var(--text)">${b.freq} range:</strong> ${b.desc[0]}<br><br>`;
+  if (abs < 1) { msg += `<span style="color:var(--text2)">Move the slider to hear what this frequency does.</span>`; }
+  else if (v > 0) { msg += `<span style="color:var(--yellow)">&#9650; Boosting ${sign}${parseFloat(v).toFixed(1)} dB — ${b.desc[2]}</span>`; }
+  else { msg += `<span style="color:var(--blue)">&#9660; Cutting ${parseFloat(v).toFixed(1)} dB — ${b.desc[1]}</span>`; }
+  if (abs > 8) msg += `<br><br><span style="color:var(--red)">&#9888; ${abs}dB is a lot — moves this large usually signal a recording or gain staging problem.</span>`;
+  document.getElementById('eq-feedback').innerHTML = msg;
+  drawEQCurve();
+}
+
+function drawEQCurve() {
+  const canvas = document.getElementById('eq-canvas');
+  if (!canvas) return;
+  const W = canvas.offsetWidth || 800;
+  const H = 120;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, W, H);
+  ctx.strokeStyle = 'rgba(201,168,76,0.15)';
+  ctx.lineWidth = 1;
+  for (let i = 1; i < 4; i++) { ctx.beginPath(); ctx.moveTo(0, H/4*i); ctx.lineTo(W, H/4*i); ctx.stroke(); }
+  ctx.beginPath();
+  ctx.strokeStyle = '#C9A84C';
+  ctx.lineWidth = 2;
+  for (let x = 0; x <= W; x++) {
+    let y = H / 2;
+    EQ_BANDS.forEach((b, i) => {
+      const bx = (i + 0.5) / EQ_BANDS.length * W;
+      const dist = Math.abs(x - bx) / (W / EQ_BANDS.length);
+      const influence = Math.max(0, 1 - dist);
+      y -= eqVals[i] * influence * (H / 2 / 12);
+    });
+    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+// COMP
+let compVals = {};
+COMP_PARAMS.forEach(p => compVals[p.id] = p.val);
+
+function buildComp() {
+  const container = document.getElementById('comp-knobs');
+  container.innerHTML = COMP_PARAMS.map(p => `
+    <div class="knob-wrap">
+      <div class="knob-label">${p.label}</div>
+      <input type="range" min="${p.min}" max="${p.max}" value="${p.val}" step="${p.step}"
+        oninput="updateComp('${p.id}', this.value)">
+      <div class="knob-val" id="cv-${p.id}">${p.val}${p.unit}</div>
+    </div>
+  `).join('');
+  updateCompFeedback();
+}
+
+function updateComp(id, v) {
+  compVals[id] = parseFloat(v);
+  const p = COMP_PARAMS.find(x => x.id === id);
+  const display = id === 'ratio' ? parseFloat(v).toFixed(1) + ':1' : parseFloat(v).toFixed(0) + (id === 'threshold' ? ' dB' : ' ms');
+  document.getElementById('cv-' + id).textContent = display;
+  updateCompFeedback();
+}
+
+function updateCompFeedback() {
+  const { threshold, ratio, attack, release } = compVals;
+  const gr = Math.max(0, Math.min(20, Math.abs(threshold) * (1 - 1/ratio) * 0.5));
+  document.getElementById('gr-bar').style.width = (gr / 20 * 100) + '%';
+  document.getElementById('gr-val').textContent = gr.toFixed(1) + ' dB GR';
+  let msg = '';
+  if (ratio <= 2) msg += `<span style="color:var(--green-light)">Light compression (${ratio}:1) — gentle glue, great for mix bus.</span>`;
+  else if (ratio <= 6) msg += `<span style="color:var(--yellow)">Medium compression (${ratio}:1) — solid control for vocals and instruments.</span>`;
+  else msg += `<span style="color:var(--red)">Heavy compression (${ratio}:1) — aggressive. Good for parallel processing or problem signals.</span>`;
+  msg += '<br><br>';
+  if (attack <= 5) msg += `Fast attack (${attack}ms) — catches even the initial transient. More control, less punch. `;
+  else if (attack <= 30) msg += `Medium attack (${attack}ms) — lets some transient through. Balanced punch and control. `;
+  else msg += `Slow attack (${attack}ms) — transient passes through uncompressed. More punch and snap. `;
+  if (release <= 50) msg += `Fast release (${release}ms) — can cause pumping/breathing if too fast.`;
+  else if (release <= 150) msg += `Medium release (${release}ms) — smooth and musical.`;
+  else msg += `Slow release (${release}ms) — may sound flat if the compressor never fully recovers.`;
+  document.getElementById('comp-feedback').innerHTML = msg;
+}
+
+// MIXER
+let mixerState = MIXER_CHANNELS.map(() => ({ vol: 75, pan: 0, muted: false, soloed: false }));
+
+function buildMixer() {
+  const container = document.getElementById('mixer-strips');
+  container.innerHTML = MIXER_CHANNELS.map((ch, i) => `
+    <div class="strip">
+      <div class="strip-name" style="color:${ch.color}">${ch.name}</div>
+      <div class="strip-fader-wrap">
+        <input type="range" class="strip-fader" min="0" max="100" value="75"
+          oninput="updateMixer(${i},'vol',this.value)">
+      </div>
+      <div class="strip-db" id="mdb-${i}">0 dB</div>
+      <div class="strip-pan-label">Pan</div>
+      <input type="range" class="strip-pan" min="-100" max="100" value="0"
+        oninput="updateMixer(${i},'pan',this.value)">
+      <div class="strip-btns">
+        <button class="strip-btn" id="mbtn-m-${i}" onclick="toggleMixerBtn(${i},'muted')">M</button>
+        <button class="strip-btn" id="mbtn-s-${i}" onclick="toggleMixerBtn(${i},'soloed')">S</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function updateMixer(i, prop, v) {
+  mixerState[i][prop] = parseFloat(v);
+  const vol = mixerState[i].vol;
+  const db = vol === 0 ? '-inf' : (20 * Math.log10(vol / 75)).toFixed(1);
+  document.getElementById('mdb-' + i).textContent = vol === 0 ? '-inf' : (db > 0 ? '+' : '') + db + ' dB';
+  const pan = mixerState[i].pan;
+  const panText = pan === 0 ? 'C' : pan < 0 ? 'L' + Math.abs(pan) : 'R' + pan;
+  let msg = `<strong style="color:var(--text)">${MIXER_CHANNELS[i].name}</strong> — `;
+  msg += `Volume: ${vol}% (${vol === 0 ? '-inf' : (db > 0 ? '+' : '') + db + ' dB'}) | Pan: ${panText}`;
+  if (pan > 60 || pan < -60) msg += `<br><span style="color:var(--yellow)">Wide pan — make sure something is balancing this on the other side.</span>`;
+  if (vol > 90) msg += `<br><span style="color:var(--red)">High fader level — check for clipping on the channel.</span>`;
+  document.getElementById('mixer-feedback').innerHTML = msg;
+}
+
+function toggleMixerBtn(i, prop) {
+  mixerState[i][prop] = !mixerState[i][prop];
+  const btn = document.getElementById(`mbtn-${prop === 'muted' ? 'm' : 's'}-${i}`);
+  btn.classList.toggle(prop, mixerState[i][prop]);
+  const ch = MIXER_CHANNELS[i].name;
+  let msg = mixerState[i][prop]
+    ? `<strong style="color:var(--text)">${ch}</strong> is now ${prop}. ${prop === 'muted' ? 'The channel is silenced — no signal passes through.' : 'Solo mode — only soloed channels play. Use to focus on one element.'}`
+    : `<strong style="color:var(--text)">${ch}</strong> — ${prop} removed.`;
+  document.getElementById('mixer-feedback').innerHTML = msg;
+}
+
+// =================== TEMPLATES ===================
+const genres = {
+  rnb: {
+    title: "R&B / Soul mixing blueprint",
+    sub: "Warm low-mids, intimate vocals, lush stereo field — every step in order from setup to final export.",
+    phases: [
+      { label:"Session setup & organization", tag:"Foundation", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Set session sample rate & bit depth", detail:"44.1kHz / 24-bit for release. TV/film sync: use 48kHz. Never drop below 24-bit during the session.", settings:[{label:"Sample rate",val:"44.1 kHz (streaming) / 48 kHz (sync)",note:""},{label:"Bit depth",val:"24-bit session",note:"Export 16-bit only for final delivery"}]},
+          { label:"Group and color-code your tracks", detail:"Build your group buses before touching a single knob. R&B has many vocal layers — bussing early saves hours.", settings:[{label:"Drums bus",val:"Kick, snare, hats, percussion",note:""},{label:"Bass bus",val:"808, bass guitar, sub layer",note:""},{label:"Keys / chords bus",val:"Rhodes, pads, piano",note:""},{label:"Vocals bus",val:"Lead, doubles, harmonies, ad libs",note:"Ad libs -3 dB relative to lead"},{label:"FX bus",val:"Reverbs, delays — return channels only",note:""}]},
+          { label:"Gain staging before any plugins", detail:"Every track should peak around -18 dBFS before plugins. Check input meters on each channel.", settings:[{label:"Individual tracks",val:"-18 dBFS peak",note:""},{label:"Group buses",val:"-12 to -10 dBFS peak",note:""},{label:"Master bus",val:"-6 dBFS pre-master",note:"Leave headroom for limiting"}]}
+        ]
+      },
+      { label:"Drums — shape the pocket", tag:"Rhythm", numBg:"#1A1830", numText:"#CECBF6", tagBg:"#1A1830", tagText:"#7F77DD",
+        steps:[
+          { label:"Kick drum EQ", detail:"R&B kick is punchy but never boomy. You want it felt more than heard.", settings:[{label:"HPF",val:"Cut below 50 Hz",note:"Remove sub rumble"},{label:"Body boost",val:"+2 to +3 dB at 80–100 Hz",note:"The chest hit"},{label:"Cut mud",val:"-3 dB at 200–300 Hz",note:"Keeps mix clean"},{label:"Attack boost",val:"+2 dB at 3–5 kHz",note:"Click and definition"}]},
+          { label:"Kick drum compression", detail:"Control the transient so the pocket locks in. R&B kick shouldn't be over-compressed — keep it breathing.", settings:[{label:"Ratio",val:"4:1",note:""},{label:"Threshold",val:"-10 to -12 dBFS",note:"3–5 dB gain reduction"},{label:"Attack",val:"10–20 ms",note:"Let transient through first"},{label:"Release",val:"50–80 ms",note:"Fast enough to recover before next hit"}]},
+          { label:"Snare EQ + compression", detail:"R&B snare is crispy up top and fat in the mid.", settings:[{label:"HPF",val:"Cut below 100 Hz",note:""},{label:"Body boost",val:"+2 dB at 200–250 Hz",note:"Fatness"},{label:"Air boost",val:"+2 dB at 8–10 kHz",note:"Snap and shimmer"},{label:"Comp ratio",val:"6:1 | Attack 5–10 ms | Release 60–100 ms",note:""}]},
+          { label:"Hi-hats panning & level", detail:"R&B hats are subtle — they breathe and support, never dominate.", settings:[{label:"Closed hat",val:"Center to slight right (10–20R)",note:""},{label:"Open hat",val:"Slight left (10–15L)",note:""},{label:"Level",val:"-8 to -10 dB below kick",note:""},{label:"HPF",val:"Cut below 800 Hz",note:"Remove rumble bleed"}]},
+          { label:"Drums stereo width — bus level", detail:"Keep low-end mono on the drums bus. Widen mids and highs only.", settings:[{label:"Below 200 Hz",val:"Mono",note:"Kick stays centered"},{label:"200 Hz – 8 kHz",val:"20–30% wider than source",note:""},{label:"Above 8 kHz",val:"Full width — hats breathe",note:""}]}
+        ]
+      },
+      { label:"Bass — lock the low end", tag:"Foundation", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Bass EQ — sub vs mid bass", detail:"Layer sub (felt) and mid-bass (heard) so it translates on every speaker.", settings:[{label:"Sub boost",val:"+2 dB at 50–60 Hz",note:"The felt weight"},{label:"Mid-bass boost",val:"+2 dB at 150–200 Hz",note:"Audible on small speakers"},{label:"Cut mud",val:"-3 dB at 250–350 Hz",note:"Stops bass fighting kick"},{label:"HPF all other tracks",val:"Cut below 80 Hz on everything except kick and bass",note:"Keeps sub clean"}]},
+          { label:"Bass compression", settings:[{label:"Ratio",val:"4:1 to 6:1",note:""},{label:"Threshold",val:"-12 to -15 dBFS",note:"4–6 dB GR"},{label:"Attack",val:"30–50 ms",note:"Let note breathe"},{label:"Release",val:"100–150 ms",note:"Smooth and musical"}]},
+          { label:"Sidechain kick to bass", detail:"Kick slightly ducks the bass — you feel it, you don't hear it.", settings:[{label:"Sidechain source",val:"Kick drum",note:""},{label:"Reduction",val:"2–4 dB",note:"Feel it, don't hear it"},{label:"Attack",val:"1–5 ms",note:""},{label:"Release",val:"80–120 ms",note:""}]}
+        ]
+      },
+      { label:"Vocals — the centerpiece", tag:"Feature", numBg:"#2A1020", numText:"#F4C0D1", tagBg:"#2A1020", tagText:"#D4537E",
+        steps:[
+          { label:"Lead vocal EQ", detail:"Warm and intimate. Presence without harshness.", settings:[{label:"HPF",val:"Cut below 80–100 Hz",note:""},{label:"Cut boxiness",val:"-2 to -4 dB at 300–500 Hz",note:""},{label:"Presence",val:"+1.5 to +2 dB at 2–3 kHz",note:""},{label:"Air",val:"+1 to +2 dB at 12–16 kHz",note:"Shelf — keep gentle"}]},
+          { label:"Vocal compression — two-pass method", detail:"First pass evens dynamics. Second pass shapes tone. This is how pros get that locked-in R&B vocal.", settings:[{label:"Pass 1 — utility",val:"4:1 | Attack 5 ms | Release 80 ms | 4–6 dB GR",note:"Tames peaks"},{label:"Pass 2 — tone",val:"2:1 | Attack 20–40 ms | Release 150–200 ms | 2–3 dB GR",note:"Warmth and glue"}]},
+          { label:"De-essing", settings:[{label:"Target",val:"5–8 kHz",note:"Female: often 7–9 kHz"},{label:"Reduction",val:"3–5 dB on hits",note:"Smooth, not lisp"}]},
+          { label:"Vocal reverb", detail:"Intimate — plate or short room, not a cathedral.", settings:[{label:"Type",val:"Plate or short room",note:""},{label:"Pre-delay",val:"20–40 ms",note:""},{label:"Decay",val:"0.8 – 1.5 seconds",note:""},{label:"Return level",val:"-12 to -15 dB vs dry",note:""},{label:"HPF on return",val:"Cut below 300 Hz",note:""}]},
+          { label:"Vocal panning — doubles & harmonies", settings:[{label:"Lead vocal",val:"Center (0)",note:""},{label:"Doubles",val:"L20 / R20",note:"Paired, not one side"},{label:"Low harmonies",val:"L35 / R35",note:""},{label:"High harmonies",val:"L50 / R50 or wider",note:""},{label:"Ad libs",val:"L60 / R60 or hard pan",note:"Accent, not anchor"}]}
+        ]
+      },
+      { label:"Mix bus — glue", tag:"Polish", numBg:"#231500", numText:"#FAC775", tagBg:"#231500", tagText:"#BA7517",
+        steps:[
+          { label:"Mix bus compression", settings:[{label:"Ratio",val:"2:1",note:""},{label:"Threshold",val:"1–2 dB GR only",note:""},{label:"Attack",val:"30–50 ms",note:"Slow — protect transients"},{label:"Release",val:"Auto or 250 ms",note:""}]},
+          { label:"Check mix at low volume", detail:"Turn monitors way down. Kick, bass, and lead vocal should still come through.", settings:[{label:"Reference level",val:"Very low — neighbor's TV level",note:""},{label:"What survives",val:"Kick, bass, lead vocal, snare — in that order",note:""}]}
+        ]
+      },
+      { label:"Mastering — final output", tag:"Delivery", numBg:"#0D2014", numText:"#C0DD97", tagBg:"#0D2014", tagText:"#3B6D11",
+        steps:[
+          { label:"Mastering EQ", settings:[{label:"HPF",val:"Cut below 30 Hz",note:""},{label:"Low-mid",val:"-1 dB at 300–400 Hz if muddy",note:""},{label:"Air",val:"+0.5 to +1 dB at 16 kHz shelf",note:""}]},
+          { label:"Limiting", settings:[{label:"True Peak ceiling",val:"-1.0 dBTP",note:"Required for all platforms"},{label:"Target LUFS",val:"-14 LUFS integrated",note:"Spotify / Apple standard"},{label:"GR",val:"1–2 dB max",note:""}]},
+          { label:"Export", settings:[{label:"Mix bounce",val:"32-bit float WAV",note:""},{label:"Master streaming",val:"24-bit / 44.1 kHz WAV",note:""},{label:"Master sync",val:"24-bit / 48 kHz WAV, -1 dBTP",note:""}]}
+        ]
+      }
+    ]
+  },
+  hiphop: {
+    title: "Hip hop mixing blueprint",
+    sub: "Punchy 808s, crispy highs, upfront rap vocals — controlled, hitting hard, translating on every speaker.",
+    phases: [
+      { label:"Session setup & organization", tag:"Foundation", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Set session sample rate & bit depth", settings:[{label:"Sample rate",val:"44.1 kHz",note:""},{label:"Bit depth",val:"24-bit minimum",note:""}]},
+          { label:"Group and bus your tracks", settings:[{label:"808 / bass bus",val:"808, bass, sub — together",note:""},{label:"Drums bus",val:"Kick, snare, clap, hats, perc",note:""},{label:"Melody bus",val:"Chords, leads, counter-melodies",note:""},{label:"Vocal bus",val:"Main rap, doubles, adlibs, hooks",note:""},{label:"FX / atmos bus",val:"Reverbs, delays, samples",note:""}]},
+          { label:"Gain stage before plugins", settings:[{label:"Individual tracks",val:"-18 dBFS peak",note:""},{label:"808",val:"Check sub level in solo — watch for hidden clipping",note:""},{label:"Master",val:"-6 dBFS pre-limiter",note:""}]}
+        ]
+      },
+      { label:"808 / bass — the backbone", tag:"Low end", numBg:"#1A1830", numText:"#CECBF6", tagBg:"#1A1830", tagText:"#7F77DD",
+        steps:[
+          { label:"808 EQ", detail:"Layer sub (felt) and mid-bass (heard) so it hits on Airpods and car subs both.", settings:[{label:"Sub boost",val:"+2 dB at 50–70 Hz",note:"Felt weight"},{label:"Mid-bass",val:"+2 dB at 100–150 Hz",note:"Heard on small speakers"},{label:"Cut mud",val:"-3 to -4 dB at 250–400 Hz",note:""},{label:"HPF everything else",val:"Cut below 80 Hz on all non-808 tracks",note:"808 owns the sub"}]},
+          { label:"808 pitch and tuning", detail:"An out-of-tune 808 wrecks an otherwise perfect mix.", settings:[{label:"Root note",val:"Match the key of the beat",note:""},{label:"Slide / glide time",val:"Fast for choppy, slow for smooth",note:""}]},
+          { label:"808 compression", settings:[{label:"Ratio",val:"3:1 to 4:1",note:""},{label:"Threshold",val:"-10 to -12 dBFS",note:"2–4 dB GR"},{label:"Attack",val:"30–50 ms",note:"Let the hit breathe"},{label:"Release",val:"Auto or 200 ms",note:""}]},
+          { label:"Sidechain kick to 808", settings:[{label:"Source",val:"Kick drum",note:""},{label:"Reduction",val:"4–6 dB",note:"More than R&B — kick must slap through"},{label:"Attack",val:"1–3 ms",note:""},{label:"Release",val:"60–100 ms",note:""}]}
+        ]
+      },
+      { label:"Drums — the knock", tag:"Rhythm", numBg:"#231500", numText:"#FAC775", tagBg:"#231500", tagText:"#BA7517",
+        steps:[
+          { label:"Kick EQ", settings:[{label:"HPF",val:"Cut below 60 Hz",note:"808 owns that space"},{label:"Body",val:"+3 dB at 80–100 Hz",note:""},{label:"Cut mud",val:"-3 dB at 200–300 Hz",note:""},{label:"Knock",val:"+3 dB at 2–4 kHz",note:"The transient that drives the beat"}]},
+          { label:"Snare / clap EQ + compression", settings:[{label:"HPF",val:"Cut below 150 Hz",note:""},{label:"Body",val:"+2 dB at 200 Hz",note:""},{label:"Crack",val:"+3 dB at 5–8 kHz",note:"The snap"},{label:"Comp",val:"8:1 | Attack 1–5 ms | Release 50–80 ms",note:"More aggressive than R&B"}]},
+          { label:"Hi-hats — panning", settings:[{label:"Closed hat",val:"Center or slight right (15R)",note:""},{label:"Open hat",val:"L20 to L35",note:""},{label:"Rolling hats (trap)",val:"Hard pan pairs: L70 / R70",note:""},{label:"HPF",val:"Cut below 1 kHz",note:""}]},
+          { label:"Parallel drum compression (NY style)", detail:"Send drums to a smashed parallel channel. Blend 30–40% under the dry signal for knock and density.", settings:[{label:"Parallel ratio",val:"10:1 or higher — smash it",note:""},{label:"Attack",val:"1–5 ms",note:""},{label:"Release",val:"50 ms",note:""},{label:"Blend",val:"30–40% parallel vs 100% dry",note:""}]}
+        ]
+      },
+      { label:"Rap vocals — upfront and clear", tag:"Feature", numBg:"#2A1020", numText:"#F4C0D1", tagBg:"#2A1020", tagText:"#D4537E",
+        steps:[
+          { label:"Lead vocal EQ", settings:[{label:"HPF",val:"Cut below 100 Hz",note:""},{label:"Cut boxiness",val:"-3 dB at 300–500 Hz",note:""},{label:"Presence",val:"+2 to +3 dB at 2–4 kHz",note:"Intelligibility lives here"},{label:"Brilliance",val:"+1 to +2 dB at 10–12 kHz",note:""}]},
+          { label:"Vocal compression", settings:[{label:"Ratio",val:"6:1 to 8:1",note:"More aggressive than R&B"},{label:"Threshold",val:"6–8 dB GR on peaks",note:""},{label:"Attack",val:"10–15 ms",note:""},{label:"Release",val:"60–100 ms",note:""}]},
+          { label:"Vocal delay — the secret weapon", detail:"Rhythmic delay synced to tempo gives rap that locked-in feel. Use instead of heavy reverb on the lead.", settings:[{label:"Type",val:"Ping-pong or tape delay",note:""},{label:"Sync",val:"1/8 note or dotted 1/16",note:""},{label:"Feedback",val:"1–2 repeats only",note:""},{label:"HPF on return",val:"Cut below 500 Hz",note:""},{label:"Level",val:"-15 to -18 dB vs dry",note:""}]},
+          { label:"Vocal panning", settings:[{label:"Main vocal",val:"Center (0)",note:""},{label:"Doubles",val:"L15 / R15",note:"Tight, not wide"},{label:"Ad libs",val:"L60 / R60 or hard pan",note:""},{label:"Hook",val:"L30 / R30",note:"Hook should feel bigger than verse"}]}
+        ]
+      },
+      { label:"Mix bus & glue", tag:"Polish", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Mix bus compression", settings:[{label:"Ratio",val:"2:1 to 4:1",note:""},{label:"Threshold",val:"2–3 dB GR",note:""},{label:"Attack",val:"30 ms",note:""},{label:"Release",val:"Auto",note:""}]},
+          { label:"Mono check", settings:[{label:"Below 80 Hz",val:"Must be mono or near-mono",note:""},{label:"808 in mono",val:"Should still be felt and heard",note:""}]}
+        ]
+      },
+      { label:"Mastering — final output", tag:"Delivery", numBg:"#0D2014", numText:"#C0DD97", tagBg:"#0D2014", tagText:"#3B6D11",
+        steps:[
+          { label:"Mastering EQ", settings:[{label:"HPF",val:"Cut below 30 Hz",note:""},{label:"Sub check",val:"808 balanced — not too much, not too little",note:""},{label:"Air",val:"+0.5 to +1 dB at 12–16 kHz",note:""}]},
+          { label:"Limiting", settings:[{label:"True Peak",val:"-1.0 dBTP",note:""},{label:"LUFS",val:"-14 LUFS integrated",note:""},{label:"GR",val:"2–4 dB max",note:"More = losing punch"}]},
+          { label:"Export", settings:[{label:"Mix",val:"32-bit float WAV",note:""},{label:"Streaming master",val:"24-bit / 44.1 kHz WAV",note:""},{label:"Sync master",val:"24-bit / 48 kHz WAV",note:""}]}
+        ]
+      }
+    ]
+  },
+  cinematic: {
+    title: "Cinematic / sync mixing blueprint",
+    sub: "Wide dynamic range, full stereo field, emotional space — TV, film, and trailer ready from step one.",
+    phases: [
+      { label:"Session setup & organization", tag:"Foundation", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Set session sample rate & bit depth", detail:"Sync / film work defaults to 48kHz — non-negotiable.", settings:[{label:"Sample rate",val:"48 kHz",note:"Non-negotiable for sync"},{label:"Bit depth",val:"24-bit minimum",note:"32-bit float for the session"}]},
+          { label:"Group and bus by instrument family", settings:[{label:"Percussion bus",val:"Taiko, orchestral perc, hits, booms",note:""},{label:"Strings bus",val:"All string layers",note:""},{label:"Brass / woodwinds bus",val:"Horns, brass, woodwinds",note:""},{label:"Pads / atmosphere bus",val:"Drones, synth pads, textures",note:""},{label:"Choir / vocal bus",val:"Choral elements, solo vocal",note:""},{label:"SFX bus",val:"Sound design, impacts, whooshes",note:""}]},
+          { label:"Gain staging — extra headroom needed", detail:"Dynamic range can span 20+ dB between quiet passages and impact hits.", settings:[{label:"Quiet passages",val:"-24 to -18 dBFS on master",note:""},{label:"Peak impacts",val:"-6 dBFS on master",note:""},{label:"Headroom rule",val:"Keep at least 6 dB headroom at all times",note:""}]}
+        ]
+      },
+      { label:"Percussion — weight and impact", tag:"Rhythm", numBg:"#1A1830", numText:"#CECBF6", tagBg:"#1A1830", tagText:"#7F77DD",
+        steps:[
+          { label:"Orchestral kick / taiko EQ", settings:[{label:"Sub boost",val:"+3 dB at 50–60 Hz",note:"Room-shaking weight"},{label:"Body",val:"+2 dB at 100–150 Hz",note:""},{label:"Cut mud",val:"-2 dB at 300–500 Hz",note:""},{label:"Attack",val:"+2 dB at 2–3 kHz",note:"The mallet hit"}]},
+          { label:"Percussion compression", detail:"Main hits should feel explosive, not squashed. Light or no compression.", settings:[{label:"Main hits",val:"No compression or 2:1 | Attack 30 ms",note:"Keep dynamics — they create impact"},{label:"Rolls / hybrid perc",val:"4:1 | Attack 10 ms",note:""},{label:"Alternative",val:"Transient shaper instead of compressor",note:""}]},
+          { label:"Percussion stereo placement", settings:[{label:"Center kick / taiko",val:"Center — always",note:"Low-end must be mono"},{label:"Auxiliary perc",val:"L40 / R40 to L70 / R70",note:""},{label:"Cymbal swells",val:"Full width — hard L/R",note:""}]}
+        ]
+      },
+      { label:"Strings — the emotional core", tag:"Texture", numBg:"#2A1020", numText:"#F4C0D1", tagBg:"#2A1020", tagText:"#D4537E",
+        steps:[
+          { label:"Strings EQ", settings:[{label:"HPF high strings",val:"Cut below 200 Hz",note:"Violins and violas"},{label:"HPF low strings",val:"Cut below 80 Hz",note:"Cellos and basses"},{label:"Cut boxiness",val:"-2 to -3 dB at 300–500 Hz",note:"Removes canned sample sound"},{label:"Presence",val:"+1 dB at 3–4 kHz",note:"Bow attack and realism"},{label:"Air",val:"+1 dB at 10–12 kHz",note:""}]},
+          { label:"Strings reverb — the hall", settings:[{label:"Type",val:"Hall or large room",note:""},{label:"Pre-delay",val:"10–20 ms",note:""},{label:"Decay",val:"2.0 – 3.5 seconds",note:"Bigger for epic, shorter for intimate"},{label:"Return level",val:"-8 to -10 dB",note:""}]},
+          { label:"Strings panning — orchestra seating", detail:"Music supervisors notice when this is wrong.", settings:[{label:"1st Violins",val:"L40 – L60",note:""},{label:"2nd Violins",val:"L20 – L40",note:""},{label:"Violas",val:"Center to R20",note:""},{label:"Cellos",val:"R20 – R40",note:""},{label:"Basses",val:"R40 – R60 or center",note:""}]}
+        ]
+      },
+      { label:"Brass & woodwinds", tag:"Power", numBg:"#231500", numText:"#FAC775", tagBg:"#231500", tagText:"#BA7517",
+        steps:[
+          { label:"Brass EQ", settings:[{label:"HPF",val:"80 Hz (French horn) / 100 Hz (trumpets)",note:""},{label:"Cut honk",val:"-2 dB at 400–600 Hz",note:""},{label:"Presence",val:"+2 dB at 2–3 kHz",note:""},{label:"Air",val:"+1 dB at 8–10 kHz",note:""}]},
+          { label:"Brass panning", settings:[{label:"French horns",val:"L30 – L50",note:""},{label:"Trumpets",val:"L10 – L20",note:""},{label:"Trombones",val:"R10 – R30",note:""},{label:"Tuba",val:"Center",note:"Low freq — keep mono"}]}
+        ]
+      },
+      { label:"Pads, drones & atmosphere", tag:"Space", numBg:"#0A1828", numText:"#B5D4F4", tagBg:"#0A1828", tagText:"#378ADD",
+        steps:[
+          { label:"Atmosphere EQ", settings:[{label:"HPF",val:"Cut below 100 Hz",note:""},{label:"Cut mids",val:"-2 to -3 dB at 800 Hz – 2 kHz",note:"Should not call attention to itself"},{label:"Air shelf",val:"+1 dB at 12 kHz",note:""}]},
+          { label:"Atmosphere width", settings:[{label:"Pads / drones",val:"Full stereo — L100 / R100",note:""},{label:"Sub below 150 Hz",val:"Keep mono",note:""},{label:"Stereo imager",val:"Widen further above 2 kHz",note:""}]},
+          { label:"Compression", settings:[{label:"Rule",val:"Little or none — let them breathe",note:""},{label:"Prefer",val:"Volume automation to shape swells",note:"More musical than compression"}]}
+        ]
+      },
+      { label:"Mix bus & dynamics", tag:"Polish", numBg:"#0D2920", numText:"#9FE1CB", tagBg:"#0D2920", tagText:"#1D9E75",
+        steps:[
+          { label:"Mix bus compression — minimal", settings:[{label:"Ratio",val:"1.5:1 to 2:1 max",note:""},{label:"Threshold",val:"1–2 dB GR only",note:""},{label:"Attack",val:"50–80 ms",note:"Slow — protect transients"},{label:"Release",val:"Auto or 300 ms",note:""}]},
+          { label:"Dynamic range check", settings:[{label:"Target",val:"DR12 or higher",note:"Use a DR meter"},{label:"Quiet sections",val:"Should genuinely be quiet",note:""},{label:"Peak hits",val:"Should genuinely slam",note:"They create emotional impact"}]}
+        ]
+      },
+      { label:"Mastering — sync delivery", tag:"Delivery", numBg:"#0D2014", numText:"#C0DD97", tagBg:"#0D2014", tagText:"#3B6D11",
+        steps:[
+          { label:"Mastering EQ", settings:[{label:"HPF",val:"Cut below 20–30 Hz",note:""},{label:"Air",val:"+0.5 dB at 14–16 kHz",note:"Subtle only"}]},
+          { label:"Limiting for sync", settings:[{label:"True Peak",val:"-1.0 dBTP",note:""},{label:"LUFS streaming",val:"-14 LUFS integrated",note:""},{label:"LUFS broadcast",val:"-23 LUFS integrated",note:"Confirm with the brief"},{label:"GR",val:"1–2 dB max",note:"Protect dynamics"}]},
+          { label:"Deliver alternate versions", detail:"Prepare these before pitching — don't wait to be asked.", settings:[{label:"Full mix",val:"Full length WAV",note:""},{label:"Stems",val:"Drums, bass, melody, atmosphere",note:""},{label:"Instrumental",val:"No vocal version",note:""},{label:"Edits",val:"30-sec and 60-sec cuts",note:""},{label:"Format",val:"24-bit / 48 kHz WAV, -1 dBTP",note:""}]}
+        ]
+      }
+    ]
+  }
+};
+
+let currentGenre = 'rnb';
+let checks = {};
+
+function tkey(g, pi, si) { return `${g}_${pi}_${si}`; }
+
+function updateProgress(genre) {
+  const g = genres[genre];
+  let total = 0, done = 0;
+  g.phases.forEach((ph, pi) => ph.steps.forEach((_, si) => { total++; if (checks[tkey(genre,pi,si)]) done++; }));
+  const pct = total ? Math.round(done/total*100) : 0;
+  const bar = document.getElementById('prog-bar');
+  const lbl = document.getElementById('prog-label');
+  if (bar) bar.style.width = pct + '%';
+  if (lbl) lbl.textContent = `${done} of ${total} steps complete`;
+}
+
+function toggleCheck(genre, pi, si) {
+  const k = tkey(genre, pi, si);
+  checks[k] = !checks[k];
+  document.getElementById('chk-'+k)?.classList.toggle('done', checks[k]);
+  document.getElementById('lbl-'+k)?.classList.toggle('done', checks[k]);
+  updateProgress(genre);
+}
+
+function togglePhase(id) {
+  const body = document.getElementById('pbody-'+id);
+  const arrow = document.getElementById('parrow-'+id);
+  if (!body) return;
+  const open = body.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open', open);
+}
+
+function switchGenre(genre, btn) {
+  currentGenre = genre;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderTemplate(genre);
+}
+
+function resetTemplate(genre) {
+  genres[genre].phases.forEach((ph,pi) => ph.steps.forEach((_,si) => { checks[tkey(genre,pi,si)] = false; }));
+  renderTemplate(genre);
+}
+
+function renderTemplate(genre) {
+  const g = genres[genre];
+  let html = `
+    <div class="template-header">
+      <div class="template-title">${g.title}</div>
+      <div class="template-sub">${g.sub}</div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label" id="prog-label"></div>
+      <button class="reset-btn" onclick="resetTemplate('${genre}')">Reset checklist</button>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+  `;
+  g.phases.forEach((ph, pi) => {
+    const pid = `${genre}_${pi}`;
+    html += `
+      <div class="phase-block">
+        <div class="phase-header" onclick="togglePhase('${pid}')">
+          <div class="phase-num" style="background:${ph.numBg};color:${ph.numText}">${pi+1}</div>
+          <div class="phase-title">${ph.label}</div>
+          <div class="phase-tag" style="background:${ph.tagBg};color:${ph.tagText}">${ph.tag}</div>
+          <div class="phase-arrow" id="parrow-${pid}">&#9654;</div>
+        </div>
+        <div class="phase-body" id="pbody-${pid}">
+    `;
+    ph.steps.forEach((step, si) => {
+      const k = tkey(genre, pi, si);
+      html += `
+        <div class="step-row">
+          <div class="step-check ${checks[k]?'done':''}" id="chk-${k}" onclick="toggleCheck('${genre}',${pi},${si})"></div>
+          <div class="step-content">
+            <div class="step-label ${checks[k]?'done':''}" id="lbl-${k}">${step.label}</div>
+            ${step.detail ? `<div class="step-detail">${step.detail}</div>` : ''}
+            ${step.settings?.length ? `<div class="setting-grid">${step.settings.map(s=>`
+              <div class="setting-card">
+                <div class="setting-label">${s.label}</div>
+                <div class="setting-val">${s.val}</div>
+                ${s.note?`<div class="setting-note">${s.note}</div>`:''}
+              </div>`).join('')}</div>` : ''}
+          </div>
+        </div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('template-area').innerHTML = html;
+  updateProgress(genre);
+  togglePhase(`${genre}_0`);
+}
+
+renderTemplate('rnb');
+</script>
+</body>
+</html>
