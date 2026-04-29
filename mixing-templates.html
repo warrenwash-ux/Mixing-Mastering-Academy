@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mixing & Mastering Templates | LMW Studio</title>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-dim: #7A6230;
+    --bg: #0A0A0A;
+    --bg2: #111111;
+    --bg3: #181818;
+    --bg4: #222222;
+    --border: #2A2A2A;
+    --border2: #333333;
+    --text: #F0F0F0;
+    --text2: #A0A0A0;
+    --text3: #666666;
+    --green: #1D9E75;
+    --green-bg: #0D2920;
+    --green-light: #9FE1CB;
+    --purple: #7F77DD;
+    --purple-bg: #1A1830;
+    --purple-light: #CECBF6;
+    --pink: #D4537E;
+    --pink-bg: #2A1020;
+    --pink-light: #F4C0D1;
+    --amber: #BA7517;
+    --amber-bg: #231500;
+    --amber-light: #FAC775;
+    --blue: #378ADD;
+    --blue-bg: #0A1828;
+    --blue-light: #B5D4F4;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .site-logo {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+  .site-nav {
+    display: flex;
+    gap: 6px;
+  }
+  .nav-link {
+    font-size: 12px;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all .15s;
+  }
+  .nav-link:hover { color: var(--gold); border-color: var(--border2); }
+  .nav-link.active { color: var(--gold); border-color: var(--gold-dim); background: rgba(201,168,76,0.06); }
+
+  /* HERO */
+  .hero {
+    padding: 3rem 2rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-transform: uppercase;
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--gold-dim);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(24px, 4vw, 38px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* MAIN LAYOUT */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 2rem 4rem;
+  }
+
+  /* GENRE TABS */
+  .genre-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    border: 1px solid var(--border2);
+    border-radius: 8px;
+    background: var(--bg2);
+    color: var(--text2);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all .2s;
+    letter-spacing: .3px;
+  }
+  .tab-btn:hover { border-color: var(--gold-dim); color: var(--gold-light); }
+  .tab-btn.active {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    color: var(--gold);
+  }
+
+  /* TEMPLATE HEADER */
+  .template-header {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .template-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .template-sub {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  /* PROGRESS */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .progress-label { font-size: 12px; color: var(--text2); }
+  .reset-btn {
+    font-size: 12px;
+    color: var(--text3);
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color .15s;
+  }
+  .reset-btn:hover { color: var(--text2); }
+  .progress-bar-wrap {
+    height: 3px;
+    background: var(--bg4);
+    border-radius: 2px;
+    margin-bottom: 1.75rem;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    transition: width .4s ease;
+  }
+
+  /* PHASE BLOCKS */
+  .phase-block {
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+  .phase-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+  }
+  .phase-header:hover { background: var(--bg3); }
+  .phase-num {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .phase-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .phase-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+  }
+  .phase-arrow {
+    font-size: 10px;
+    color: var(--text3);
+    transition: transform .2s;
+  }
+  .phase-arrow.open { transform: rotate(90deg); }
+
+  .phase-body {
+    display: none;
+    border-top: 1px solid var(--border);
+  }
+  .phase-body.open { display: block; }
+
+  /* STEPS */
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .step-row:last-child { border-bottom: none; }
+
+  .step-check {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--border2);
+    border-radius: 5px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .15s;
+  }
+  .step-check:hover { border-color: var(--gold-dim); }
+  .step-check.done {
+    background: rgba(201,168,76,0.15);
+    border-color: var(--gold);
+  }
+  .step-check.done::after {
+    content: '';
+    width: 11px;
+    height: 7px;
+    border-left: 2px solid var(--gold);
+    border-bottom: 2px solid var(--gold);
+    transform: rotate(-45deg);
+    display: block;
+    margin-top: -2px;
+  }
+
+  .step-content { flex: 1; min-width: 0; }
+  .step-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 5px;
+    transition: all .15s;
+  }
+  .step-label.done {
+    text-decoration: line-through;
+    color: var(--text3);
+  }
+  .step-detail {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  /* SETTING CARDS */
+  .setting-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .setting-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .setting-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 5px;
+  }
+  .setting-val {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .setting-note {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  /* FOOTER */
+  .page-footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 12px;
+    color: var(--text3);
+    border-top: 1px solid var(--border);
+  }
+  .page-footer span { color: var(--gold-dim); }
+
+  @media (max-width: 600px) {
+    .site-header { padding: 0 1rem; }
+    .hero, .main { padding-left: 1rem; padding-right: 1rem; }
+    .hero h1 { font-size: 22px; }
+    .setting-grid { grid-template-columns: 1fr 1fr; }
+    .site-nav { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-logo">LMW Studio</div>
+  <nav class="site-nav">
+    <a href="#" class="nav-link">Lessons</a>
+    <a href="#" class="nav-link">Simulator</a>
+    <a href="#" class="nav-link active">Templates</a>
+    <a href="#" class="nav-link">Done For You</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-badge">&#9834; Genre Blueprints</div>
+  <h1>Mixing & Mastering <span>Templates</span></h1>
+  <p>Genre-specific checklists with exact settings — EQ, compression, panning, stereo width, and delivery specs. Work through every step in order so nothing gets missed.</p>
+</div>
+
+<div class="main">
+  <div class="genre-tabs">
+    <button class="tab-btn active" onclick="switchGenre('rnb', this)">R&amp;B / Soul</button>
+    <button class="tab-btn" onclick="switchGenre('hiphop', this)">Hip Hop</button>
+    <button class="tab-btn" onclick="switchGenre('cinematic', this)">Cinematic / Sync</button>
+  </div>
+
+  <div id="template-area"></div>
+</div>
+
+<footer class="page-footer">
+  <span>Lamb Music Works</span> &mdash; No Cuss, No Fuss &mdash; lambmusicworks.com
+</footer>
+
+<script>
+const genres = {
+  rnb: {
+    title: "R&B / Soul mixing blueprint",
+    sub: "Warm low-mids, intimate vocals, lush stereo field — every step in order from setup to final export.",
+    phases: [
+      {
+        label: "Session setup & organization",
+        tag: "Foundation",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Set session sample rate & bit depth",
+            detail: "44.1kHz / 24-bit for release. If delivering for TV or film sync, use 48kHz. Never drop below 24-bit during the session.",
+            settings: [
+              { label: "Sample rate", val: "44.1 kHz (streaming) / 48 kHz (sync)", note: "" },
+              { label: "Bit depth", val: "24-bit session", note: "Export at 16-bit only for final delivery" }
+            ]
+          },
+          {
+            label: "Group and color-code your tracks",
+            detail: "Before touching a single knob, build your group buses. R&B has a lot of vocal layers — getting them bussed early saves hours.",
+            settings: [
+              { label: "Drums bus", val: "Kick, snare, hats, percussion", note: "" },
+              { label: "Bass bus", val: "808, bass guitar, sub layer", note: "" },
+              { label: "Keys / chords bus", val: "Rhodes, pads, piano", note: "" },
+              { label: "Vocals bus", val: "Lead, doubles, harmonies, ad libs", note: "Keep ad libs -3 dB relative to lead" },
+              { label: "FX bus", val: "Reverbs, delays, atmospheres — return channels only", note: "" }
+            ]
+          },
+          {
+            label: "Set your gain staging before any plugins",
+            detail: "Every track should peak around -18 dBFS before plugins so your signal chain has headroom. Check the input meter on each channel.",
+            settings: [
+              { label: "Individual tracks", val: "-18 dBFS peak", note: "" },
+              { label: "Group buses", val: "-12 to -10 dBFS peak", note: "" },
+              { label: "Master bus", val: "-6 dBFS peak pre-master", note: "Leave headroom for limiting" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Drums — shape the pocket",
+        tag: "Rhythm",
+        numBg: "#1A1830", numText: "#CECBF6",
+        tagBg: "#1A1830", tagText: "#7F77DD",
+        steps: [
+          {
+            label: "Kick drum EQ",
+            detail: "R&B kick is punchy but sits in the low-mids, never boomy. You want it felt more than heard.",
+            settings: [
+              { label: "High pass (HPF)", val: "Cut below 50 Hz", note: "Remove sub rumble" },
+              { label: "Boost body", val: "+2 to +3 dB at 80–100 Hz", note: "The chest hit" },
+              { label: "Cut mud", val: "-3 dB around 200–300 Hz", note: "Keeps the mix clean" },
+              { label: "Boost attack", val: "+2 dB at 3–5 kHz", note: "Click and definition" }
+            ]
+          },
+          {
+            label: "Kick drum compression",
+            detail: "Control the transient so the pocket locks in. R&B kick shouldn't be over-compressed — keep it breathing.",
+            settings: [
+              { label: "Ratio", val: "4:1", note: "" },
+              { label: "Threshold", val: "-10 to -12 dBFS", note: "3–5 dB of gain reduction" },
+              { label: "Attack", val: "10–20 ms", note: "Let the transient through first" },
+              { label: "Release", val: "50–80 ms", note: "Fast enough to recover before next hit" }
+            ]
+          },
+          {
+            label: "Snare EQ + compression",
+            detail: "R&B snare is crispy up top and fat in the mid. Classic rimshot or snare clap sound.",
+            settings: [
+              { label: "HPF", val: "Cut below 100 Hz", note: "" },
+              { label: "Snare body boost", val: "+2 dB at 200–250 Hz", note: "Fatness" },
+              { label: "Air boost", val: "+2 dB at 8–10 kHz", note: "Snap and shimmer" },
+              { label: "Compression ratio", val: "6:1", note: "" },
+              { label: "Attack", val: "5–10 ms", note: "" },
+              { label: "Release", val: "60–100 ms", note: "" }
+            ]
+          },
+          {
+            label: "Hi-hats — panning & level",
+            detail: "R&B hats are subtle — they sit in the stereo field and breathe, not dominate.",
+            settings: [
+              { label: "Closed hat pan", val: "Center to slight right (10–20R)", note: "" },
+              { label: "Open hat pan", val: "Slight left (10–15L)", note: "" },
+              { label: "Level vs kick", val: "-8 to -10 dB below kick", note: "Hats support, not lead" },
+              { label: "HPF on hats", val: "Cut below 800 Hz", note: "Remove low rumble bleed" }
+            ]
+          },
+          {
+            label: "Drums stereo width (bus level)",
+            detail: "On your Drums bus, keep the low-end mono. Use a stereo imager to widen mids and highs only.",
+            settings: [
+              { label: "Below 200 Hz", val: "Mono (M/S or low-mono plugin)", note: "Kick and low snare stay centered" },
+              { label: "200 Hz – 8 kHz", val: "Slight width — 20–30% wider than source", note: "" },
+              { label: "Above 8 kHz", val: "Full width — hats and cymbals breathe", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Bass — lock the low end",
+        tag: "Foundation",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Bass EQ — define sub vs mid bass",
+            detail: "R&B bass (808 or bass guitar) needs to cut through on earbuds and subwoofers both. Layer the sub (felt) and the mid-bass (heard).",
+            settings: [
+              { label: "Sub layer boost", val: "+2 dB at 50–60 Hz", note: "The felt weight" },
+              { label: "Mid-bass boost", val: "+2 dB at 150–200 Hz", note: "Audible on small speakers" },
+              { label: "Cut mud", val: "-3 dB at 250–350 Hz", note: "Stops bass fighting the kick" },
+              { label: "HPF all non-bass tracks", val: "Cut below 80 Hz on everything except kick and bass", note: "Keeps the sub clean" }
+            ]
+          },
+          {
+            label: "Bass compression",
+            detail: "Bass needs consistent level so the groove locks with the kick. Moderate compression, slower attack to let the initial note speak.",
+            settings: [
+              { label: "Ratio", val: "4:1 to 6:1", note: "" },
+              { label: "Threshold", val: "-12 to -15 dBFS", note: "4–6 dB gain reduction" },
+              { label: "Attack", val: "30–50 ms", note: "Let note transient breathe" },
+              { label: "Release", val: "100–150 ms", note: "Smooth and musical" }
+            ]
+          },
+          {
+            label: "Sidechain kick to bass",
+            detail: "The kick slightly ducks the bass so they don't clash in the sub. Subtle is the goal — you should feel it, not hear it.",
+            settings: [
+              { label: "Sidechain source", val: "Kick drum", note: "" },
+              { label: "Reduction amount", val: "2–4 dB", note: "Should feel, not hear, the duck" },
+              { label: "Attack", val: "1–5 ms", note: "Fast — responds to the hit" },
+              { label: "Release", val: "80–120 ms", note: "Recovers before next beat" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Vocals — the centerpiece",
+        tag: "Feature",
+        numBg: "#2A1020", numText: "#F4C0D1",
+        tagBg: "#2A1020", tagText: "#D4537E",
+        steps: [
+          {
+            label: "Lead vocal EQ",
+            detail: "R&B vocals are warm and intimate. Don't over-brighten. The goal is presence without harshness.",
+            settings: [
+              { label: "HPF", val: "Cut below 80–100 Hz", note: "Remove plosive rumble and handling noise" },
+              { label: "Cut boxiness", val: "-2 to -4 dB at 300–500 Hz", note: "Removes the talking-in-a-box sound" },
+              { label: "Presence boost", val: "+1.5 to +2 dB at 2–3 kHz", note: "Helps the vocal cut through" },
+              { label: "Air boost", val: "+1 to +2 dB at 12–16 kHz", note: "Silky top end — shelf, keep it gentle" }
+            ]
+          },
+          {
+            label: "Lead vocal compression — two-pass method",
+            detail: "First pass evens out dynamics (utility), second pass shapes tone and vibe. This is how pros get that locked-in R&B vocal.",
+            settings: [
+              { label: "Pass 1 — utility", val: "Ratio 4:1 | Attack 5 ms | Release 80 ms | 4–6 dB GR", note: "Tames peaks before the second compressor" },
+              { label: "Pass 2 — tone", val: "Ratio 2:1 | Attack 20–40 ms | Release 150–200 ms | 2–3 dB GR", note: "Adds warmth and glue — VCA or optical character" }
+            ]
+          },
+          {
+            label: "De-essing",
+            detail: "R&B vocals sit in a warm, intimate space — harsh S and T sounds break the mood. De-ess after your compressors.",
+            settings: [
+              { label: "Target frequency", val: "5–8 kHz", note: "Female vocals often higher (7–9 kHz)" },
+              { label: "Reduction", val: "3–5 dB on sibilant hits", note: "Should smooth, not lisp" }
+            ]
+          },
+          {
+            label: "Vocal reverb & space",
+            detail: "R&B reverb is intimate — room and plate, not big halls. The verb should feel like the singer is in the room with you.",
+            settings: [
+              { label: "Reverb type", val: "Plate or short room", note: "" },
+              { label: "Pre-delay", val: "20–40 ms", note: "Keeps verb from swallowing the vocal" },
+              { label: "Decay / RT60", val: "0.8 – 1.5 seconds", note: "Intimate — not a cathedral" },
+              { label: "Verb level on return", val: "-12 to -15 dB vs dry vocal", note: "Should blend, not dominate" },
+              { label: "HPF on reverb return", val: "Cut below 300 Hz", note: "Stops reverb muddying the low-mids" }
+            ]
+          },
+          {
+            label: "Vocal panning — doubles & harmonies",
+            detail: "Lead stays center. Doubles and harmonies fill the stereo field. This is what gives R&B vocals that wide, lush sound.",
+            settings: [
+              { label: "Lead vocal", val: "Center (0)", note: "" },
+              { label: "Double track", val: "L20 / R20 — paired, not one side", note: "" },
+              { label: "Low harmonies", val: "L35 / R35", note: "" },
+              { label: "High harmonies", val: "L50 / R50 or wider", note: "" },
+              { label: "Ad libs", val: "L60 / R60 or hard pan", note: "They accent, not anchor" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Keys, pads & instruments",
+        tag: "Texture",
+        numBg: "#1A1830", numText: "#CECBF6",
+        tagBg: "#1A1830", tagText: "#7F77DD",
+        steps: [
+          {
+            label: "Rhodes / piano EQ",
+            detail: "R&B keys sit in the mid-range and support the vocal. They should feel warm, not bright.",
+            settings: [
+              { label: "HPF", val: "Cut below 120 Hz", note: "Bass owns that space" },
+              { label: "Cut harshness", val: "-2 dB at 1–2 kHz", note: "Smooth the piano edge" },
+              { label: "Warmth boost", val: "+1.5 dB at 250–350 Hz", note: "Rhodes character lives here" }
+            ]
+          },
+          {
+            label: "Pads & strings panning",
+            detail: "Pads fill the stereo width. They live wide so the center stays clear for vocals.",
+            settings: [
+              { label: "Pads pan", val: "L50 / R50 wide stereo", note: "" },
+              { label: "Strings pan", val: "L40 / R40", note: "" },
+              { label: "Pads level", val: "-6 to -10 dB below lead vocal", note: "They support, never compete" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mix bus — glue processing",
+        tag: "Polish",
+        numBg: "#231500", numText: "#FAC775",
+        tagBg: "#231500", tagText: "#BA7517",
+        steps: [
+          {
+            label: "Mix bus compression (glue)",
+            detail: "Gentle bus compression makes everything feel like one performance. Keep it subtle — 2 dB max.",
+            settings: [
+              { label: "Ratio", val: "2:1", note: "" },
+              { label: "Threshold", val: "Set for 1–2 dB GR only", note: "" },
+              { label: "Attack", val: "30–50 ms", note: "Slow — let transients breathe" },
+              { label: "Release", val: "Auto or 250 ms", note: "" }
+            ]
+          },
+          {
+            label: "Mix bus EQ (optional — subtle only)",
+            detail: "A gentle high shelf on the mix bus adds air to everything at once. Only add if the mix genuinely needs it.",
+            settings: [
+              { label: "High shelf", val: "+0.5 to +1 dB at 16 kHz", note: "Air and openness" },
+              { label: "Low shelf", val: "+0.5 dB at 60 Hz if needed", note: "Warmth check — trust your ears" }
+            ]
+          },
+          {
+            label: "Check your mix at low volume",
+            detail: "Turn the monitors way down. If the kick, bass, and lead vocal still come through, your balance is right.",
+            settings: [
+              { label: "Reference level", val: "Very low — neighbor's TV level", note: "" },
+              { label: "What should survive", val: "Kick, bass, lead vocal, snare — in that order", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mastering — final output",
+        tag: "Delivery",
+        numBg: "#0D2014", numText: "#C0DD97",
+        tagBg: "#0D2014", tagText: "#3B6D11",
+        steps: [
+          {
+            label: "Mastering EQ",
+            detail: "Mastering EQ is surgical — tiny moves, broad strokes. You're correcting, not sculpting.",
+            settings: [
+              { label: "HPF", val: "Cut below 30 Hz", note: "Remove subsonic energy that wastes headroom" },
+              { label: "Low-mid check", val: "-1 dB at 300–400 Hz if mix sounds muddy", note: "" },
+              { label: "Presence", val: "+0.5 dB at 3–5 kHz if needed", note: "" },
+              { label: "Air", val: "+0.5 to +1 dB at 16 kHz — high shelf", note: "" }
+            ]
+          },
+          {
+            label: "Mastering compression & limiting",
+            detail: "R&B masters breathe — don't brick-wall everything. Streaming platforms normalize loudness so going louder actually hurts you.",
+            settings: [
+              { label: "Bus comp / multiband", val: "1–2 dB GR max — glue only", note: "" },
+              { label: "Limiter ceiling", val: "-1.0 dBTP (True Peak)", note: "Required for all streaming platforms" },
+              { label: "Target LUFS", val: "-14 LUFS integrated", note: "Spotify / Apple normalize to this — louder gets turned down" }
+            ]
+          },
+          {
+            label: "Final stereo width check",
+            detail: "Check your master in mono before bouncing. If the mix collapses badly, you have phase issues to fix.",
+            settings: [
+              { label: "Mono compatibility", val: "Lead vocal and kick still present", note: "" },
+              { label: "Correlation meter", val: "Stay above +0.5", note: "Below that = phase problems" }
+            ]
+          },
+          {
+            label: "Export settings & file delivery",
+            settings: [
+              { label: "Mixing bounce", val: "32-bit float WAV — same sample rate as session", note: "" },
+              { label: "Master for streaming", val: "24-bit / 44.1 kHz WAV", note: "" },
+              { label: "Master for sync / TV", val: "24-bit / 48 kHz WAV, -1 dBTP ceiling", note: "" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  hiphop: {
+    title: "Hip hop mixing blueprint",
+    sub: "Punchy 808s, crispy highs, upfront rap vocals — controlled, hitting hard, and translating on every speaker.",
+    phases: [
+      {
+        label: "Session setup & organization",
+        tag: "Foundation",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Set session sample rate & bit depth",
+            detail: "44.1kHz / 24-bit for release. If the beat was made at 48kHz, match it. Never change sample rate mid-project.",
+            settings: [
+              { label: "Sample rate", val: "44.1 kHz", note: "" },
+              { label: "Bit depth", val: "24-bit minimum", note: "" }
+            ]
+          },
+          {
+            label: "Group and bus your tracks",
+            detail: "Hip hop sessions get cluttered fast — bussing is non-negotiable before you touch any plugins.",
+            settings: [
+              { label: "808 / bass bus", val: "808, bass, sub — together", note: "" },
+              { label: "Drums bus", val: "Kick, snare, clap, hats, perc", note: "" },
+              { label: "Melody bus", val: "Chords, leads, counter-melodies", note: "" },
+              { label: "Vocal bus", val: "Main rap, doubles, adlibs, hooks", note: "" },
+              { label: "FX / atmos bus", val: "Reverbs, delays, samples, ambience", note: "" }
+            ]
+          },
+          {
+            label: "Gain stage before plugins",
+            detail: "Peak each track at -18 dBFS pre-plugin. 808s especially need headroom — they carry massive sub energy that can clip quietly.",
+            settings: [
+              { label: "Individual tracks", val: "-18 dBFS peak", note: "" },
+              { label: "808 specifically", val: "Low-pass the 808 and check its sub level in solo", note: "Watch for hidden sub clipping" },
+              { label: "Master output", val: "-6 dBFS pre-limiter", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "808 / bass — the backbone",
+        tag: "Low end",
+        numBg: "#1A1830", numText: "#CECBF6",
+        tagBg: "#1A1830", tagText: "#7F77DD",
+        steps: [
+          {
+            label: "808 EQ — define the note",
+            detail: "The 808 has to hit on everything from Airpods to a car system. Layer your sub (felt) and mid-bass (heard) so it translates.",
+            settings: [
+              { label: "Sub boost", val: "+2 dB at 50–70 Hz", note: "The felt weight" },
+              { label: "Mid-bass presence", val: "+2 dB at 100–150 Hz", note: "Heard on small speakers" },
+              { label: "Cut mud", val: "-3 to -4 dB at 250–400 Hz", note: "Stops 808 muddying the vocals" },
+              { label: "HPF everything else", val: "Cut below 80 Hz on all non-808 tracks", note: "808 owns the sub" }
+            ]
+          },
+          {
+            label: "808 pitch and tuning",
+            detail: "If the 808 slides (portamento), make sure it's tuned to the key of the song. An out-of-tune 808 wrecks an otherwise perfect mix.",
+            settings: [
+              { label: "Root note", val: "Match the key of the beat", note: "" },
+              { label: "Slide / glide time", val: "Adjust to taste — fast for choppy, slow for smooth", note: "" }
+            ]
+          },
+          {
+            label: "808 compression",
+            detail: "Light compression — the 808 needs dynamics. Over-compressing kills the impact.",
+            settings: [
+              { label: "Ratio", val: "3:1 to 4:1", note: "" },
+              { label: "Threshold", val: "-10 to -12 dBFS", note: "2–4 dB gain reduction" },
+              { label: "Attack", val: "30–50 ms", note: "Let the hit breathe" },
+              { label: "Release", val: "Auto or 200 ms", note: "" }
+            ]
+          },
+          {
+            label: "Sidechain kick to 808",
+            detail: "The kick and 808 cannot live in the same sub space at the same time. Sidechain the 808 to duck when the kick hits.",
+            settings: [
+              { label: "Sidechain source", val: "Kick drum signal", note: "" },
+              { label: "Reduction", val: "4–6 dB", note: "More aggressive than R&B — the kick needs to slap through" },
+              { label: "Attack", val: "1–3 ms", note: "" },
+              { label: "Release", val: "60–100 ms", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Drums — the knock",
+        tag: "Rhythm",
+        numBg: "#231500", numText: "#FAC775",
+        tagBg: "#231500", tagText: "#BA7517",
+        steps: [
+          {
+            label: "Kick EQ — the knock",
+            detail: "Hip hop kick is punchy and defined. More attack than R&B — it needs to cut through a dense mix.",
+            settings: [
+              { label: "HPF", val: "Cut below 60 Hz", note: "808 owns that space" },
+              { label: "Body", val: "+3 dB at 80–100 Hz", note: "" },
+              { label: "Cut mud", val: "-3 dB at 200–300 Hz", note: "" },
+              { label: "Knock / click", val: "+3 dB at 2–4 kHz", note: "The transient that drives the beat" }
+            ]
+          },
+          {
+            label: "Snare / clap EQ + compression",
+            detail: "Hip hop snare is crispy and has presence. In trap it cracks. In boom bap it pops.",
+            settings: [
+              { label: "HPF", val: "Cut below 150 Hz", note: "" },
+              { label: "Body", val: "+2 dB at 200 Hz", note: "" },
+              { label: "Crack / presence", val: "+3 dB at 5–8 kHz", note: "The snap" },
+              { label: "Compression ratio", val: "8:1", note: "More aggressive than R&B" },
+              { label: "Attack", val: "1–5 ms", note: "" },
+              { label: "Release", val: "50–80 ms", note: "" }
+            ]
+          },
+          {
+            label: "Hi-hats — pattern and panning",
+            detail: "Hats drive the energy in hip hop. They sit wide and bright to create bounce and movement.",
+            settings: [
+              { label: "Closed hat pan", val: "Center or slight right (15R)", note: "" },
+              { label: "Open hat pan", val: "L20 to L35", note: "" },
+              { label: "Rolling hats (trap)", val: "Hard pan pairs: L70 / R70", note: "The bounce comes from the width" },
+              { label: "HPF", val: "Cut below 1 kHz", note: "" }
+            ]
+          },
+          {
+            label: "Parallel drum compression (New York style)",
+            detail: "Send a copy of your drum bus to a heavily compressed parallel channel. Blend it under the dry drums for knock and density.",
+            settings: [
+              { label: "Parallel compressor ratio", val: "10:1 or higher — smash it", note: "This is the dirty channel" },
+              { label: "Attack", val: "Fast — 1–5 ms", note: "" },
+              { label: "Release", val: "Fast — 50 ms", note: "" },
+              { label: "Blend", val: "30–40% parallel vs 100% dry", note: "Should add density, not kill transients" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Rap vocals — upfront and clear",
+        tag: "Feature",
+        numBg: "#2A1020", numText: "#F4C0D1",
+        tagBg: "#2A1020", tagText: "#D4537E",
+        steps: [
+          {
+            label: "Lead rap vocal EQ",
+            detail: "Rap vocals need to sit on top of the beat — bright, clear, intelligible. More presence than R&B vocals.",
+            settings: [
+              { label: "HPF", val: "Cut below 100 Hz", note: "" },
+              { label: "Cut boxiness", val: "-3 dB at 300–500 Hz", note: "Keeps vocal from sounding muddy" },
+              { label: "Presence boost", val: "+2 to +3 dB at 2–4 kHz", note: "Intelligibility lives here" },
+              { label: "Brilliance", val: "+1 to +2 dB at 10–12 kHz", note: "Clarity and air" }
+            ]
+          },
+          {
+            label: "Rap vocal compression — control the energy",
+            detail: "Rappers vary their intensity a lot. You need heavy compression to tame peaks while keeping the performance feeling alive.",
+            settings: [
+              { label: "Ratio", val: "6:1 to 8:1", note: "More aggressive than R&B" },
+              { label: "Threshold", val: "Set for 6–8 dB GR on peaks", note: "" },
+              { label: "Attack", val: "10–15 ms", note: "Let the initial consonant hit" },
+              { label: "Release", val: "60–100 ms", note: "" },
+              { label: "Optional 2nd pass", val: "Ratio 2:1 | Very slow attack | Adds tone", note: "Same two-pass principle as R&B" }
+            ]
+          },
+          {
+            label: "De-essing",
+            detail: "Hard consonants are more pronounced in rap due to close-mic delivery and the high presence boost.",
+            settings: [
+              { label: "Target", val: "6–9 kHz", note: "" },
+              { label: "Reduction", val: "4–6 dB on hits", note: "" }
+            ]
+          },
+          {
+            label: "Vocal delay — the hip hop secret weapon",
+            detail: "A rhythmic delay synced to tempo gives rap vocals that locked-in feel. Use instead of heavy reverb on the lead.",
+            settings: [
+              { label: "Delay type", val: "Ping-pong or stereo tape delay", note: "" },
+              { label: "Tempo sync", val: "1/8 note or 1/16 note dotted", note: "Match the groove" },
+              { label: "Feedback", val: "1–2 repeats only", note: "Echo, not slap" },
+              { label: "HPF on delay return", val: "Cut below 500 Hz", note: "Keeps delay out of the low end" },
+              { label: "Delay level", val: "-15 to -18 dB vs dry", note: "Heard on rests, buried in syllables" }
+            ]
+          },
+          {
+            label: "Vocal panning — doubles & ad libs",
+            detail: "Main rap vocal stays dead center. Doubles are tight. Ad libs push wide — they live in the corners.",
+            settings: [
+              { label: "Main vocal", val: "Center (0)", note: "" },
+              { label: "Doubles", val: "L15 / R15 — tight, not wide", note: "" },
+              { label: "Ad libs / hype", val: "L60 / R60 or hard pan", note: "" },
+              { label: "Hook vocals", val: "Widen the hook — L30 / R30", note: "Hook should feel bigger than the verse" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mix bus & glue",
+        tag: "Polish",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Mix bus compression",
+            detail: "Hip hop mix bus gets a bit more compression than R&B — you want density and knock throughout.",
+            settings: [
+              { label: "Ratio", val: "2:1 to 4:1", note: "" },
+              { label: "Threshold", val: "2–3 dB GR", note: "" },
+              { label: "Attack", val: "30 ms", note: "" },
+              { label: "Release", val: "Auto", note: "" }
+            ]
+          },
+          {
+            label: "Low end mono check",
+            detail: "Fold your mix to mono and make sure the kick and 808 still hit hard. If one disappears, you have phase cancellation.",
+            settings: [
+              { label: "Below 80 Hz", val: "Must be mono or near-mono", note: "" },
+              { label: "808 in mono", val: "Should still be felt and heard", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mastering — final output",
+        tag: "Delivery",
+        numBg: "#0D2014", numText: "#C0DD97",
+        tagBg: "#0D2014", tagText: "#3B6D11",
+        steps: [
+          {
+            label: "Mastering EQ",
+            settings: [
+              { label: "HPF", val: "Cut below 30 Hz", note: "" },
+              { label: "Sub check", val: "Verify 808 sub is balanced — not too much, not too little", note: "" },
+              { label: "Top end air", val: "+0.5 to +1 dB at 12–16 kHz", note: "" }
+            ]
+          },
+          {
+            label: "Limiting — loudness for streaming",
+            detail: "Hip hop trends slightly louder but streaming normalization punishes over-limiting. Aim for -14 LUFS and protect your punch.",
+            settings: [
+              { label: "True Peak ceiling", val: "-1.0 dBTP", note: "" },
+              { label: "Target LUFS", val: "-14 LUFS integrated", note: "Streaming standard" },
+              { label: "Limiter GR", val: "2–4 dB max", note: "More than this and you're losing punch" }
+            ]
+          },
+          {
+            label: "Export settings",
+            settings: [
+              { label: "Mix bounce", val: "32-bit float WAV", note: "" },
+              { label: "Master for streaming", val: "24-bit / 44.1 kHz WAV", note: "" },
+              { label: "Master for sync", val: "24-bit / 48 kHz WAV, -1 dBTP", note: "" }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+
+  cinematic: {
+    title: "Cinematic / sync mixing blueprint",
+    sub: "Wide dynamic range, full stereo field, emotional space — TV, film, and trailer ready from the first step.",
+    phases: [
+      {
+        label: "Session setup & organization",
+        tag: "Foundation",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Set session sample rate & bit depth",
+            detail: "Sync / film work defaults to 48kHz. This is non-negotiable — never deliver sync work at 44.1kHz without confirming first.",
+            settings: [
+              { label: "Sample rate", val: "48 kHz — non-negotiable for sync", note: "" },
+              { label: "Bit depth", val: "24-bit minimum", note: "32-bit float for the session itself" }
+            ]
+          },
+          {
+            label: "Group and bus your tracks",
+            detail: "Cinematic music is dense. Bussing by instrument family is critical — you'll need it for stems delivery too.",
+            settings: [
+              { label: "Percussion bus", val: "Taiko, orchestral perc, hits, booms", note: "" },
+              { label: "Strings bus", val: "All string layers", note: "" },
+              { label: "Brass / woodwinds bus", val: "Horns, brass, woodwinds", note: "" },
+              { label: "Pads / atmosphere bus", val: "Drones, synth pads, textures", note: "" },
+              { label: "Piano / keys bus", val: "Solo piano, Rhodes, prepared piano", note: "" },
+              { label: "Vocal / choir bus", val: "Choral elements, solo vocal", note: "" },
+              { label: "SFX / design bus", val: "Sound design, impacts, whooshes", note: "" }
+            ]
+          },
+          {
+            label: "Gain staging — cinematic needs extra headroom",
+            detail: "Cinematic music has huge dynamic range — a quiet moment vs an impact hit can be 20+ dB apart. Give yourself room.",
+            settings: [
+              { label: "Quiet passages", val: "-24 to -18 dBFS on the master", note: "" },
+              { label: "Peak hits / impacts", val: "-6 dBFS on the master", note: "" },
+              { label: "Rule of thumb", val: "Keep at least 6 dB headroom at all times", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Percussion — weight and impact",
+        tag: "Rhythm",
+        numBg: "#1A1830", numText: "#CECBF6",
+        tagBg: "#1A1830", tagText: "#7F77DD",
+        steps: [
+          {
+            label: "Orchestral kick / taiko EQ",
+            detail: "Cinematic percussion is massive — deep, thundering impact. Very different treatment from pop or hip hop.",
+            settings: [
+              { label: "Sub boost", val: "+3 dB at 50–60 Hz", note: "The room-shaking weight" },
+              { label: "Body", val: "+2 dB at 100–150 Hz", note: "Thump and definition" },
+              { label: "Cut mud", val: "-2 dB at 300–500 Hz", note: "" },
+              { label: "Attack transient", val: "+2 dB at 2–3 kHz", note: "The mallet hit" }
+            ]
+          },
+          {
+            label: "Percussion compression",
+            detail: "Cinematic percussion should feel explosive, not squashed. Light compression or none on the main hits.",
+            settings: [
+              { label: "Main hits (taiko, booms)", val: "No compression or very light: 2:1 | Attack 30 ms", note: "Keep the dynamics — they create impact" },
+              { label: "Snare rolls / hybrid perc", val: "Ratio 4:1 | Attack 10 ms", note: "" },
+              { label: "Alternative", val: "Use a transient shaper instead of compression on impact hits", note: "" }
+            ]
+          },
+          {
+            label: "Percussion stereo placement",
+            detail: "Cinematic percussion uses the full stereo field — wide and immersive. Only the low-end center elements stay in the middle.",
+            settings: [
+              { label: "Center kick / taiko", val: "Center — always", note: "Low-end energy must be mono" },
+              { label: "Auxiliary perc", val: "Wide — L40 / R40 to L70 / R70", note: "" },
+              { label: "Cymbal swells", val: "Full width — hard L/R", note: "" },
+              { label: "Snare / clap hits", val: "Center to slight width", note: "" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Strings — the emotional core",
+        tag: "Texture",
+        numBg: "#2A1020", numText: "#F4C0D1",
+        tagBg: "#2A1020", tagText: "#D4537E",
+        steps: [
+          {
+            label: "Strings EQ",
+            detail: "Orchestral strings need to sound natural and roomy, not harsh. The boxiness from samples is the biggest enemy.",
+            settings: [
+              { label: "HPF on high strings", val: "Cut below 200 Hz", note: "Violins and violas" },
+              { label: "HPF on low strings", val: "Cut below 80 Hz", note: "Cellos and basses" },
+              { label: "Cut boxiness", val: "-2 to -3 dB at 300–500 Hz", note: "Removes the canned sample sound" },
+              { label: "Presence boost", val: "+1 dB at 3–4 kHz", note: "Bow attack and realism" },
+              { label: "Air", val: "+1 dB at 10–12 kHz", note: "Hall air and shimmer" }
+            ]
+          },
+          {
+            label: "Strings reverb — the hall",
+            detail: "Cinematic strings live in a hall. The reverb is not an effect — it IS the space. Longer and richer than any pop reverb.",
+            settings: [
+              { label: "Reverb type", val: "Hall or large room", note: "" },
+              { label: "Pre-delay", val: "10–20 ms", note: "" },
+              { label: "Decay / RT60", val: "2.0 – 3.5 seconds", note: "Bigger for epic — shorter for intimate" },
+              { label: "Reverb level", val: "-8 to -10 dB on return", note: "Strings should feel in the hall, not drenched" }
+            ]
+          },
+          {
+            label: "Strings panning — standard orchestra seating",
+            detail: "Replicate real orchestra seating. Music supervisors notice when this is wrong. This is the expected layout for sync work.",
+            settings: [
+              { label: "1st Violins", val: "L40 – L60", note: "" },
+              { label: "2nd Violins", val: "L20 – L40", note: "" },
+              { label: "Violas", val: "Center to slight right (0 to R20)", note: "" },
+              { label: "Cellos", val: "R20 – R40", note: "" },
+              { label: "Basses", val: "R40 – R60 or center", note: "Center if you want sub energy anchored" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Brass & woodwinds",
+        tag: "Power",
+        numBg: "#231500", numText: "#FAC775",
+        tagBg: "#231500", tagText: "#BA7517",
+        steps: [
+          {
+            label: "Brass EQ",
+            detail: "Brass carries power and drama. Needs to be bold but not honky — cut the buildup in the 400–600 Hz range first.",
+            settings: [
+              { label: "HPF", val: "Cut below 80 Hz (French horn) / 100 Hz (trumpets)", note: "" },
+              { label: "Cut honk", val: "-2 dB at 400–600 Hz", note: "The characteristic brassy buildup" },
+              { label: "Presence", val: "+2 dB at 2–3 kHz", note: "Power and cut" },
+              { label: "Air", val: "+1 dB at 8–10 kHz", note: "Bell shimmer" }
+            ]
+          },
+          {
+            label: "Brass panning — standard placement",
+            settings: [
+              { label: "French horns", val: "L30 – L50", note: "Traditional position" },
+              { label: "Trumpets", val: "L10 – L20", note: "" },
+              { label: "Trombones", val: "R10 – R30", note: "" },
+              { label: "Tuba", val: "Center", note: "Low frequency — keep in mono" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Pads, drones & atmosphere",
+        tag: "Space",
+        numBg: "#0A1828", numText: "#B5D4F4",
+        tagBg: "#0A1828", tagText: "#378ADD",
+        steps: [
+          {
+            label: "Atmosphere EQ",
+            detail: "Pads and drones are the emotional glue. They should be felt but not heard — pure subconscious support.",
+            settings: [
+              { label: "HPF", val: "Cut below 100 Hz", note: "Bass and perc own the sub" },
+              { label: "Cut mid harshness", val: "-2 to -3 dB at 800 Hz – 2 kHz", note: "Pads should not call attention to themselves" },
+              { label: "Air shelf", val: "+1 dB at 12 kHz", note: "Shimmer and openness" }
+            ]
+          },
+          {
+            label: "Atmosphere panning & width",
+            detail: "Pads should feel like they surround you. Use full stereo width, but keep the sub in mono.",
+            settings: [
+              { label: "Pads / drones", val: "Full stereo width — L100 / R100", note: "" },
+              { label: "Sub below 150 Hz", val: "Keep mono", note: "Sub energy stays centered" },
+              { label: "Stereo imager", val: "Widen pads even further above 2 kHz", note: "The surrounding feeling" }
+            ]
+          },
+          {
+            label: "Atmosphere compression",
+            detail: "Little or no compression on atmospheric elements — they need to breathe and evolve naturally.",
+            settings: [
+              { label: "Compression", val: "None or very light — 2:1, threshold barely touching", note: "" },
+              { label: "Prefer automation", val: "Use volume automation to shape the pad swell", note: "More musical than compression for this" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mix bus & dynamics",
+        tag: "Polish",
+        numBg: "#0D2920", numText: "#9FE1CB",
+        tagBg: "#0D2920", tagText: "#1D9E75",
+        steps: [
+          {
+            label: "Mix bus compression — minimal",
+            detail: "Cinematic music should NOT be heavily compressed. The dynamic range is the power. Light glue only.",
+            settings: [
+              { label: "Ratio", val: "1.5:1 to 2:1 max", note: "" },
+              { label: "Threshold", val: "1–2 dB GR only", note: "Touch the compressor, don't squeeze" },
+              { label: "Attack", val: "50–80 ms", note: "Slow — protect the transients" },
+              { label: "Release", val: "Auto or 300 ms", note: "" }
+            ]
+          },
+          {
+            label: "Check your dynamic range",
+            detail: "Cinematic music for sync needs wide dynamic range — especially for trailer and film use. Don't normalize everything flat.",
+            settings: [
+              { label: "Dynamic range target", val: "DR12 or higher", note: "Use a DR meter plugin to verify" },
+              { label: "Quiet sections", val: "Should genuinely be quiet", note: "Don't compress them up" },
+              { label: "Peak hits", val: "Should genuinely slam", note: "They create the emotional impact" }
+            ]
+          }
+        ]
+      },
+      {
+        label: "Mastering — sync delivery",
+        tag: "Delivery",
+        numBg: "#0D2014", numText: "#C0DD97",
+        tagBg: "#0D2014", tagText: "#3B6D11",
+        steps: [
+          {
+            label: "Mastering EQ",
+            settings: [
+              { label: "HPF", val: "Cut below 20–30 Hz", note: "Remove subsonic rumble" },
+              { label: "Low-mid clarity", val: "-1 dB at 300 Hz if muddy", note: "" },
+              { label: "High shelf", val: "+0.5 dB at 14–16 kHz", note: "Subtle air only" }
+            ]
+          },
+          {
+            label: "Limiting for sync — protect the dynamics",
+            detail: "Sync masters are different from streaming masters. Music supervisors want to work with the track in post — keep the dynamics intact.",
+            settings: [
+              { label: "True Peak ceiling", val: "-1.0 dBTP", note: "Required" },
+              { label: "LUFS (streaming)", val: "-14 LUFS integrated", note: "" },
+              { label: "LUFS (sync / TV broadcast)", val: "-23 LUFS integrated", note: "Confirm with the brief — this is the standard" },
+              { label: "Limiter GR", val: "1–2 dB max", note: "Protect the dynamics at all cost" }
+            ]
+          },
+          {
+            label: "Deliver alternate versions",
+            detail: "Sync licensing almost always requires multiple versions. Prepare these before pitching — don't wait to be asked.",
+            settings: [
+              { label: "Full mix", val: "Full length WAV", note: "" },
+              { label: "Stems", val: "Drums, bass, melody, atmosphere — separate files", note: "Music supervisors adjust elements in post" },
+              { label: "Instrumental", val: "No vocal version", note: "" },
+              { label: "30-sec / 60-sec edits", val: "Pre-cut to common ad and trailer lengths", note: "" },
+              { label: "File format", val: "24-bit / 48 kHz WAV, -1 dBTP", note: "" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+};
+
+let currentGenre = 'rnb';
+let checks = {};
+
+function key(g, pi, si) { return `${g}_${pi}_${si}`; }
+
+function updateProgress(genre) {
+  const g = genres[genre];
+  let total = 0, done = 0;
+  g.phases.forEach((ph, pi) => {
+    ph.steps.forEach((_, si) => { total++; if (checks[key(genre, pi, si)]) done++; });
+  });
+  const pct = total ? Math.round(done / total * 100) : 0;
+  const bar = document.getElementById('prog-bar');
+  const lbl = document.getElementById('prog-label');
+  if (bar) bar.style.width = pct + '%';
+  if (lbl) lbl.textContent = `${done} of ${total} steps complete`;
+}
+
+function toggleCheck(genre, pi, si) {
+  const k = key(genre, pi, si);
+  checks[k] = !checks[k];
+  const el = document.getElementById('chk-' + k);
+  const lbl = document.getElementById('lbl-' + k);
+  if (el) el.classList.toggle('done', checks[k]);
+  if (lbl) lbl.classList.toggle('done', checks[k]);
+  updateProgress(genre);
+}
+
+function togglePhase(id) {
+  const body = document.getElementById('body-' + id);
+  const arrow = document.getElementById('arrow-' + id);
+  if (!body) return;
+  const open = body.classList.toggle('open');
+  if (arrow) arrow.classList.toggle('open', open);
+}
+
+function switchGenre(genre, btn) {
+  currentGenre = genre;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderTemplate(genre);
+}
+
+function resetGenre(genre) {
+  const g = genres[genre];
+  g.phases.forEach((ph, pi) => {
+    ph.steps.forEach((_, si) => { checks[key(genre, pi, si)] = false; });
+  });
+  renderTemplate(genre);
+}
+
+function renderTemplate(genre) {
+  const g = genres[genre];
+  let html = `
+    <div class="template-header">
+      <div class="template-title">${g.title}</div>
+      <div class="template-sub">${g.sub}</div>
+    </div>
+    <div class="progress-row">
+      <div class="progress-label" id="prog-label"></div>
+      <button class="reset-btn" onclick="resetGenre('${genre}')">Reset checklist</button>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="prog-bar" style="width:0%"></div></div>
+  `;
+
+  g.phases.forEach((ph, pi) => {
+    const pid = `${genre}_${pi}`;
+    html += `
+      <div class="phase-block">
+        <div class="phase-header" onclick="togglePhase('${pid}')">
+          <div class="phase-num" style="background:${ph.numBg};color:${ph.numText}">${pi + 1}</div>
+          <div class="phase-title">${ph.label}</div>
+          <div class="phase-tag" style="background:${ph.tagBg};color:${ph.tagText}">${ph.tag}</div>
+          <div class="phase-arrow" id="arrow-${pid}">&#9654;</div>
+        </div>
+        <div class="phase-body" id="body-${pid}">
+    `;
+
+    ph.steps.forEach((step, si) => {
+      const k = key(genre, pi, si);
+      const isDone = !!checks[k];
+      html += `
+        <div class="step-row">
+          <div class="step-check ${isDone ? 'done' : ''}" id="chk-${k}" onclick="toggleCheck('${genre}',${pi},${si})"></div>
+          <div class="step-content">
+            <div class="step-label ${isDone ? 'done' : ''}" id="lbl-${k}">${step.label}</div>
+            ${step.detail ? `<div class="step-detail">${step.detail}</div>` : ''}
+            ${step.settings && step.settings.length ? `
+              <div class="setting-grid">
+                ${step.settings.map(s => `
+                  <div class="setting-card">
+                    <div class="setting-label">${s.label}</div>
+                    <div class="setting-val">${s.val}</div>
+                    ${s.note ? `<div class="setting-note">${s.note}</div>` : ''}
+                  </div>
+                `).join('')}
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    });
+
+    html += `</div></div>`;
+  });
+
+  document.getElementById('template-area').innerHTML = html;
+  updateProgress(genre);
+  togglePhase(`${genre}_0`);
+}
+
+renderTemplate('rnb');
+</script>
+</body>
+</html>
