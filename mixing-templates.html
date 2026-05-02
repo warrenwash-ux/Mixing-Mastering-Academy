@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LMW Mixing Templates — Complete Professional Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07090e;--s:#0d1118;--s2:#141a22;--s3:#1b2330;--b:rgba(255,255,255,0.07);--b2:rgba(255,255,255,0.13);--t:#eef0f7;--m:#4a5568;--m2:#718096;--gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#7A6230;--god:rgba(201,168,76,0.08);--gr:#00e676;--re:#ff3d57;--am:#ffab00;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:'Manrope',sans-serif;font-size:14px;min-height:100vh}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.top-nav{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:54px;border-bottom:1px solid var(--b);background:rgba(7,9,14,.98);position:sticky;top:0;z-index:300;backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;background:linear-gradient(135deg,var(--gold),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.genre-tabs{display:flex;gap:4px}
+.gtab{font-family:'Manrope',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;padding:6px 12px;border-radius:6px;border:1px solid transparent;background:transparent;color:var(--m);cursor:pointer;transition:all .2s}
+.gtab:hover{color:var(--t);background:var(--s2)}
+.gtab.active{color:var(--gold);background:var(--god);border-color:rgba(201,168,76,.25)}
+.genre-page{display:none}.genre-page.active{display:block;animation:fadeIn .3s ease}
+.hero{padding:2rem 1.5rem 1rem;max-width:900px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;background:var(--god);border:1px solid var(--gold-d);border-radius:20px;padding:4px 13px;margin-bottom:.9rem}
+.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,4vw,34px);letter-spacing:2px;margin-bottom:.4rem}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:13px;color:var(--m2);line-height:1.7;max-width:620px}
+.prog-row{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}
+.prog-lbl{font-size:12px;color:var(--m2)}
+.reset-btn{font-size:12px;color:var(--m);border:none;background:none;cursor:pointer;text-decoration:underline;font-family:inherit}
+.prog-bar-wrap{height:3px;background:var(--s3);border-radius:2px;margin:.4rem 1.5rem 0;overflow:hidden}
+.prog-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold));transition:width .4s}
+.section-nav{display:flex;gap:5px;padding:0 1.5rem;margin:.75rem auto 0;flex-wrap:wrap;max-width:900px}
+.snav-btn{font-size:11px;font-weight:700;padding:5px 10px;border-radius:20px;border:1px solid var(--b2);background:transparent;color:var(--m2);cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.3px;font-family:'Manrope',sans-serif}
+.snav-btn:hover{color:var(--t)}
+.snav-btn.active{color:var(--gold);background:var(--god);border-color:rgba(201,168,76,.3)}
+.content{max-width:900px;margin:0 auto;padding:1rem 1.5rem 4rem}
+.section{margin-bottom:2rem}
+.sec-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--b)}
+.sec-icon{font-size:24px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px}
+.sec-sub{font-size:12px;color:var(--m2);margin-top:2px}
+.phase{margin-bottom:.7rem;border:1px solid var(--b);border-radius:12px;overflow:hidden;background:var(--s)}
+.ph-header{display:flex;align-items:center;gap:11px;padding:12px 15px;cursor:pointer;user-select:none;transition:background .15s}
+.ph-header:hover{background:var(--s2)}
+.ph-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.ph-title{font-size:14px;font-weight:700;color:var(--t);flex:1}
+.ph-tag{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.ph-arrow{font-size:10px;color:var(--m);transition:transform .2s;flex-shrink:0}
+.ph-arrow.open{transform:rotate(90deg)}
+.ph-body{display:none;border-top:1px solid var(--b)}
+.ph-body.open{display:block}
+.step-row{display:flex;align-items:flex-start;gap:11px;padding:13px 15px;border-bottom:1px solid var(--b)}
+.step-row:last-child{border-bottom:none}
+.step-chk{width:17px;height:17px;border:1.5px solid var(--b2);border-radius:4px;cursor:pointer;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.step-chk:hover{border-color:var(--gold-d)}
+.step-chk.done{background:rgba(201,168,76,.15);border-color:var(--gold)}
+.step-chk.done::after{content:'';width:9px;height:5px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg);display:block;margin-top:-2px}
+.step-body{flex:1;min-width:0}
+.step-lbl{font-size:13px;font-weight:700;color:var(--t);margin-bottom:4px}
+.step-lbl.done{text-decoration:line-through;color:var(--m)}
+.step-why{font-size:12px;color:var(--m2);line-height:1.65;margin-bottom:7px;font-style:italic}
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-top:6px}
+.sc{background:var(--s2);border:1px solid var(--b);border-radius:8px;padding:9px 11px}
+.sc-l{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--m);margin-bottom:3px}
+.sc-v{font-size:13px;font-weight:700;line-height:1.4;margin-bottom:2px}
+.sc-v.boost{color:var(--gr)}
+.sc-v.cut{color:var(--re)}
+.sc-v.warn{color:var(--am)}
+.sc-v.neutral{color:var(--t)}
+.sc-n{font-size:11px;color:var(--m2);line-height:1.4}
+@media(max-width:600px){.genre-tabs{display:none}.sg{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <div class="nav-logo">LMW Mixing Templates</div>
+  <div class="genre-tabs">
+    <button class="gtab active" onclick="sw('rnb',this)">R&amp;B / Soul</button>
+    <button class="gtab" onclick="sw('hiphop',this)">Hip Hop</button>
+    <button class="gtab" onclick="sw('cinematic',this)">Cinematic / Sync</button>
+  </div>
+</nav>
+<div class="genre-page active" id="g-rnb">
+  <div class="hero"><div class="hero-badge">R&amp;B / Soul</div><h1>Complete Mixing Blueprint <span>R&amp;B / Soul</span></h1><p>Every parameter for every effect. EQ, compression, saturation, reverb, delay, stereo width, limiting. Every value is a real starting point you dial in and adjust by ear.</p><div class="prog-row"><div class="prog-lbl" id="rnb-lbl">0 of 0 steps</div><button class="reset-btn" onclick="rst('rnb')">Reset all</button></div></div>
+  <div class="prog-bar-wrap"><div class="prog-bar" id="rnb-bar" style="width:0%"></div></div>
+  <div class="section-nav" id="rnb-nav"></div><div class="content" id="rnb-cnt"></div>
+</div>
+<div class="genre-page" id="g-hiphop">
+  <div class="hero"><div class="hero-badge">Hip Hop</div><h1>Complete Mixing Blueprint <span>Hip Hop</span></h1><p>808s that hit on every speaker, crispy snares, upfront rap vocals. Every EQ move, every compression setting, exact values to dial in right now.</p><div class="prog-row"><div class="prog-lbl" id="hiphop-lbl">0 of 0 steps</div><button class="reset-btn" onclick="rst('hiphop')">Reset all</button></div></div>
+  <div class="prog-bar-wrap"><div class="prog-bar" id="hiphop-bar" style="width:0%"></div></div>
+  <div class="section-nav" id="hiphop-nav"></div><div class="content" id="hiphop-cnt"></div>
+</div>
+<div class="genre-page" id="g-cinematic">
+  <div class="hero"><div class="hero-badge">Cinematic / Sync</div><h1>Complete Mixing Blueprint <span>Cinematic / Sync</span></h1><p>Wide dynamic range, full stereo field, TV and film ready. Every orchestral instrument, every effect, plus the exact delivery specs music supervisors require.</p><div class="prog-row"><div class="prog-lbl" id="cinematic-lbl">0 of 0 steps</div><button class="reset-btn" onclick="rst('cinematic')">Reset all</button></div></div>
+  <div class="prog-bar-wrap"><div class="prog-bar" id="cinematic-bar" style="width:0%"></div></div>
+  <div class="section-nav" id="cinematic-nav"></div><div class="content" id="cinematic-cnt"></div>
+</div>
+
+<script>
+var D = {
+rnb:[
+ {id:"rnb-setup",icon:"SETUP",title:"Session Setup & Gain Staging",sub:"Before a single plugin is inserted",phases:[
+  {title:"DAW Session Settings",tag:"Foundation",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Set sample rate",w:"44.1kHz for streaming. 48kHz if delivering for sync or TV. Set this first, before any recording.",s:[
+    {n:"Streaming release",v:"44.1 kHz",vc:"neutral"},{n:"Sync / TV delivery",v:"48 kHz",nt:"Non-negotiable for film and TV",vc:"warn"},{n:"Bit depth",v:"24-bit minimum",nt:"32-bit float internally",vc:"neutral"}]},
+   {l:"Set buffer size",w:"Low for recording, high for mixing. Wrong buffer causes clicks and pops.",s:[
+    {n:"While recording",v:"64-128 samples",nt:"Minimizes monitoring latency",vc:"neutral"},{n:"While mixing",v:"512-1024 samples",nt:"Reduces CPU load",vc:"neutral"}]},
+   {l:"Gain stage every track before touching plugins",w:"If a track hits plugins too hot, every plugin will distort. If too quiet, noise floor becomes audible. Fix this FIRST before any EQ or compression.",s:[
+    {n:"Audio tracks target",v:"-18 dBFS peak",nt:"Put a Trim plugin first on every channel",vc:"neutral"},{n:"MIDI/virtual instruments",v:"-14 to -18 dBFS",nt:"Lower the instrument volume knob not the fader",vc:"neutral"},{n:"Drum bus",v:"-10 to -12 dBFS",nt:"After all drum tracks route in",vc:"neutral"},{n:"Master bus pre-limiter",v:"-6 dBFS or lower",nt:"Leave headroom for mastering limiter",vc:"warn"}]},
+   {l:"Build and color-code all buses before processing",w:"Route everything before you touch a single plugin. This prevents you mixing tracks in isolation and missing how they interact.",s:[
+    {n:"Drums bus",v:"Kick + Snare + Hats + Perc"},{n:"Bass bus",v:"Bass + 808 + sub layers"},{n:"Keys bus",v:"Rhodes + pads + piano"},{n:"Lead vocal bus",v:"Lead only - separate from doubles"},{n:"BG vocal bus",v:"Doubles + harmonies + ad libs"},{n:"FX bus",v:"Reverb returns + delay returns",nt:"100 percent wet return channels only"}]}
+  ]}
+ ]},
+ {id:"rnb-kick",icon:"KICK",title:"Kick Drum",sub:"The heartbeat of every R&B record",phases:[
+  {title:"Kick EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"High pass filter - remove sub rumble",w:"Below 30-50 Hz there is only rumble and room noise. Cut it clean. This gives the kick's actual sub frequencies more headroom.",s:[
+    {n:"HPF frequency",v:"30-50 Hz",vc:"cut"},{n:"HPF slope",v:"24 dB per octave",nt:"Steeper slope = cleaner more defined cut",vc:"neutral"}]},
+   {l:"Sub weight boost - the chest hit",w:"This is the boom you feel in your chest on a good system. Find the fundamental note of the kick by boosting and slowly sweeping until it jumps out.",s:[
+    {n:"Frequency",v:"60-80 Hz",nt:"Sweep to find where the kick sings",vc:"neutral"},{n:"Gain",v:"+2 to +4 dB",vc:"boost"},{n:"Q bandwidth",v:"0.7 to 1.0",nt:"Wide. You want it to blend naturally not ring",vc:"neutral"}]},
+   {l:"Cut muddy low-mids - the cardboard sound",w:"200-350 Hz is the boxy cardboard zone. Every cheap-sounding kick has too much here. Find the worst frequency by boosting hard and sweeping, then cut.",s:[
+    {n:"Frequency",v:"200-350 Hz",nt:"Sweep first with a boost to find it",vc:"neutral"},{n:"Gain",v:"-3 to -6 dB",vc:"cut"},{n:"Q",v:"1.5 to 2.5",nt:"Moderately narrow. Targeted removal",vc:"neutral"}]},
+   {l:"Attack boost - the beater click",w:"This is what makes the kick audible on laptop speakers and earbuds. Without this boost the kick disappears on small playback.",s:[
+    {n:"Frequency",v:"2.5-5 kHz",nt:"2.5k = thud. 4k = click. 5k = sharp crack",vc:"neutral"},{n:"Gain",v:"+2 to +4 dB",nt:"Subtle. Too much sounds like a toy.",vc:"boost"},{n:"Q",v:"1.0 to 2.0",vc:"neutral"}]},
+   {l:"Low pass filter - optional cleanup",w:"If the kick has harsh high-end sizzle or top-end noise, roll it off. The kick does not need information above 12kHz.",s:[
+    {n:"LPF frequency",v:"10-12 kHz",nt:"Only apply if kick sounds harsh or noisy up top",vc:"cut"},{n:"Slope",v:"6-12 dB per oct",nt:"Gentle roll-off",vc:"neutral"}]}
+  ]},
+  {title:"Kick Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Primary compression - control dynamics",w:"The goal is to even out the hits so the quietest kick and the loudest kick feel similar in volume. You want to control the peaks without killing the punch. Set threshold, then listen to GR meter aim for 3-5 dB of gain reduction on the loudest hits.",s:[
+    {n:"Threshold",v:"-12 to -18 dBFS",nt:"Start at -14 and move until you see 3-5 dB GR",vc:"neutral"},{n:"Ratio",v:"4:1 to 6:1",nt:"4:1 for subtle control. 6:1 for tighter sound.",vc:"neutral"},{n:"Attack",v:"10-30 ms",nt:"SLOW enough to let the transient through first. Too fast kills the punch.",vc:"neutral"},{n:"Release",v:"50-100 ms",nt:"Faster = punchier. Match roughly to tempo. Should breathe.",vc:"neutral"},{n:"Makeup gain",v:"Match bypassed level exactly",nt:"Level-match before deciding if it sounds better",vc:"neutral"},{n:"GR target",v:"3-5 dB on peaks",vc:"warn"}]},
+   {l:"Parallel compression - NY style for density",w:"Send the kick to a second bus. Crush that second bus with extreme compression. Blend a small amount back in. You get the punch of the uncompressed signal PLUS the density and sustain of the crushed signal.",s:[
+    {n:"Parallel send",v:"Pre-fader send to separate bus",vc:"neutral"},{n:"Parallel ratio",v:"10:1 or higher",nt:"Absolutely crush it. This is blended in gently.",vc:"neutral"},{n:"Parallel threshold",v:"-20 to -25 dBFS",nt:"You want 10+ dB of GR on the parallel channel",vc:"neutral"},{n:"Blend amount",v:"20-35 percent parallel mixed in",nt:"Add until you feel weight and density then back off slightly",vc:"neutral"}]},
+   {l:"Transient shaper - alternative to compression",w:"A transient shaper controls attack and sustain independently without changing the overall level. Use this instead of or after compression to fine-tune the feel.",s:[
+    {n:"Attack knob",v:"-2 to -4 dB",nt:"Reduce attack slightly to tighten the beater sound",vc:"cut"},{n:"Sustain knob",v:"+1 to +3 dB",nt:"Add sustain for more boom and weight",vc:"boost"}]}
+  ]},
+  {title:"Kick Saturation",tag:"Saturation",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Tape or tube saturation for translation",w:"Saturation adds harmonic overtones above the fundamental frequency. These harmonics let the kick be heard on tiny speakers that physically cannot reproduce sub-bass.",s:[
+    {n:"Type",v:"Tape or Tube",nt:"Tape = warm rounded. Tube = round with some bite.",vc:"neutral"},{n:"Drive amount",v:"Low. Just barely touching.",nt:"You are adding harmonics not distortion",vc:"neutral"},{n:"Mix blend",v:"20-40 percent",nt:"Blend with dry signal. Subtle.",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"rnb-snare",icon:"SNARE",title:"Snare / Clap",sub:"Pocket, crack, and presence",phases:[
+  {title:"Snare EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"High pass filter",w:"Remove all low-end rumble from the snare. Nothing below 80-120 Hz is useful on a snare.",s:[
+    {n:"HPF",v:"80-120 Hz",nt:"Set higher (100-120 Hz) if snare sounds boomy",vc:"cut"},{n:"Slope",v:"18-24 dB per oct",vc:"neutral"}]},
+   {l:"Body boost - the wooden crack",w:"The full-bodied crack of a real snare. This is the wood of the drum shell resonating. Boost here to make the snare sound solid and real not plasticky.",s:[
+    {n:"Frequency",v:"150-250 Hz",nt:"200 Hz is the classic R&B snare body",vc:"neutral"},{n:"Gain",v:"+2 to +4 dB",vc:"boost"},{n:"Q",v:"0.8 to 1.2",nt:"Wide musical boost",vc:"neutral"}]},
+   {l:"Cut the boxy frequency",w:"400-600 Hz is the hollow nasal sound that makes snares sound cheap. Sweep with a boost to find exactly where it sounds worst then cut it.",s:[
+    {n:"Frequency",v:"400-600 Hz",nt:"Sweep first to locate the exact nasal spot",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"1.5 to 2.5",vc:"neutral"}]},
+   {l:"Crack boost - the bright snap",w:"This is the bright crispy sound that cuts through a busy R&B mix. Without this the snare disappears behind guitars and pads.",s:[
+    {n:"Frequency",v:"4-8 kHz",nt:"5k = crack. 7k = air and sizzle.",vc:"neutral"},{n:"Gain",v:"+2 to +5 dB",vc:"boost"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"Air boost - optional for neo-soul",w:"Adds an open airy quality at the very top. Works especially well for neo-soul and smooth R&B.",s:[
+    {n:"Frequency",v:"10-14 kHz",nt:"Shelf or wide bell",vc:"neutral"},{n:"Gain",v:"+1 to +3 dB",nt:"Very subtle. Just opens it up.",vc:"boost"}]}
+  ]},
+  {title:"Snare Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Dynamic control",w:"Snare compression tightens the performance and adds consistent punch. You want every snare hit to feel equally impactful in the mix.",s:[
+    {n:"Threshold",v:"-10 to -14 dBFS",nt:"Aim for 4-6 dB gain reduction",vc:"neutral"},{n:"Ratio",v:"4:1 to 8:1",nt:"6:1 is the sweet spot for R&B snare",vc:"neutral"},{n:"Attack",v:"5-15 ms",nt:"Fast enough to control. Slow enough to let the crack through first.",vc:"neutral"},{n:"Release",v:"60-120 ms",nt:"Should feel like the snare breathes between hits",vc:"neutral"},{n:"GR target",v:"4-6 dB",vc:"warn"}]}
+  ]},
+  {title:"Snare Reverb",tag:"Reverb",c:"#0A1828",tc:"#378ADD",steps:[
+   {l:"Plate reverb - the classic R&B snare space",w:"R&B snares live in a plate reverb. Too short and they sound dry and boring. Too long and they wash into the next bar. The pre-delay is critical. It separates the dry snap from the wet tail so you hear both clearly.",s:[
+    {n:"Reverb type",v:"Plate reverb",nt:"EMT 140 style. Bright musical tail.",vc:"neutral"},{n:"Pre-delay",v:"15-25 ms",nt:"CRITICAL. Keeps snap distinct from tail.",vc:"neutral"},{n:"Decay time",v:"0.8-1.5 seconds",nt:"0.8s = uptempo. 1.5s = slow ballad.",vc:"neutral"},{n:"Send level",v:"-12 to -18 dB",nt:"Subtle. Enhances the snare. Does not wash it.",vc:"neutral"},{n:"HPF on reverb return",v:"200 Hz",nt:"Keeps reverb from clouding low-mids",vc:"cut"},{n:"LPF on reverb return",v:"8 kHz",nt:"Warm musical tail not harsh and bright",vc:"cut"}]}
+  ]}
+ ]},
+ {id:"rnb-hats",icon:"HATS",title:"Hi-Hats and Cymbals",sub:"Groove and air without clutter",phases:[
+  {title:"Hat EQ and Placement",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Aggressive high pass filter",w:"Hats contain zero useful musical information below 800 Hz. Cut it all. This removes the build-up that crowds the low-mid frequencies.",s:[
+    {n:"Closed hat HPF",v:"800 Hz to 1.5 kHz",vc:"cut"},{n:"Open hat HPF",v:"400-800 Hz",nt:"Lower cutoff to keep some body",vc:"cut"},{n:"Ride cymbal HPF",v:"200-400 Hz",nt:"Lower to preserve the bell of the ride",vc:"cut"},{n:"Slope",v:"24 dB per oct",nt:"Steep clean cut",vc:"neutral"}]},
+   {l:"Harshness cut",w:"The metallic ear-fatiguing ring that makes cheap hat samples sound bad. Narrow surgical cut.",s:[
+    {n:"Frequency",v:"6-9 kHz",nt:"Sweep to find the worst metal ring",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"2.0 to 3.0",nt:"Narrow surgical cut",vc:"neutral"}]},
+   {l:"Air shelf boost - optional shimmer",w:"Adds shimmer and openness at the very top of the frequency range. Subtle.",s:[
+    {n:"Frequency",v:"12-16 kHz",nt:"High shelf",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",nt:"Very subtle",vc:"boost"}]},
+   {l:"Hat panning and level positions",w:"Natural drum kit positioning. Creates width and realism without artificial stereo processing.",s:[
+    {n:"Closed hi-hat",v:"Center to L10-L20",nt:"Right-hand position from drummer perspective",vc:"neutral"},{n:"Open hi-hat",v:"L15-L25",vc:"neutral"},{n:"Ride cymbal",v:"R15-R30",vc:"neutral"},{n:"Crash cymbal",v:"L40-L60",vc:"neutral"},{n:"Closed hat vs kick",v:"-8 to -12 dB below kick",vc:"neutral"},{n:"Open hat vs kick",v:"-6 to -10 dB below kick",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"rnb-bass",icon:"BASS",title:"Bass and Low End",sub:"Felt AND heard - the foundation",phases:[
+  {title:"Bass EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Sub fundamental boost - what you feel",w:"The physical weight in your chest on a good speaker or subwoofer. Find the fundamental note of the bass by boosting a wide bell and slowly sweeping until the note sounds full and present.",s:[
+    {n:"Frequency",v:"40-60 Hz",nt:"Find where the fundamental of the note lives",vc:"neutral"},{n:"Gain",v:"+2 to +3 dB",vc:"boost"},{n:"Q",v:"0.7",nt:"Wide. Natural blend.",vc:"neutral"}]},
+   {l:"Mid-bass presence - what you hear",w:"Makes the bass audible on laptop speakers and earphones that cannot reproduce sub frequencies. This is the heard part of the bass.",s:[
+    {n:"Frequency",v:"100-200 Hz",nt:"150 Hz is the sweet spot for most bass",vc:"neutral"},{n:"Gain",v:"+1 to +3 dB",vc:"boost"},{n:"Q",v:"0.8 to 1.2",vc:"neutral"}]},
+   {l:"Cut mud - the undefined woofy zone",w:"This is where bass notes blur together and the low end becomes a wall of undefined mud. Sweep hard to find it then cut.",s:[
+    {n:"Frequency",v:"200-400 Hz",nt:"Sweep to find the exact muddiest spot",vc:"neutral"},{n:"Gain",v:"-3 to -6 dB",vc:"cut"},{n:"Q",v:"1.5 to 2.5",vc:"neutral"}]},
+   {l:"Cut honky upper-mids",w:"The nasal horn-like tone that clashes with lead vocals and makes the bass sound cheap in a mix.",s:[
+    {n:"Frequency",v:"700 Hz to 1.5 kHz",nt:"Sweep for the nasal honk",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"1.5 to 2.0",vc:"neutral"}]},
+   {l:"HPF every non-bass instrument",w:"This is one of the most important moves in any R&B mix. Every synth, pad, guitar, and key that does not need to live in the sub frequencies needs a high pass filter. Cleaning up the low end of all those tracks gives the bass and kick room to breathe.",s:[
+    {n:"Everything except kick and bass",v:"HPF at 80-100 Hz minimum",nt:"Every single track. No exceptions.",vc:"cut"},{n:"Guitars",v:"HPF at 100-120 Hz",vc:"cut"},{n:"Pads and synths",v:"HPF at 80-200 Hz",nt:"Higher cutoff = cleaner low end",vc:"cut"},{n:"Keys and Rhodes",v:"HPF at 80-120 Hz",vc:"cut"}]}
+  ]},
+  {title:"Bass Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Primary bass compression",w:"Bass players are never perfectly consistent in their playing dynamics. Compression evens out the notes so every note sits at the same level in the mix.",s:[
+    {n:"Threshold",v:"-12 to -18 dBFS",nt:"4-8 dB GR target",vc:"neutral"},{n:"Ratio",v:"4:1 to 6:1",vc:"neutral"},{n:"Attack",v:"30-60 ms",nt:"Slow enough to let the pluck attack of each note through first",vc:"neutral"},{n:"Release",v:"80-150 ms",nt:"Should breathe with the tempo naturally",vc:"neutral"},{n:"GR target",v:"4-8 dB consistently",vc:"warn"}]},
+   {l:"Sidechain kick to bass - the glue of the low end",w:"When the kick hits the bass ducks down by a few dB. This prevents them from stacking and creating a low-end pile-up. You should feel it rather than hear it.",s:[
+    {n:"Sidechain source",v:"Kick drum track",vc:"neutral"},{n:"Threshold",v:"-20 to -25 dBFS",nt:"Triggered by kick transient",vc:"neutral"},{n:"Ratio",v:"4:1 to 8:1",vc:"neutral"},{n:"Attack",v:"1-5 ms",nt:"Very fast. Reacts to kick immediately.",vc:"neutral"},{n:"Release",v:"80-150 ms",nt:"Bass returns to full level before the next kick",vc:"neutral"},{n:"Duck amount",v:"2-4 dB reduction",nt:"Feel it do not hear it obviously",vc:"warn"}]},
+   {l:"Bass saturation for small speaker translation",w:"Adds harmonic overtones above the bass fundamental. Speakers that cannot physically produce 50 Hz can still produce 100 Hz and 200 Hz harmonics. This is how bass is heard on phones.",s:[
+    {n:"Type",v:"Tube or tape saturation",vc:"neutral"},{n:"Drive",v:"Low. Just touching.",nt:"Harmonics not distortion",vc:"neutral"},{n:"Mix",v:"25-40 percent",nt:"Blend gently with the dry signal",vc:"neutral"},{n:"Frequency focus",v:"Apply above 100 Hz only",nt:"Use HPF on saturator input or use multiband",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"rnb-keys",icon:"KEYS",title:"Keys, Rhodes and Pads",sub:"Warmth, space, and harmonic richness",phases:[
+  {title:"Keys EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"High pass filter - get out of the bass frequencies",w:"Keys do not need to compete with bass guitar and 808 in the low end. A HPF cleans this up and gives the bass its own space.",s:[
+    {n:"Rhodes / electric piano",v:"HPF at 80-120 Hz",vc:"cut"},{n:"Acoustic piano",v:"HPF at 60-80 Hz",nt:"Piano has real low-end weight so lower cutoff",vc:"cut"},{n:"Pads and synths",v:"HPF at 120-200 Hz",nt:"Higher for wide atmospheric pads",vc:"cut"}]},
+   {l:"Warmth boost",w:"The rich full-bodied tone of a well-recorded Rhodes or piano. Subtle boost here makes keys feel warm and real.",s:[
+    {n:"Frequency",v:"150-250 Hz",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",nt:"Subtle. Too much = muddy.",vc:"boost"},{n:"Q",v:"0.7 to 1.0",nt:"Wide",vc:"neutral"}]},
+   {l:"Cut mid-range mud",w:"The frequency range where keys clash with lead vocals. Cutting here creates space for the vocal to sit in without fighting.",s:[
+    {n:"Frequency",v:"300-600 Hz",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"Presence boost",w:"Makes the key part audible and defined in a busy mix without making it harsh.",s:[
+    {n:"Frequency",v:"2-4 kHz",nt:"2k = warm presence. 3-4k = brighter.",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",vc:"boost"},{n:"Q",v:"1.0",vc:"neutral"}]},
+   {l:"Air shelf boost",w:"The shimmer and sparkle that makes keys sound expensive and open.",s:[
+    {n:"Frequency",v:"10-14 kHz",nt:"High shelf",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",vc:"boost"}]}
+  ]},
+  {title:"Keys Compression and Effects",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Light dynamic control",w:"Keys rarely need heavy compression. Just smooth the performance dynamics slightly.",s:[
+    {n:"Threshold",v:"-14 to -18 dBFS",nt:"2-4 dB GR target. Gentle.",vc:"neutral"},{n:"Ratio",v:"2:1 to 3:1",nt:"Very light ratio",vc:"neutral"},{n:"Attack",v:"20-50 ms",nt:"Let each note attack through naturally",vc:"neutral"},{n:"Release",v:"150-250 ms",vc:"neutral"},{n:"GR target",v:"2-4 dB",nt:"Subtle evening out only",vc:"warn"}]},
+   {l:"Plate reverb send",w:"Keys need space to breathe in R&B. This is where the vibe and mood lives.",s:[
+    {n:"Reverb type",v:"Plate or medium room",nt:"Plate = brighter. Room = darker.",vc:"neutral"},{n:"Pre-delay",v:"15-30 ms",nt:"Separates dry keys from the reverb tail",vc:"neutral"},{n:"Decay time",v:"1.0-2.5 seconds",nt:"Longer for ballads. Shorter for uptempo.",vc:"neutral"},{n:"Return level",v:"-10 to -14 dB vs dry",vc:"neutral"},{n:"HPF on reverb return",v:"300 Hz",vc:"cut"},{n:"LPF on reverb return",v:"7-9 kHz",nt:"Warm musical reverb. Not harsh.",vc:"cut"}]},
+   {l:"Stereo width",w:"Wide keys fill the stereo field and create the immersive R&B atmosphere.",s:[
+    {n:"Rhodes double panning",v:"L30-L40 and R30-R40",nt:"Or use a stereo widener plugin",vc:"neutral"},{n:"Pads width",v:"Full stereo L70-R70 to full",vc:"neutral"},{n:"Stereo widener mix",v:"20-40 percent",nt:"Subtle width addition",vc:"neutral"},{n:"Mono check",v:"Below 200 Hz must remain mono",nt:"Check with mid-side EQ or correlation meter",vc:"warn"}]},
+   {l:"Chorus for classic Rhodes tone",w:"The wobbling warm modulation is iconic to vintage R&B and soul. Used on Rhodes to add movement and life.",s:[
+    {n:"Rate",v:"0.3-0.8 Hz",nt:"Slow and subtle",vc:"neutral"},{n:"Depth",v:"20-35 percent",vc:"neutral"},{n:"Mix",v:"30-50 percent",nt:"Blend. Do not let it wobble obviously.",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"rnb-vocals",icon:"VOCALS",title:"Lead Vocals",sub:"The centerpiece of every R&B record",phases:[
+  {title:"Vocal EQ - Subtractive First",tag:"EQ",c:"#2A1020",tc:"#D4537E",steps:[
+   {l:"High pass filter",w:"Remove the proximity effect boom from close-mic recording and room rumble below the vocal range.",s:[
+    {n:"HPF frequency",v:"80-120 Hz",nt:"100 Hz is the standard start. Adjust by ear.",vc:"cut"},{n:"Slope",v:"12-18 dB per oct",vc:"neutral"}]},
+   {l:"Remove proximity effect boominess",w:"Close-mic vocals pick up extra low-mid energy from the microphone proximity effect. This makes the voice sound tubby and thick in a bad way.",s:[
+    {n:"Frequency",v:"150-250 Hz",nt:"Sweep and cut if voice sounds boomy or bassy",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"Cut boxiness - the small room sound",w:"The hollow boxy sound comes from the room reflections at 300-500 Hz. This is what makes a vocal sound like it was recorded in a closet.",s:[
+    {n:"Frequency",v:"300-500 Hz",nt:"Sweep until it sounds most hollow then cut",vc:"neutral"},{n:"Gain",v:"-2 to -5 dB",vc:"cut"},{n:"Q",v:"1.5 to 2.5",vc:"neutral"}]},
+   {l:"Congestion cut",w:"Cutting in this range opens up space for the vocal to sit in the mix without fighting the instruments.",s:[
+    {n:"Frequency",v:"500-700 Hz",vc:"neutral"},{n:"Gain",v:"-1 to -3 dB",nt:"Very subtle. This range has useful tone too.",vc:"cut"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]}
+  ]},
+  {title:"Vocal EQ - Additive",tag:"EQ",c:"#2A1020",tc:"#D4537E",steps:[
+   {l:"Presence boost - the most important additive move",w:"This is what makes a vocal feel intimate and upfront. It is the frequency that makes listeners feel like the singer is singing directly to them.",s:[
+    {n:"Frequency",v:"2-3.5 kHz",nt:"2k = warm presence. 3k = forward. 3.5k = intense.",vc:"neutral"},{n:"Gain",v:"+1.5 to +3 dB",nt:"The single most important additive EQ on vocals",vc:"boost"},{n:"Q",v:"0.8 to 1.2",nt:"Wide musical boost",vc:"neutral"}]},
+   {l:"Intelligibility boost - hear every word",w:"This is the clarity frequency. Makes lyrics understandable on first listen on any playback system.",s:[
+    {n:"Frequency",v:"4-5 kHz",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",vc:"boost"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"Air boost - the expensive sound",w:"The open airy top end of a well-recorded R&B vocal. Makes it feel like the singer is in a big beautiful room.",s:[
+    {n:"Frequency",v:"10-16 kHz",nt:"High shelf. 12k is the classic spot.",vc:"neutral"},{n:"Gain",v:"+1 to +3 dB",vc:"boost"}]}
+  ]},
+  {title:"Vocal Compression - Two Pass Method",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Pass 1 - Utility compressor catches peaks",w:"The first compressor only deals with the loudest peaks. It brings the performance into a manageable range so the second compressor can work consistently and musically on everything.",s:[
+    {n:"Compressor type",v:"FET style - 1176 type",nt:"Fast attack character. Peak control.",vc:"neutral"},{n:"Threshold",v:"-10 to -14 dBFS",nt:"Only engaging on the loudest hits",vc:"neutral"},{n:"Ratio",v:"4:1 to 8:1",vc:"neutral"},{n:"Attack",v:"3-8 ms",nt:"Fast. Catches peaks before they distort downstream.",vc:"neutral"},{n:"Release",v:"40-80 ms",vc:"neutral"},{n:"GR target",v:"4-6 dB on loud peaks only",nt:"Should not be compressing quiet passages at all",vc:"warn"}]},
+   {l:"Pass 2 - Tone and glue compressor",w:"The second compressor adds the warmth and glue that defines the smooth compressed R&B vocal sound. It should always be gently working. You should never hear it pump.",s:[
+    {n:"Compressor type",v:"Optical or VCA - LA-2A or SSL style",vc:"neutral"},{n:"Threshold",v:"-16 to -20 dBFS",nt:"Gentle. Always working on the signal.",vc:"neutral"},{n:"Ratio",v:"2:1 to 3:1",nt:"Very light ratio",vc:"neutral"},{n:"Attack",v:"20-50 ms",nt:"Slow and musical. Not utility.",vc:"neutral"},{n:"Release",v:"150-300 ms",vc:"neutral"},{n:"GR target",v:"2-4 dB consistently",nt:"Always working. Never slamming.",vc:"warn"}]},
+   {l:"Volume automation after both compressors",w:"Compression evens out dynamics but cannot do what a manual volume ride does. Automation lifts the quiet phrases and tames the occasional loud phrase that still pokes through.",s:[
+    {n:"Push into chorus",v:"+1 to +2 dB before chorus hits",nt:"Creates energy and excitement",vc:"boost"},{n:"Lift quiet passages",v:"+1 to +3 dB on quieter phrases",nt:"So every lyric is heard clearly",vc:"boost"},{n:"Tame loud peaks",v:"-1 to -2 dB on peaks still poking out",vc:"cut"}]}
+  ]},
+  {title:"Vocal De-essing",tag:"De-ess",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"De-esser settings",w:"Sibilance is the harsh S SH and CH sounds that cause listening fatigue. The de-esser reduces these frequencies only when they hit. Set the threshold so it reacts to the harshest esses only.",s:[
+    {n:"Target frequency",v:"5-8 kHz",nt:"Female vocals often need 7-9 kHz",vc:"neutral"},{n:"Reduction on hits",v:"3-6 dB",vc:"cut"},{n:"Type",v:"Split-band or wideband",nt:"Split-band is more transparent",vc:"neutral"},{n:"Position in chain",v:"After EQ. Before reverb send.",vc:"neutral"}]}
+  ]},
+  {title:"Vocal Reverb",tag:"Reverb",c:"#0A1828",tc:"#378ADD",steps:[
+   {l:"Primary plate reverb",w:"The classic R&B vocal space. Plate reverb is bright musical and intimate. The pre-delay is essential. Without it the reverb smears the vocal.",s:[
+    {n:"Type",v:"Plate reverb - EMT 140 style",vc:"neutral"},{n:"Pre-delay",v:"20-40 ms",nt:"CRITICAL. Keeps dry vocal clear from wet tail.",vc:"neutral"},{n:"Decay time",v:"0.8-1.5 seconds",nt:"0.8s uptempo. 1.5s ballad.",vc:"neutral"},{n:"Return level",v:"-12 to -16 dB vs dry",vc:"neutral"},{n:"HPF on return",v:"250-400 Hz",vc:"cut"},{n:"LPF on return",v:"6-8 kHz",nt:"Warm smooth tail not harsh",vc:"cut"}]},
+   {l:"Slapback delay - classic R&B thickness",w:"A single echo with no repeats. Adds thickness and size to the vocal without being audible as a delay. The listener does not hear it consciously but the vocal sounds bigger.",s:[
+    {n:"Delay time",v:"60-100 ms",nt:"Not synced to tempo. Set by feel.",vc:"neutral"},{n:"Feedback",v:"0 repeats",nt:"Single reflection only",vc:"neutral"},{n:"Level",v:"-14 to -18 dB vs dry",vc:"neutral"},{n:"HPF on delay return",v:"400 Hz",vc:"cut"},{n:"LPF on delay return",v:"4-6 kHz",nt:"Vintage warm echo. Not bright.",vc:"cut"}]},
+   {l:"Quarter note delay - for ad libs and holds",w:"Used on held notes and ad lib endings. Creates the ear candy that fills the space between vocal lines. Only apply via automation on specific words.",s:[
+    {n:"Delay time",v:"1/4 note - tempo synced",vc:"neutral"},{n:"Feedback",v:"2-3 repeats",vc:"neutral"},{n:"Level",v:"-16 to -20 dB vs dry",vc:"neutral"},{n:"Apply method",v:"Automate it on. Not always on.",nt:"On held words and line endings only",vc:"warn"}]}
+  ]},
+  {title:"Vocal Panning and Doubles",tag:"Panning",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"All vocal panning positions",w:"Lead must always be center. Doubles frame the lead from slightly inside. Harmonies live in the wide space. Ad libs fill the extremes.",s:[
+    {n:"Lead vocal",v:"Dead center - 0",nt:"Non-negotiable. Always center.",vc:"neutral"},{n:"Close doubles",v:"L20 and R20",nt:"Just slightly wide",vc:"neutral"},{n:"Wide doubles",v:"L40 and R40",vc:"neutral"},{n:"Double level",v:"-4 to -8 dB below lead",vc:"neutral"},{n:"Low harmonies",v:"L30-L40 and R30-R40",vc:"neutral"},{n:"High harmonies",v:"L60-L80 and R60-R80",vc:"neutral"},{n:"Harmony level",v:"-6 to -10 dB below lead",vc:"neutral"},{n:"Ad libs",v:"L60-R80 or hard pan alternating",vc:"neutral"},{n:"Ad lib level",v:"-6 to -10 dB below lead",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"rnb-mixbus",icon:"BUS",title:"Mix Bus Processing",sub:"Glue the mix into a record",phases:[
+  {title:"Mix Bus EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Gentle mix bus EQ moves only",w:"Bus EQ is finishing not fixing. If you are making big moves on the bus it means the mix was not done properly. All moves should be small.",s:[
+    {n:"Sub cleanup",v:"HPF at 30-60 Hz",nt:"Remove DC offset and infrasound",vc:"cut"},{n:"Low-mid if muddy",v:"-1 to -2 dB at 200-400 Hz",nt:"Q = 0.7 wide. Only if overall mix sounds muddy.",vc:"cut"},{n:"Air shelf",v:"+0.5 to +1.5 dB at 12-16 kHz",nt:"The final sheen. Very subtle.",vc:"boost"}]}
+  ]},
+  {title:"Mix Bus Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Glue compression - binds everything into one",w:"A very gentle compressor on the master bus makes all the elements feel like they belong together. Without it a mix can feel like separate instruments. With it it feels like one record.",s:[
+    {n:"Type",v:"VCA bus compressor - SSL G style",vc:"neutral"},{n:"Threshold",v:"Set for 1-2 dB GR only",nt:"Very gentle. Just barely touching the signal.",vc:"neutral"},{n:"Ratio",v:"2:1 to 4:1",nt:"2:1 is most transparent",vc:"neutral"},{n:"Attack",v:"30-50 ms",nt:"Slow. Let transients breathe.",vc:"neutral"},{n:"Release",v:"Auto or 200-300 ms",vc:"neutral"},{n:"GR target",v:"1-2 dB maximum",nt:"More than 2 dB and you are limiting not glueing",vc:"warn"}]}
+  ]},
+  {title:"Mono and Low Volume Checks",tag:"Reference",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Low volume check",w:"Turn your monitors way down to barely audible. At very low volume only the most important elements should still be clear. This reveals what is truly loud versus what feels loud from distortion or harshness.",s:[
+    {n:"Must be heard at low vol",v:"Kick. Snare. Lead vocal. Bass.",vc:"warn"},{n:"Should be present",v:"Hats. Keys. Guitars.",vc:"neutral"},{n:"Should almost disappear",v:"Reverb tails. Delays. Pads.",vc:"neutral"}]},
+   {l:"Mono fold-down check",w:"Many playback systems including Bluetooth speakers phones and some TVs are mono. Sum your mix to mono and verify nothing important disappears due to phase cancellation.",s:[
+    {n:"Sum to mono",v:"Use DAW mono button",vc:"neutral"},{n:"Nothing important vanishes",v:"Phase cancellation check",nt:"If an element disappears in mono you have a phase problem",vc:"warn"},{n:"Bass in mono",v:"Must stay full and present",vc:"neutral"},{n:"Lead vocal in mono",v:"Must stay upfront and clear",nt:"If it gets quieter you have phase issues with doubles",vc:"warn"}]}
+  ]}
+ ]},
+ {id:"rnb-master",icon:"MASTER",title:"Mastering",sub:"Final optimization for all distribution platforms",phases:[
+  {title:"Mastering EQ",tag:"EQ",c:"#0D2014",tc:"#3B6D11",steps:[
+   {l:"Mastering EQ - tiny moves only",w:"If you are making large EQ moves at mastering it means the mix needed more work. All mastering EQ should be subtle finishing touches.",s:[
+    {n:"Sub cleanup",v:"HPF at 20-30 Hz at 6 dB/oct",nt:"Remove DC and infrasound only",vc:"cut"},{n:"Low-mid balance",v:"-0.5 to -1.5 dB at 200-400 Hz",nt:"Only if the full mix sounds muddy",vc:"cut"},{n:"Presence balance",v:"+/- 0.5 to 1.5 dB at 2-5 kHz",nt:"Adjust only if mix feels dull or too harsh overall",vc:"neutral"},{n:"Air shelf",v:"+0.5 to +1.5 dB at 12-16 kHz",nt:"Final polish and sheen",vc:"boost"}]}
+  ]},
+  {title:"Mastering Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Gentle mastering compression",w:"Adds density and perceived loudness without killing the dynamic range that makes music feel alive.",s:[
+    {n:"Type",v:"Stereo bus or multiband compressor",vc:"neutral"},{n:"Threshold",v:"Set for 1-3 dB GR",nt:"Very gentle",vc:"neutral"},{n:"Ratio",v:"1.5:1 to 2:1",vc:"neutral"},{n:"Attack",v:"50-80 ms",nt:"Slow. Transparent.",vc:"neutral"},{n:"Release",v:"250-400 ms",vc:"neutral"},{n:"GR target",v:"1-3 dB",vc:"warn"}]}
+  ]},
+  {title:"Limiting and LUFS Targets",tag:"Limiting",c:"#0D2014",tc:"#3B6D11",steps:[
+   {l:"True peak limiting - mandatory settings",w:"Inter-sample peaks cause distortion when streaming services re-encode your audio to AAC or MP3. True peak limiting prevents this. This is non-negotiable for professional releases.",s:[
+    {n:"True peak ceiling",v:"-1.0 dBTP",nt:"Non-negotiable for all streaming platforms",vc:"warn"},{n:"Limiter type",v:"True peak capable limiter only",nt:"Must detect true peaks not just sample peaks",vc:"neutral"},{n:"GR on limiter",v:"1-3 dB maximum",nt:"More than 3 dB and you are destroying dynamics",vc:"warn"}]},
+   {l:"LUFS targets by delivery platform",w:"Streaming platforms analyze the integrated loudness of your track and normalize it to their target. If you master louder than their target they turn you down. If quieter they turn you up. Aim for their target.",s:[
+    {n:"Spotify",v:"-14 LUFS integrated",vc:"neutral"},{n:"Apple Music",v:"-16 LUFS integrated",vc:"neutral"},{n:"YouTube",v:"-14 LUFS integrated",vc:"neutral"},{n:"TV and film sync",v:"-23 LUFS integrated",nt:"Broadcast standard. Confirm with brief.",vc:"warn"},{n:"Club and DJ masters",v:"-9 to -7 LUFS",nt:"Louder for DJ playback context",vc:"neutral"}]},
+   {l:"Export specifications",w:"Wrong format causes rejection from platforms and distributors.",s:[
+    {n:"Mix bounce",v:"32-bit float WAV",nt:"Highest quality before mastering",vc:"neutral"},{n:"Streaming master",v:"24-bit 44.1 kHz WAV",vc:"neutral"},{n:"Sync master",v:"24-bit 48 kHz WAV",vc:"neutral"},{n:"Never deliver",v:"MP3 as a master file",nt:"WAV or AIFF only for all masters",vc:"warn"}]}
+  ]}
+ ]}
+],
+
+hiphop:[
+ {id:"hh-setup",icon:"SETUP",title:"Session Setup",sub:"Foundation before anything else",phases:[
+  {title:"Session and Bus Structure",tag:"Foundation",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Sample rate and gain staging",w:"",s:[
+    {n:"Sample rate",v:"44.1 kHz",nt:"Hip hop is primarily streaming",vc:"neutral"},{n:"Bit depth",v:"24-bit",nt:"32-bit float internally",vc:"neutral"},{n:"Individual tracks",v:"-18 dBFS peak",vc:"neutral"},{n:"808 peak level",v:"-14 to -12 dBFS",nt:"808 is the loudest element after mixing",vc:"neutral"},{n:"Master pre-limiter",v:"-6 dBFS",vc:"neutral"}]},
+   {l:"Build bus structure",w:"",s:[
+    {n:"808 and bass bus",v:"808 + bass + sub layers",nt:"Everything below 200 Hz",vc:"neutral"},{n:"Drums bus",v:"Kick + snare + clap + hats + perc",vc:"neutral"},{n:"Melody bus",v:"Chords + piano + bells + leads",vc:"neutral"},{n:"Rap vocal bus",v:"Main rap and hook vocals",vc:"neutral"},{n:"Double and adlib bus",v:"All doubles and ad libs",vc:"neutral"},{n:"FX bus",v:"All reverb and delay returns",nt:"100 percent wet return channels",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"hh-808",icon:"808",title:"808 and Sub Bass",sub:"The backbone of every hip hop record",phases:[
+  {title:"808 EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Sub fundamental boost - the weight",w:"The boom felt in the chest on a subwoofer system. Find the fundamental note of the 808 by boosting a wide bell at different frequencies until the 808 sounds full and present.",s:[
+    {n:"Frequency",v:"50-70 Hz",nt:"Find the fundamental note of the 808",vc:"neutral"},{n:"Gain",v:"+2 to +4 dB",vc:"boost"},{n:"Q",v:"0.7 to 1.0",nt:"Wide",vc:"neutral"}]},
+   {l:"Mid-bass presence - heard on small speakers",w:"Makes the 808 audible on earbuds and laptop speakers that cannot physically produce sub frequencies. Without this boost the 808 disappears on small speakers.",s:[
+    {n:"Frequency",v:"100-180 Hz",nt:"120-150 Hz is where 808 tone lives",vc:"neutral"},{n:"Gain",v:"+2 to +4 dB",vc:"boost"},{n:"Q",v:"0.8 to 1.2",vc:"neutral"}]},
+   {l:"Cut mud - aggressive in hip hop",w:"Hip hop 808 needs a clean clean low end. The muddy zone at 250-450 Hz is where the 808 notes blur together. Cut it hard.",s:[
+    {n:"Frequency",v:"250-450 Hz",vc:"neutral"},{n:"Gain",v:"-4 to -8 dB",nt:"More aggressive than R&B. Hip hop 808 must be clean.",vc:"cut"},{n:"Q",v:"1.5 to 2.5",vc:"neutral"}]},
+   {l:"Cut honky upper-mids",w:"Removes the cheap synthetic plasticky quality that 808 samples have when unprocessed.",s:[
+    {n:"Frequency",v:"600 Hz to 1.5 kHz",vc:"neutral"},{n:"Gain",v:"-3 to -6 dB",vc:"cut"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"HPF every non-808 element",w:"The 808 owns the sub. Everything else needs to get out of its way.",s:[
+    {n:"All non-808 elements",v:"HPF at 80-120 Hz minimum",vc:"cut"},{n:"Melody elements",v:"HPF at 150-200 Hz",nt:"Keep the low end exclusively to the 808",vc:"cut"}]}
+  ]},
+  {title:"808 Compression and Treatment",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"808 compression - sustain and level control",w:"Keeps the 808 at a consistent level as it pitch slides. Without compression the 808 gets louder and quieter as the note changes.",s:[
+    {n:"Threshold",v:"-12 to -16 dBFS",vc:"neutral"},{n:"Ratio",v:"3:1 to 5:1",vc:"neutral"},{n:"Attack",v:"30-60 ms",nt:"Let the initial attack of the 808 through",vc:"neutral"},{n:"Release",v:"150-300 ms or Auto",vc:"neutral"},{n:"GR target",v:"3-6 dB",vc:"warn"}]},
+   {l:"Sidechain kick to 808 - most important move",w:"When the kick hits the 808 ducks slightly. This is what allows the kick and 808 to both be heard clearly without fighting in the same frequency range. You should feel it not hear it obviously.",s:[
+    {n:"Sidechain source",v:"Kick drum track",vc:"neutral"},{n:"Threshold",v:"-18 to -22 dBFS",vc:"neutral"},{n:"Ratio",v:"6:1 to 10:1",vc:"neutral"},{n:"Attack",v:"1-3 ms",nt:"Very fast. Reacts to kick immediately.",vc:"neutral"},{n:"Release",v:"60-120 ms",nt:"808 returns before the next beat",vc:"neutral"},{n:"Duck amount",v:"4-8 dB reduction",nt:"You should feel the kick cut through cleanly",vc:"warn"}]},
+   {l:"808 saturation - essential for small speakers",w:"Adds harmonic overtones above the fundamental so the 808 can be heard on systems that cannot reproduce sub bass. This is not optional in hip hop.",s:[
+    {n:"Type",v:"Soft clipper or tape saturation",vc:"neutral"},{n:"Drive",v:"Low to medium",nt:"More aggressive than R&B. Hip hop 808 can be pushed.",vc:"neutral"},{n:"Mix blend",v:"40-60 percent",vc:"neutral"}]},
+   {l:"808 pitch tuning",w:"An 808 out of tune with the chord progression sounds wrong even when listeners cannot identify why. Always tune it.",s:[
+    {n:"Root note",v:"Match the key of the beat",nt:"Use a tuner plugin to verify the fundamental note",vc:"warn"},{n:"Pitch slides",v:"Fast = choppy. Slow = smooth melodic.",nt:"Adjust to match the feel of the track",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"hh-kick",icon:"KICK",title:"Kick Drum",sub:"The knock that cuts through everything",phases:[
+  {title:"Kick EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Hip hop kick EQ chain",w:"Hip hop kick needs more aggression than R&B. Less warmth and body. More punch and knock that cuts through 808 and hi hats.",s:[
+    {n:"HPF",v:"50-60 Hz",nt:"808 owns below this",vc:"cut"},{n:"Body boost",v:"+3 to +5 dB at 80-120 Hz",nt:"More aggressive than R&B",vc:"boost"},{n:"Cut mud",v:"-3 to -5 dB at 250-400 Hz",vc:"cut"},{n:"Knock boost",v:"+3 to +5 dB at 2-5 kHz",nt:"3-4k is the knock zone that cuts through",vc:"boost"}]}
+  ]},
+  {title:"Kick Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Transient shaping for punch",w:"Hip hop kicks are often better shaped with a transient shaper than a compressor. More control over the knock and tail independently.",s:[
+    {n:"Attack knob",v:"+2 to +5 dB",nt:"Emphasize the initial beater attack for more knock",vc:"boost"},{n:"Sustain knob",v:"-2 to -4 dB",nt:"Tighten the tail so it does not bleed into the 808",vc:"cut"}]},
+   {l:"Or: standard compression settings",w:"",s:[
+    {n:"Threshold",v:"-10 to -14 dBFS",vc:"neutral"},{n:"Ratio",v:"4:1 to 8:1",vc:"neutral"},{n:"Attack",v:"5-15 ms",nt:"Faster than R&B. Hip hop kicks are punchy.",vc:"neutral"},{n:"Release",v:"40-80 ms",vc:"neutral"},{n:"GR target",v:"3-5 dB",vc:"warn"}]},
+   {l:"Parallel drum compression - NY compression",w:"Send the entire drum bus to a parallel bus and crush it with extreme compression. Blend that crushed signal back in at a low level. This is the technique that gives hip hop drums their signature density and weight.",s:[
+    {n:"Send drums to parallel bus",v:"Pre-fader send",vc:"neutral"},{n:"Parallel ratio",v:"10:1 or limiter",nt:"Absolutely crush the parallel signal",vc:"neutral"},{n:"Parallel threshold",v:"-20 to -25 dBFS",nt:"Aim for 10 or more dB GR",vc:"neutral"},{n:"Blend back in",v:"25-40 percent of parallel",nt:"Blend until you feel density and weight",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"hh-snare",icon:"SNARE",title:"Snare and Clap",sub:"The crack that defines the genre",phases:[
+  {title:"Snare EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Hip hop snare EQ - crack is king",w:"Hip hop snares crack harder than any other genre. The EQ is more aggressive and the snap frequency is boosted significantly more than R&B.",s:[
+    {n:"HPF",v:"100-150 Hz",vc:"cut"},{n:"Body",v:"+2 to +3 dB at 200-300 Hz",vc:"boost"},{n:"Cut boxy",v:"-3 to -5 dB at 400-600 Hz",vc:"cut"},{n:"Snap boost",v:"+3 to +6 dB at 5-10 kHz",nt:"6-8k is the crack zone in hip hop",vc:"boost"}]}
+  ]},
+  {title:"Snare Compression and Effects",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Heavy snare compression",w:"Hip hop snares are compressed hard. This is intentional. The heavy compression is part of the sound.",s:[
+    {n:"Threshold",v:"-8 to -12 dBFS",vc:"neutral"},{n:"Ratio",v:"6:1 to 10:1",vc:"neutral"},{n:"Attack",v:"1-8 ms",nt:"Fast. Catches the snap.",vc:"neutral"},{n:"Release",v:"50-100 ms",vc:"neutral"},{n:"GR target",v:"6-10 dB",nt:"Hip hop snares are compressed hard intentionally",vc:"warn"}]},
+   {l:"Clap layering for thickness",w:"One clap sample sounds thin and digital. Layer 2-3 claps together and they sound thick and real. Slightly offset each layer in time.",s:[
+    {n:"Layer 1 body",v:"Slightly pitched down 1-2 semitones",nt:"Main clap body",vc:"neutral"},{n:"Layer 2 crack",v:"Original pitch",nt:"Adds the snap",vc:"neutral"},{n:"Layer 3 room",v:"Short reverb baked-in sample",nt:"Adds depth",vc:"neutral"},{n:"Offset layers",v:"1-3 ms apart",nt:"Micro-timing makes it feel human",vc:"neutral"}]},
+   {l:"Snare and clap reverb",w:"",s:[
+    {n:"Type",v:"Short room or room reverb",vc:"neutral"},{n:"Pre-delay",v:"5-15 ms",vc:"neutral"},{n:"Decay",v:"0.3-0.8 seconds",nt:"Short. Hip hop snares should be crispy not washy.",vc:"neutral"},{n:"HPF on return",v:"300 Hz",vc:"cut"}]}
+  ]}
+ ]},
+ {id:"hh-hats",icon:"HATS",title:"Hi-Hats",sub:"Groove and swing",phases:[
+  {title:"Hat EQ and Panning",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Hip hop hat treatment by style",w:"Trap hats are bright and crispy with hard panning. Classic boom-bap hats groove in the pocket near center.",s:[
+    {n:"Closed hat HPF",v:"1-2 kHz",vc:"cut"},{n:"Open hat HPF",v:"500 Hz to 1 kHz",vc:"cut"},{n:"Trap rolling hats HPF",v:"2 kHz",nt:"Keep them crispy and bright",vc:"cut"},{n:"Harshness cut",v:"-2 to -3 dB at 8-10 kHz",nt:"Only if metallic and fatiguing",vc:"cut"},{n:"Trap hat panning",v:"Hard pan L100 and R100 alternating",nt:"Signature trap sound",vc:"neutral"},{n:"Standard closed hat",v:"L15-L25",vc:"neutral"},{n:"Open hat",v:"L25-L40",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"hh-vocals",icon:"VOCALS",title:"Rap Vocals",sub:"Upfront, articulate, full of energy",phases:[
+  {title:"Rap Vocal EQ",tag:"EQ",c:"#2A1020",tc:"#D4537E",steps:[
+   {l:"Rap vocal EQ chain",w:"Every word must be understood on every playback system. Presence and clarity are prioritized over warmth.",s:[
+    {n:"HPF",v:"100-150 Hz",nt:"Harder HPF than singing",vc:"cut"},{n:"Cut boxiness",v:"-3 to -5 dB at 300-500 Hz",vc:"cut"},{n:"Cut congestion",v:"-2 to -3 dB at 500-700 Hz",vc:"cut"},{n:"Presence boost",v:"+2 to +4 dB at 2-4 kHz",nt:"3k is the key presence frequency for rap",vc:"boost"},{n:"Brilliance boost",v:"+1 to +3 dB at 8-12 kHz",nt:"Makes consonants T K P crisp and defined",vc:"boost"}]}
+  ]},
+  {title:"Rap Vocal Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Heavy utility compression",w:"Rap vocals have extreme dynamic range. A rapper going from whispering to screaming in the same bar needs aggressive taming.",s:[
+    {n:"Type",v:"FET - 1176 style",nt:"Fast attack character",vc:"neutral"},{n:"Threshold",v:"-10 to -14 dBFS",vc:"neutral"},{n:"Ratio",v:"6:1 to 10:1",nt:"More aggressive than singing",vc:"neutral"},{n:"Attack",v:"3-8 ms",nt:"Fast. Rap dynamics are extreme.",vc:"neutral"},{n:"Release",v:"40-80 ms",vc:"neutral"},{n:"GR target",v:"6-10 dB on peaks",vc:"warn"}]},
+   {l:"Secondary glue compression",w:"",s:[
+    {n:"Type",v:"Optical or VCA",vc:"neutral"},{n:"Threshold",v:"-18 to -22 dBFS",vc:"neutral"},{n:"Ratio",v:"3:1 to 4:1",vc:"neutral"},{n:"Attack",v:"10-30 ms",vc:"neutral"},{n:"Release",v:"100-200 ms",vc:"neutral"},{n:"GR target",v:"3-5 dB",vc:"warn"}]},
+   {l:"De-essing rap vocals",w:"Fast rap vocals create harsh S sounds on every beat.",s:[
+    {n:"Target frequency",v:"6-9 kHz",vc:"neutral"},{n:"Reduction on hits",v:"3-5 dB",vc:"cut"}]}
+  ]},
+  {title:"Rap Vocal Effects",tag:"Effects",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Rhythmic delay - the hip hop signature",w:"The bouncing delay that fills space between bars and makes the vocal feel huge. Apply via automation on held words and line endings only.",s:[
+    {n:"Delay type",v:"Ping-pong or tape delay",vc:"neutral"},{n:"Delay time",v:"1/8 note or dotted 1/16 - tempo synced",vc:"neutral"},{n:"Feedback",v:"1-2 repeats",vc:"neutral"},{n:"Level",v:"-14 to -18 dB vs dry",vc:"neutral"},{n:"LPF on delay",v:"3-5 kHz",nt:"Vintage tape echo darkness",vc:"cut"},{n:"Apply method",v:"Automate on held words and endings only",vc:"warn"}]},
+   {l:"Short room reverb",w:"",s:[
+    {n:"Type",v:"Short room or ambience reverb",vc:"neutral"},{n:"Pre-delay",v:"5-15 ms",vc:"neutral"},{n:"Decay",v:"0.3-0.6 seconds",nt:"Short. Rap vocals must be upfront not washy.",vc:"neutral"},{n:"Return level",v:"-14 to -18 dB",vc:"neutral"}]},
+   {l:"Vocal panning positions",w:"",s:[
+    {n:"Main rap vocal",v:"Dead center - 0",nt:"Always center",vc:"neutral"},{n:"Doubles",v:"L15 and R15",nt:"Tight doubles frame the main",vc:"neutral"},{n:"Ad libs",v:"L60 and R60 or hard pan",nt:"Ear candy in the wide space",vc:"neutral"},{n:"Hook vocals",v:"Center plus wide harmonies",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"hh-mixbus",icon:"BUS",title:"Mix Bus and Mastering",sub:"The final polish",phases:[
+  {title:"Mix Bus Processing",tag:"Processing",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Mix bus compression",w:"",s:[
+    {n:"Ratio",v:"2:1 to 4:1",vc:"neutral"},{n:"Threshold",v:"2-3 dB GR",vc:"neutral"},{n:"Attack",v:"30 ms",vc:"neutral"},{n:"Release",v:"150-250 ms",vc:"neutral"}]},
+   {l:"Mono check on low end",w:"808 and kick must both survive and coexist in mono playback.",s:[
+    {n:"808 in mono",v:"Must still be felt clearly",nt:"If it disappears you have a phase problem",vc:"warn"},{n:"Everything below 80 Hz",v:"Must be identical in L and R",vc:"neutral"}]}
+  ]},
+  {title:"Mastering Targets",tag:"Mastering",c:"#0D2014",tc:"#3B6D11",steps:[
+   {l:"Hip hop mastering targets",w:"Hip hop masters can run louder than most other genres.",s:[
+    {n:"Streaming LUFS",v:"-14 LUFS integrated",nt:"Spotify Apple YouTube target",vc:"neutral"},{n:"True peak",v:"-1.0 dBTP",nt:"Non-negotiable",vc:"warn"},{n:"Dynamic range",v:"DR6-DR8 acceptable",nt:"Hip hop is a loud genre",vc:"neutral"},{n:"Mix bounce",v:"32-bit float WAV",vc:"neutral"},{n:"Master",v:"24-bit 44.1 kHz WAV",vc:"neutral"}]}
+  ]}
+ ]}
+],
+
+cinematic:[
+ {id:"cin-setup",icon:"SETUP",title:"Session Setup",sub:"Sync-ready from the very start",phases:[
+  {title:"Session Settings",tag:"Foundation",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"48 kHz - non-negotiable for sync",w:"All broadcast television and film delivery requires 48 kHz. There are no exceptions. Set this before you record or program a single note.",s:[
+    {n:"Sample rate",v:"48 kHz",nt:"Non-negotiable for all sync TV and film work",vc:"warn"},{n:"Bit depth",v:"24-bit",nt:"32-bit float for internal mixing",vc:"neutral"}]},
+   {l:"Dynamic range targets - cinematic needs headroom",w:"Orchestral music has extreme dynamic range by design. The contrast between the quiet passages and the loud impacts IS the emotion. Preserve it.",s:[
+    {n:"Quiet passages on master",v:"-24 to -18 dBFS",vc:"neutral"},{n:"Peak impacts on master",v:"-6 to -3 dBFS",vc:"neutral"},{n:"Dynamic range target",v:"DR12 or higher",nt:"Cinematic music must breathe. Do not squash it.",vc:"warn"}]},
+   {l:"Orchestral bus structure",w:"",s:[
+    {n:"Strings bus",v:"All string layers and articulations",vc:"neutral"},{n:"Brass bus",v:"All horns brass and woodwinds",vc:"neutral"},{n:"Perc bus",v:"Orchestral perc taiko and impact drums",vc:"neutral"},{n:"Choir bus",v:"All vocal and choir elements",vc:"neutral"},{n:"Pads bus",v:"Synth pads drones and textures",vc:"neutral"},{n:"SFX bus",v:"Sound design impacts and rises",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"cin-strings",icon:"STRINGS",title:"Strings",sub:"The emotional core of cinematic music",phases:[
+  {title:"Strings EQ",tag:"EQ",c:"#2A1020",tc:"#D4537E",steps:[
+   {l:"HPF by register - remove library buildup",w:"String sample libraries accumulate low-end room and HVAC noise. High pass each string register appropriately.",s:[
+    {n:"Violins HPF",v:"150-200 Hz",vc:"cut"},{n:"Violas HPF",v:"80-120 Hz",vc:"cut"},{n:"Cellos HPF",v:"50-80 Hz",vc:"cut"},{n:"Contrabass HPF",v:"30-40 Hz",vc:"cut"},{n:"Slope",v:"12-18 dB per oct",nt:"Gentle. Strings have a natural low-end roll.",vc:"neutral"}]},
+   {l:"Cut boxiness - the synthetic library sound",w:"Most string libraries have a buildup at 250-500 Hz that makes them sound cheap and like a sample library. Cut this to make them sound more like a real orchestra.",s:[
+    {n:"Frequency",v:"250-500 Hz",vc:"neutral"},{n:"Gain",v:"-2 to -4 dB",vc:"cut"},{n:"Q",v:"1.0 to 1.5",vc:"neutral"}]},
+   {l:"Presence boost - forward and emotional",w:"Makes strings feel like they are reaching out and connecting emotionally rather than sitting far away in the background.",s:[
+    {n:"Frequency",v:"2-4 kHz",nt:"3k = bow on string contact. 4k = presence.",vc:"neutral"},{n:"Gain",v:"+1 to +2 dB",vc:"boost"},{n:"Q",v:"0.8 to 1.2",vc:"neutral"}]},
+   {l:"Air boost - concert hall sparkle",w:"",s:[
+    {n:"Frequency",v:"10-14 kHz",nt:"High shelf",vc:"neutral"},{n:"Gain",v:"+0.5 to +1.5 dB",nt:"Very subtle",vc:"boost"}]}
+  ]},
+  {title:"Strings Reverb - The Hall",tag:"Reverb",c:"#0A1828",tc:"#378ADD",steps:[
+   {l:"Primary hall reverb - essential for strings",w:"Strings without reverb sound like samples. Reverb transforms them into an orchestra. This is not optional. Use the best hall reverb you have.",s:[
+    {n:"Type",v:"Large hall or concert hall",nt:"Lexicon 480L or Bricasti M7 style",vc:"neutral"},{n:"Pre-delay",v:"10-25 ms",nt:"Shorter for intimate. Longer for epic.",vc:"neutral"},{n:"Decay RT60",v:"2.0-4.0 seconds",nt:"2s = chamber. 3s = concert hall. 4s = cathedral.",vc:"neutral"},{n:"Diffusion",v:"High setting",nt:"Smooth dense reverb tail",vc:"neutral"},{n:"Return level",v:"-6 to -10 dB vs dry",nt:"Strings need MORE reverb than pop genres",vc:"neutral"},{n:"HPF on return",v:"80-100 Hz",vc:"cut"},{n:"LPF on return",v:"10 kHz",nt:"Keep the air and shimmer of the hall",vc:"neutral"}]}
+  ]},
+  {title:"String Panning - Orchestra Positions",tag:"Panning",c:"#0D2920",tc:"#1D9E75",steps:[
+   {l:"Classical orchestra seating positions",w:"Music supervisors and film directors notice when orchestra panning is wrong. Use proper seating. The perspective is from the audience not the conductor.",s:[
+    {n:"First Violins",v:"L40-L60",nt:"Far left from audience perspective",vc:"neutral"},{n:"Second Violins",v:"L20-L40",vc:"neutral"},{n:"Violas",v:"Center to R20",vc:"neutral"},{n:"Cellos",v:"R20-R40",vc:"neutral"},{n:"Contrabasses",v:"R40-R60",vc:"neutral"},{n:"Overall width",v:"80-100 percent stereo",nt:"Strings should fill the full field",vc:"neutral"}]}
+  ]},
+  {title:"String Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Minimal compression - preserve the dynamics",w:"Strings are emotional because of their dynamics. Over-compression kills what makes them work in film and TV placement. Less is more.",s:[
+    {n:"Threshold",v:"-18 to -22 dBFS",nt:"Only catching the loudest peaks",vc:"neutral"},{n:"Ratio",v:"1.5:1 to 2:1",nt:"Very gentle. Strings breathe.",vc:"neutral"},{n:"Attack",v:"50-100 ms",nt:"Slow. Let the bow attack of each note through.",vc:"neutral"},{n:"Release",v:"300-500 ms",vc:"neutral"},{n:"GR target",v:"1-3 dB maximum",vc:"warn"}]}
+  ]}
+ ]},
+ {id:"cin-brass",icon:"BRASS",title:"Brass and Woodwinds",sub:"Power, weight, and warmth",phases:[
+  {title:"Brass EQ and Panning",tag:"EQ",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Brass EQ and positions",w:"",s:[
+    {n:"Trumpets HPF",v:"150-200 Hz",vc:"cut"},{n:"French Horns HPF",v:"80-100 Hz",vc:"cut"},{n:"Trombones and Tuba HPF",v:"40-60 Hz",vc:"cut"},{n:"Warmth boost",v:"+1 to +2 dB at 150-300 Hz",vc:"boost"},{n:"Harshness cut",v:"-2 to -4 dB at 3-6 kHz",nt:"Libraries are often too bright and brittle",vc:"cut"},{n:"Presence",v:"+1 to +2 dB at 1-2 kHz",vc:"boost"},{n:"Trumpets position",v:"L20-L40 and R20-R40",vc:"neutral"},{n:"French Horns position",v:"R30-R50",nt:"Traditionally right side",vc:"neutral"},{n:"Trombones position",v:"Center to slight right",vc:"neutral"},{n:"Tuba position",v:"Center",vc:"neutral"},{n:"Woodwinds position",v:"L10-R10 near center",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"cin-perc",icon:"PERC",title:"Orchestral Percussion and Impacts",sub:"Weight, drama, and power",phases:[
+  {title:"Orchestral Kick and Taiko EQ",tag:"EQ",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Orchestral percussion EQ - massive low end",w:"Orchestral impacts need to shake the room. More aggressive than any other genre.",s:[
+    {n:"Sub weight",v:"+3 to +6 dB at 40-70 Hz",nt:"Bigger than R&B or hip hop",vc:"boost"},{n:"Body",v:"+2 to +4 dB at 100-200 Hz",vc:"boost"},{n:"Mallet attack",v:"+2 to +3 dB at 1.5-3 kHz",nt:"The crack of mallet on drum head",vc:"boost"},{n:"Cut mud",v:"-3 to -5 dB at 300-500 Hz",vc:"cut"}]}
+  ]},
+  {title:"Percussion Reverb and Panning",tag:"Reverb",c:"#0A1828",tc:"#378ADD",steps:[
+   {l:"Orchestral percussion reverb and position",w:"Impacts in film score need epic hall space.",s:[
+    {n:"Type",v:"Large hall reverb",vc:"neutral"},{n:"Pre-delay",v:"0-10 ms",nt:"Less than strings. Immediate impact.",vc:"neutral"},{n:"Decay",v:"2.0-4.0 seconds",nt:"Long tail for epic cinematic feel",vc:"neutral"},{n:"Return level",v:"-8 to -12 dB vs dry",vc:"neutral"},{n:"Bass drum position",v:"Dead center - always",nt:"Low-end must stay centered",vc:"neutral"},{n:"Snare and frame drums",v:"Center to slight right",vc:"neutral"},{n:"Auxiliary percussion",v:"L30-L60 and R30-R60",nt:"Wide for immersive feel",vc:"neutral"},{n:"Cymbal swells",v:"Full width L80-R80",vc:"neutral"}]}
+  ]},
+  {title:"Percussion Compression",tag:"Compression",c:"#231500",tc:"#BA7517",steps:[
+   {l:"Minimal compression - preserve drama",w:"Orchestral percussion dynamics are emotional. Do not compress them into submission.",s:[
+    {n:"Ratio",v:"2:1 to 3:1",vc:"neutral"},{n:"Attack",v:"20-50 ms",nt:"Let the transient through",vc:"neutral"},{n:"GR target",v:"1-3 dB maximum",vc:"warn"},{n:"Transient shaper attack",v:"+2 to +4 dB",nt:"Emphasize mallet attack",vc:"boost"},{n:"Transient shaper sustain",v:"+2 to +5 dB",nt:"Extend tail for more epic feel",vc:"boost"}]}
+  ]}
+ ]},
+ {id:"cin-pads",icon:"PADS",title:"Pads, Drones and Atmosphere",sub:"The emotional foundation",phases:[
+  {title:"Atmosphere EQ and Width",tag:"EQ",c:"#0A1828",tc:"#378ADD",steps:[
+   {l:"Atmosphere EQ and stereo setup",w:"Pads should support the orchestra not compete with it.",s:[
+    {n:"HPF",v:"100-200 Hz",nt:"Higher if bass instruments are very active",vc:"cut"},{n:"Cut mids",v:"-2 to -4 dB at 500 Hz to 2 kHz",nt:"Q = 0.7 wide. Clears space for orchestra.",vc:"cut"},{n:"Air boost",v:"+1 to +2 dB at 10-14 kHz",nt:"High shelf",vc:"boost"},{n:"Stereo width",v:"L80-L100 and R80-R100",nt:"Full or near-full width",vc:"neutral"},{n:"Sub below 150 Hz",v:"Keep mono",nt:"Mono low-end only",vc:"warn"},{n:"Reverb type",v:"Large hall or infinite reverb",vc:"neutral"},{n:"Decay time",v:"4.0-8.0 seconds or infinite",nt:"Pads can have very long tails",vc:"neutral"},{n:"Return level",v:"-8 to -12 dB",vc:"neutral"}]}
+  ]}
+ ]},
+ {id:"cin-mixbus",icon:"DELIVERY",title:"Mix Bus and Sync Delivery",sub:"Broadcast and sync ready specs",phases:[
+  {title:"Mix Bus Processing",tag:"Processing",c:"#1A1830",tc:"#7F77DD",steps:[
+   {l:"Minimal bus compression for cinematic",w:"Cinematic music must breathe. Heavy compression kills the drama and the dynamic range that makes the music emotional.",s:[
+    {n:"Ratio",v:"1.5:1 to 2:1 maximum",vc:"neutral"},{n:"Threshold",v:"1-2 dB GR only",vc:"neutral"},{n:"Attack",v:"50-100 ms",nt:"Very slow",vc:"neutral"},{n:"GR target",v:"1-2 dB absolute maximum",nt:"More than this destroys the dynamic range",vc:"warn"},{n:"Dynamic range target",v:"DR12 or higher",nt:"Cinematic music must have dynamic range",vc:"warn"}]}
+  ]},
+  {title:"Sync Delivery Specifications",tag:"Delivery",c:"#0D2014",tc:"#3B6D11",steps:[
+   {l:"LUFS targets for sync and broadcast",w:"Different platforms and formats have different loudness standards. Getting this wrong means your music is unusable for that placement.",s:[
+    {n:"Streaming master",v:"-14 LUFS integrated",vc:"neutral"},{n:"TV broadcast USA",v:"-24 LUFS integrated",nt:"ATSC A/85 standard",vc:"warn"},{n:"TV broadcast EU",v:"-23 LUFS integrated",nt:"EBU R128 standard",vc:"warn"},{n:"Film and cinema",v:"Confirm with the brief",nt:"No universal standard. Always ask the supervisor.",vc:"warn"},{n:"True peak all formats",v:"-1.0 dBTP",nt:"Non-negotiable",vc:"warn"}]},
+   {l:"Required deliverables for sync",w:"Having every deliverable ready before you pitch is a major competitive advantage. Most composers only deliver the full mix.",s:[
+    {n:"Full mix",v:"Full length WAV",vc:"neutral"},{n:"Instrumental",v:"No vocal version",nt:"Essential. Many placements require instrumental only.",vc:"neutral"},{n:"Stems",v:"Drums - Bass - Melody - Atmosphere",vc:"neutral"},{n:"30 second edit",v:"Edit that works musically",vc:"neutral"},{n:"60 second edit",v:"Edit that works musically",vc:"neutral"},{n:"Underscore version",v:"Reduced energy for dialogue scenes",vc:"neutral"},{n:"File format",v:"24-bit 48 kHz WAV only",nt:"No MP3. No AIFF. WAV only for all sync deliveries.",vc:"warn"}]},
+   {l:"File naming convention",w:"Sloppy file names get you skipped. Music supervisors deal with thousands of files.",s:[
+    {n:"Format",v:"Artist_Title_Version.wav",vc:"neutral"},{n:"Example",v:"LMW_BlueSunset_FullMix.wav",vc:"neutral"},{n:"No spaces",v:"Underscores only in filename",vc:"neutral"},{n:"Metadata",v:"Title composer BPM key ISRC embedded",vc:"warn"},{n:"Registration",v:"BMI registered before pitching",nt:"Performance royalties require prior registration",vc:"warn"}]}
+  ]}
+ ]}
+]
+};
+
+var checks = {};
+
+function sw(genre, btn) {
+  document.querySelectorAll('.genre-page').forEach(function(p){ p.classList.remove('active'); });
+  document.querySelectorAll('.gtab').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('g-' + genre).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+function gk(g, si, pi, sti) { return g+'_'+si+'_'+pi+'_'+sti; }
+
+function upd(genre) {
+  var data = D[genre], total = 0, done = 0;
+  data.forEach(function(sec, si) {
+    sec.phases.forEach(function(ph, pi) {
+      ph.steps.forEach(function(_, sti) { total++; if (checks[gk(genre,si,pi,sti)]) done++; });
+    });
+  });
+  var pct = total ? Math.round(done/total*100) : 0;
+  var bar = document.getElementById(genre+'-bar');
+  var lbl = document.getElementById(genre+'-lbl');
+  if (bar) bar.style.width = pct+'%';
+  if (lbl) lbl.textContent = done+' of '+total+' steps complete';
+}
+
+function tc(genre, si, pi, sti) {
+  var k = gk(genre, si, pi, sti);
+  checks[k] = !checks[k];
+  var chk = document.getElementById('c-'+k);
+  var lbl = document.getElementById('l-'+k);
+  if (chk) chk.classList.toggle('done', checks[k]);
+  if (lbl) lbl.classList.toggle('done', checks[k]);
+  upd(genre);
+}
+
+function tp(id) {
+  var body = document.getElementById('pb-'+id);
+  var arr = document.getElementById('pa-'+id);
+  if (!body) return;
+  var open = body.classList.toggle('open');
+  if (arr) arr.classList.toggle('open', open);
+}
+
+function rst(genre) {
+  var data = D[genre];
+  data.forEach(function(sec, si) {
+    sec.phases.forEach(function(ph, pi) {
+      ph.steps.forEach(function(_, sti) {
+        var k = gk(genre,si,pi,sti); checks[k] = false;
+        var chk = document.getElementById('c-'+k); if (chk) chk.classList.remove('done');
+        var lbl = document.getElementById('l-'+k); if (lbl) lbl.classList.remove('done');
+      });
+    });
+  });
+  upd(genre);
+}
+
+function ssc(id) {
+  var el = document.getElementById('s-'+id);
+  if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.snav-btn').forEach(function(b){ b.classList.remove('active'); });
+  var btn = document.getElementById('sn-'+id);
+  if (btn) btn.classList.add('active');
+}
+
+function buildG(genre) {
+  var data = D[genre];
+  var nav = document.getElementById(genre+'-nav');
+  var cnt = document.getElementById(genre+'-cnt');
+
+  nav.innerHTML = data.map(function(sec) {
+    return '<button class="snav-btn" id="sn-'+sec.id+'" onclick=\"ssc(\x27'+sec.id+'\x27)\">'+sec.title+'</button>';
+  }).join('');
+
+  cnt.innerHTML = data.map(function(sec, si) {
+    var html = '<div class="section" id="s-'+sec.id+'">';
+    html += '<div class="sec-header"><div class="sec-icon">'+sec.icon+'</div>';
+    html += '<div><div class="sec-title">'+sec.title+'</div><div class="sec-sub">'+sec.sub+'</div></div></div>';
+    sec.phases.forEach(function(ph, pi) {
+      var pid = genre+'_'+si+'_'+pi;
+      html += '<div class="phase"><div class="ph-header" onclick="tp(\x27"+pid+"\x27)">';
+      html += '<div class="ph-num" style="background:'+ph.c+';color:'+ph.tc+'">'+(pi+1)+'</div>';
+      html += '<div class="ph-title">'+ph.title+'</div>';
+      html += '<div class="ph-tag" style="background:'+ph.c+';color:'+ph.tc+'">'+ph.tag+'</div>';
+      html += '<div class="ph-arrow" id="pa-'+pid+'">&#9658;</div></div>';
+      html += '<div class="ph-body" id="pb-'+pid+'">';
+      ph.steps.forEach(function(step, sti) {
+        var k = gk(genre, si, pi, sti);
+        html += '<div class="step-row">';
+        html += '<div class="step-chk" id="c-'+k+'" onclick="tc(\x27'+genre+'\x27,'+si+','+pi+','+sti+')"></div>';
+        html += '<div class="step-body"><div class="step-lbl" id="l-'+k+'">'+step.l+'</div>';
+        if (step.w) html += '<div class="step-why">'+step.w+'</div>';
+        if (step.s && step.s.length) {
+          html += '<div class="sg">';
+          step.s.forEach(function(s) {
+            html += '<div class="sc"><div class="sc-l">'+s.n+'</div>';
+            html += '<div class="sc-v '+(s.vc||'neutral')+'">'+s.v+'</div>';
+            if (s.nt) html += '<div class="sc-n">'+s.nt+'</div>';
+            html += '</div>';
+          });
+          html += '</div>';
+        }
+        html += '</div></div>';
+      });
+      html += '</div></div>';
+    });
+    html += '</div>';
+    return html;
+  }).join('');
+
+  data.forEach(function(sec, si) {
+    sec.phases.forEach(function(ph, pi) { tp(genre+'_'+si+'_'+pi); });
+  });
+  upd(genre);
+}
+
+buildG('rnb');
+buildG('hiphop');
+buildG('cinematic');
+</script>
+</body>
+</html>
